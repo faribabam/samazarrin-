@@ -6,9 +6,10 @@
     <title>گالری طلا و جواهر سما زرین | SAMA ZARRIN</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body id="main-body" class="p-4 md:p-8 flex items-center justify-center min-h-screen bg-gradient-to-tr from-[#143d3b] via-[#0d2322] to-[#261f18]">
+<body id="main-body" class="p-4 md:p-8 flex items-center justify-center min-h-screen bg-gradient-to-tr from-[#1b5350] via-[#123331] to-[#362d24]">
 
-    <div id="auth-box" class="w-full max-w-sm bg-[#162a29]/90 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-[#c5a880]/20">
+    <!-- 🔐 بخش فرم ورود و ثبت‌نام -->
+    <div id="auth-box" class="w-full max-w-sm bg-[#1a3331]/95 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-[#c5a880]/20">
         <h1 class="text-center text-2xl font-light tracking-widest text-[#967969] mb-2 uppercase">SAMA ZARRIN</h1>
         <p class="text-center text-xs text-[#826a5c] mb-6">ورود / ثبت‌نام در گالری سما زرین</p>
         
@@ -29,16 +30,18 @@
         </form>
     </div>
 
+    <!-- 🛍️ پنل اصلی سایت -->
     <div id="main-panel" class="w-full max-w-5xl mx-auto hidden relative">
         
+        <!-- منوی کشویی سه‌نقطه دسته‌بندی -->
         <div class="absolute top-4 left-4 z-50">
-            <button onclick="toggleMenu()" class="w-10 h-10 rounded-full bg-[#1c3331] border border-[#c5a880]/30 flex items-center justify-center text-[#c5a880] hover:bg-[#223f3d] transition-colors cursor-pointer shadow-md">
+            <button onclick="toggleMenu()" class="w-10 h-10 rounded-full bg-[#223f3d] border border-[#c5a880]/30 flex items-center justify-center text-[#c5a880] hover:bg-[#2c524f] transition-colors cursor-pointer shadow-md">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 17v.01" />
                 </svg>
             </button>
             
-            <div id="dropdown-menu" class="hidden absolute left-0 mt-2 w-64 bg-[#162a29] border border-[#c5a880]/20 rounded-2xl shadow-2xl p-2 text-right">
+            <div id="dropdown-menu" class="hidden absolute left-0 mt-2 w-64 bg-[#1a3331] border border-[#c5a880]/20 rounded-2xl shadow-2xl p-2 text-right">
                 <button onclick="filterCategory('all')" class="w-full text-right px-4 py-2 text-xs text-stone-300 hover:bg-black/30 rounded-xl transition-colors">✨ نمایش همه محصولات</button>
                 <button onclick="filterCategory('discount')" class="w-full text-right px-4 py-2 text-xs text-[#c5a880] hover:bg-black/30 rounded-xl transition-colors font-medium">🏷️ تخفیفی ها</button>
                 <button onclick="filterCategory('stock')" class="w-full text-right px-4 py-2 text-xs text-emerald-400 hover:bg-black/30 rounded-xl transition-colors font-medium">📦 موجودی ها</button>
@@ -62,6 +65,7 @@
             </div>
         </div>
 
+        <!-- هدر لوکس سایت -->
         <header class="flex flex-col sm:flex-row justify-between items-center pb-6 border-b border-[#c5a880]/20 mb-8 gap-4 pl-14">
             <div class="text-right">
                 <h1 class="text-3xl font-light tracking-widest text-[#967969] uppercase">SAMA ZARRIN</h1>
@@ -71,7 +75,7 @@
                 </div>
             </div>
             
-            <div class="bg-[#1c3331] border border-[#c5a880]/30 rounded-2xl p-3.5 flex items-center gap-3 shadow-md">
+            <div class="bg-[#223f3d] border border-[#c5a880]/30 rounded-2xl p-3.5 flex items-center gap-3 shadow-md">
                 <div class="text-right">
                     <label class="block text-[10px] font-bold text-[#967969] mb-1">نرخ امروز ۱ گرم طلای ۱۸ عیار (تومان):</label>
                     <input type="text" id="gold-rate-input" oninput="handleGoldRateChange(this)" value="16,135,500" class="bg-[#0d1f1e] text-[#c5a880] px-3 py-1.5 rounded-xl border border-[#c5a880]/20 text-sm font-mono text-center w-44 focus:outline-none focus:ring-1 focus:ring-[#c5a880]" dir="ltr">
@@ -79,9 +83,11 @@
             </div>
         </header>
 
-        <div id="admin-panel" class="hidden bg-[#162a29] border border-[#c5a880]/30 rounded-3xl p-6 mb-8 text-right shadow-xl space-y-6">
+        <!-- 👑 بخش ادمین پیشرفته -->
+        <div id="admin-panel" class="hidden bg-[#1a3331] border border-[#c5a880]/30 rounded-3xl p-6 mb-8 text-right shadow-xl space-y-6">
             <h3 class="text-md font-medium text-[#c5a880]">🛠️ مدیریت ویترین و مشتریان سما زرین</h3>
             
+            <!-- فرم افزودن کالا -->
             <form onsubmit="addNewProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 border-b border-[#c5a880]/10 pb-6">
                 <input type="text" id="prod-name" placeholder="نام محصول" required class="p-3 rounded-xl bg-[#0d1f1e] text-stone-200 text-xs border border-[#c5a880]/10">
                 <input type="number" step="0.01" id="prod-weight" placeholder="وزن به گرم" required class="p-3 rounded-xl bg-[#0d1f1e] text-stone-200 text-xs border border-[#c5a880]/10 text-center font-mono">
@@ -107,6 +113,7 @@
                 <button type="submit" class="md:col-span-3 bg-black text-white text-xs font-medium py-3.5 rounded-xl hover:bg-stone-900 transition-colors cursor-pointer">➕ افزودن به ویترین</button>
             </form>
 
+            <!-- بخش مدیریت تعداد خرید مشتریان جهت ارتقای VIP -->
             <div>
                 <h4 class="text-xs font-bold text-stone-400 mb-2">📊 شبیه‌ساز تعداد خرید مشتری (جهت تست فعال‌سازی VIP):</h4>
                 <div class="flex flex-wrap gap-2">
@@ -116,14 +123,16 @@
             </div>
         </div>
 
+        <!-- بخش ویترین محصولات -->
         <h2 id="gallery-title" class="text-lg font-light text-[#967969] mb-6 flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-[#c5a880]"></span> ✨ جدیدترین مجموعه‌های مینیمال سما زرین
         </h2>
         
         <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
 
+        <!-- 👑 مودال و جدول مقایسه‌ای VIP -->
         <div id="vip-modal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center p-4 z-50">
-            <div class="bg-[#162a29] border border-[#c5a880]/30 p-6 rounded-3xl max-w-xl w-full text-right space-y-6 shadow-2xl">
+            <div class="bg-[#1a3331] border border-[#c5a880]/30 p-6 rounded-3xl max-w-xl w-full text-right space-y-6 shadow-2xl">
                 <div class="flex justify-between items-center border-b border-[#c5a880]/10 pb-3">
                     <h3 class="text-lg font-medium text-amber-400 flex items-center gap-1">👑 مزایای اشتراک کاربری VIP</h3>
                     <button onclick="closeVipModal()" class="text-stone-400 hover:text-white text-sm">✕</button>
@@ -167,8 +176,9 @@
             </div>
         </div>
 
+        <!-- مودال درباره ما -->
         <div id="about-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50">
-            <div class="bg-[#162a29] border border-[#c5a880]/30 p-6 rounded-3xl max-w-md w-full text-right space-y-4 shadow-2xl">
+            <div class="bg-[#1a3331] border border-[#c5a880]/30 p-6 rounded-3xl max-w-md w-full text-right space-y-4 shadow-2xl">
                 <h3 class="text-lg font-medium text-[#c5a880]">درباره گالری سما زرین</h3>
                 <p class="text-xs text-stone-300 leading-relaxed">گالری سما زرین ارائه‌دهنده لوکس‌ترین و ظریف‌ترین طلاهای مینیمال ۱۸ عیار است.</p>
                 <button onclick="closeAboutUs()" class="w-full bg-black text-white text-xs py-2.5 rounded-xl hover:bg-stone-900 cursor-pointer">بستن پنجره</button>
@@ -198,7 +208,6 @@
         function showVipModal() { document.getElementById('vip-modal').classList.remove('hidden'); toggleMenu(); }
         function closeVipModal() { document.getElementById('vip-modal').classList.add('hidden'); }
 
-        // شبیه‌ساز تعداد خرید برای تست
         function setMockPurchases(count) {
             const user = JSON.parse(localStorage.getItem('sama_user'));
             if(user) {
@@ -208,7 +217,6 @@
             }
         }
 
-        // احراز هویت / ثبت نام منعطف
         async function handleAuth(e) {
             e.preventDefault();
             const name = document.getElementById('auth-name').value.trim();
@@ -222,7 +230,6 @@
                 return;
             }
 
-            // ثبت نام و لاگین مشتریان معمولی
             let allUsers = JSON.parse(localStorage.getItem('sama_registered_users')) || [];
             let existingUser = allUsers.find(u => u.phone === phone);
 
@@ -233,20 +240,17 @@
                 }
                 localStorage.setItem('sama_user', JSON.stringify(existingUser));
             } else {
-                // ثبت نام جدید
                 const newUser = { name: name || "مشتری جدید", phone, pass, role: "customer", isVip: false, purchases: 0 };
                 allUsers.push(newUser);
                 localStorage.setItem('sama_registered_users', JSON.stringify(allUsers));
                 localStorage.setItem('sama_user', JSON.stringify(newUser));
                 
-                // اطلاع به تلگرام ادمین جهت ثبت نام جدید
                 new Image().src = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`🆕 ثبت نام جدید در سایت:\n👤 نام: ${newUser.name}\n📱 شماره: ${phone}`)}`;
             }
 
             checkLoginState();
         }
 
-        // ارتقا به VIP بر اساس شرط بیش از ۲ بار خرید
         function activateVip() {
             let user = JSON.parse(localStorage.getItem('sama_user'));
             if(!user) return;
@@ -255,7 +259,6 @@
                 user.isVip = true;
                 localStorage.setItem('sama_user', JSON.stringify(user));
                 
-                // بروزرسانی در دیتابیس کل کاربران
                 let allUsers = JSON.parse(localStorage.getItem('sama_registered_users')) || [];
                 allUsers = allUsers.map(u => u.phone === user.phone ? { ...u, isVip: true } : u);
                 localStorage.setItem('sama_registered_users', JSON.stringify(allUsers));
@@ -268,7 +271,6 @@
             }
         }
 
-        // افزودن کالا با فیلد درصد تخفیف
         function addNewProduct(e) {
             e.preventDefault();
             const newProd = {
@@ -279,7 +281,8 @@
                 profitPercent: parseInt(document.getElementById('prod-profit').value),
                 discountPercent: parseInt(document.getElementById('prod-discount-input').value) || 0,
                 category: document.getElementById('prod-category').value,
-                isStock: document.getElementById('prod-stock').checked
+                isStock: document.getElementById('prod-stock').checked,
+                img: document.getElementById('prod-img').value
             };
 
             products.push(newProd);
@@ -303,9 +306,7 @@
             updateAllPrices();
         }
 
-        // فرمول پیشرفته محاسباتی با کسر سود ۲٪ برای VIP و اعمال درصد تخفیف عمومی کالا
         function calculateGoldPrice(weight, wagePercent, profitPercent, currentRate, isVip, itemDiscountPercent) {
-            // کسر ۲ درصد مخفی از کل سود کالا برای کاربران VIP
             if (isVip) {
                 profitPercent = Math.max(0, profitPercent - 2);
             }
@@ -316,7 +317,6 @@
             const profitAmount = subTotal * (profitPercent / 100);
             let finalPrice = subTotal + profitAmount;
 
-            // اعمال تخفیف نقدی کالا در صورت وجود
             if (itemDiscountPercent > 0) {
                 finalPrice = finalPrice * ((100 - itemDiscountPercent) / 100);
             }
@@ -358,7 +358,7 @@
                 const finalPrice = calculateGoldPrice(p.weight, p.wagePercent, p.profitPercent, currentRate, isVip, p.discountPercent);
                 
                 const card = `
-                    <div class="bg-[#122423] rounded-3xl overflow-hidden shadow-xl border border-[#c5a880]/10 hover:border-[#c5a880]/30 transition-all group">
+                    <div class="bg-[#183533] rounded-3xl overflow-hidden shadow-xl border border-[#c5a880]/10 hover:border-[#c5a880]/30 transition-all group">
                         <div class="h-64 bg-stone-900 relative overflow-hidden">
                             <img src="${p.img || 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500'}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90">
                             <div class="absolute top-3 right-3 flex flex-col gap-1">
@@ -386,7 +386,7 @@
             const session = localStorage.getItem('sama_user');
             if (session) {
                 const user = JSON.parse(session);
-                document.getElementById('main-body').className = "p-4 md:p-8 block bg-gradient-to-tr from-[#143d3b] via-[#0d2322] to-[#261f18]";
+                document.getElementById('main-body').className = "p-4 md:p-8 block bg-gradient-to-tr from-[#1b5350] via-[#123331] to-[#362d24]";
                 document.getElementById('auth-box').classList.add('hidden');
                 document.getElementById('main-panel').classList.remove('hidden');
                 document.getElementById('user-welcome').innerText = `✨ ${user.name} خوش آمدید`;
