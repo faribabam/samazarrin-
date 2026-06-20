@@ -6,97 +6,91 @@
     <title>گالری طلا و جواهر سما زرین | SAMA ZARRIN</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body id="main-body" class="p-4 md:p-8 flex items-center justify-center min-h-screen bg-gradient-to-tr from-[#1b5350] via-[#123331] to-[#362d24]">
+<body id="main-body" class="p-4 md:p-8 flex items-center justify-center min-h-screen bg-gradient-to-tr from-[#005a5b] via-[#0a8082] to-[#20a4a6]">
 
-    <!-- 🔐 بخش فرم ورود و ثبت‌نام -->
-    <div id="auth-box" class="w-full max-w-sm bg-[#1a3331]/95 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-[#c5a880]/20">
-        <h1 class="text-center text-2xl font-light tracking-widest text-[#967969] mb-2 uppercase">SAMA ZARRIN</h1>
-        <p class="text-center text-xs text-[#826a5c] mb-6">ورود / ثبت‌نام در گالری سما زرین</p>
+    <div id="auth-box" class="w-full max-w-sm bg-[#063b3c]/95 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-[#d4af37]/30">
+        <h1 class="text-center text-2xl font-light tracking-widest text-[#d4af37] mb-2 uppercase">SAMA ZARRIN</h1>
+        <p class="text-center text-xs text-[#b8dfdf] mb-6">ورود / ثبت‌نام در گالری سما زرین</p>
         
         <form onsubmit="handleAuth(event)" class="space-y-4">
             <div>
-                <label class="text-xs text-[#967969] mr-1">نام و نام‌خانوادگی</label>
-                <input type="text" id="auth-name" placeholder="برای اولین ورود الزامی است" class="w-full p-3.5 mt-1 rounded-xl bg-[#0d1f1e] border border-[#c5a880]/20 text-stone-200 text-sm focus:outline-none focus:border-[#c5a880]">
+                <label class="text-xs text-[#d4af37] mr-1">نام و نام‌خانوادگی</label>
+                <input type="text" id="auth-name" placeholder="برای اولین ورود الزامی است" class="w-full p-3.5 mt-1 rounded-xl bg-[#032425] border border-[#d4af37]/20 text-stone-100 text-sm focus:outline-none focus:border-[#d4af37]">
             </div>
             <div>
-                <label class="text-xs text-[#967969] mr-1">شماره همراه</label>
-                <input type="tel" id="auth-phone" required class="w-full p-3.5 mt-1 rounded-xl bg-[#0d1f1e] border border-[#c5a880]/20 text-stone-200 text-sm text-center font-mono focus:outline-none focus:border-[#c5a880]" placeholder="09xxxxxxxxx">
+                <label class="text-xs text-[#d4af37] mr-1">شماره همراه</label>
+                <input type="tel" id="auth-phone" required class="w-full p-3.5 mt-1 rounded-xl bg-[#032425] border border-[#d4af37]/20 text-stone-200 text-sm text-center font-mono focus:outline-none focus:border-[#d4af37]" placeholder="09xxxxxxxxx">
             </div>
             <div>
-                <label class="text-xs text-[#967969] mr-1">رمز عبور</label>
-                <input type="password" id="auth-pass" required class="w-full p-3.5 mt-1 rounded-xl bg-[#0d1f1e] border border-[#c5a880]/20 text-stone-200 text-sm text-center font-mono focus:outline-none focus:border-[#c5a880]" placeholder="••••••••">
+                <label class="text-xs text-[#d4af37] mr-1">رمز عبور</label>
+                <input type="password" id="auth-pass" required class="w-full p-3.5 mt-1 rounded-xl bg-[#032425] border border-[#d4af37]/20 text-stone-200 text-sm text-center font-mono focus:outline-none focus:border-[#d4af37]" placeholder="••••••••">
             </div>
-            <button type="submit" id="submit-btn" class="w-full bg-black text-white py-3.5 rounded-xl text-sm font-medium mt-2 hover:bg-stone-900 transition-all cursor-pointer shadow-lg">ورود / عضویت</button>
+            <button type="submit" id="submit-btn" class="w-full bg-[#d4af37] text-stone-900 py-3.5 rounded-xl text-sm font-bold mt-2 hover:bg-[#b89327] transition-all cursor-pointer shadow-lg">ورود / عضویت</button>
         </form>
     </div>
 
-    <!-- 🛍️ پنل اصلی سایت -->
     <div id="main-panel" class="w-full max-w-5xl mx-auto hidden relative">
         
-        <!-- منوی کشویی سه‌نقطه دسته‌بندی -->
         <div class="absolute top-4 left-4 z-50">
-            <button onclick="toggleMenu()" class="w-10 h-10 rounded-full bg-[#223f3d] border border-[#c5a880]/30 flex items-center justify-center text-[#c5a880] hover:bg-[#2c524f] transition-colors cursor-pointer shadow-md">
+            <button onclick="toggleMenu()" class="w-10 h-10 rounded-full bg-[#054344] border border-[#d4af37]/40 flex items-center justify-center text-[#d4af37] hover:bg-[#07595b] transition-colors cursor-pointer shadow-md">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 17v.01" />
                 </svg>
             </button>
             
-            <div id="dropdown-menu" class="hidden absolute left-0 mt-2 w-64 bg-[#1a3331] border border-[#c5a880]/20 rounded-2xl shadow-2xl p-2 text-right">
-                <button onclick="filterCategory('all')" class="w-full text-right px-4 py-2 text-xs text-stone-300 hover:bg-black/30 rounded-xl transition-colors">✨ نمایش همه محصولات</button>
-                <button onclick="filterCategory('discount')" class="w-full text-right px-4 py-2 text-xs text-[#c5a880] hover:bg-black/30 rounded-xl transition-colors font-medium">🏷️ تخفیفی ها</button>
-                <button onclick="filterCategory('stock')" class="w-full text-right px-4 py-2 text-xs text-emerald-400 hover:bg-black/30 rounded-xl transition-colors font-medium">📦 موجودی ها</button>
+            <div id="dropdown-menu" class="hidden absolute left-0 mt-2 w-64 bg-[#053d3e] border border-[#d4af37]/30 rounded-2xl shadow-2xl p-2 text-right">
+                <button onclick="filterCategory('all')" class="w-full text-right px-4 py-2 text-xs text-stone-200 hover:bg-black/20 rounded-xl transition-colors">✨ نمایش همه محصولات</button>
+                <button onclick="filterCategory('discount')" class="w-full text-right px-4 py-2 text-xs text-[#d4af37] hover:bg-black/20 rounded-xl transition-colors font-medium">🏷️ تخفیفی ها</button>
+                <button onclick="filterCategory('stock')" class="w-full text-right px-4 py-2 text-xs text-emerald-400 hover:bg-black/20 rounded-xl transition-colors font-medium">📦 موجودی ها</button>
                 
-                <div class="border-t border-[#c5a880]/10 my-1.5"></div>
-                <button onclick="showVipModal()" class="w-full text-right px-4 py-2 text-xs text-amber-400 bg-amber-950/20 border border-amber-500/20 rounded-xl transition-colors font-medium">👑 اشتراک ویژه VIP</button>
+                <div class="border-t border-[#d4af37]/10 my-1.5"></div>
+                <button onclick="showVipModal()" class="w-full text-right px-4 py-2 text-xs text-amber-400 bg-amber-950/40 border border-amber-500/30 rounded-xl transition-colors font-medium">👑 اشتراک ویژه VIP</button>
                 
-                <div class="border-t border-[#c5a880]/10 my-1.5"></div>
-                <div class="px-4 py-1.5 text-xs text-[#967969] font-bold">طلاهای مینیمال✨</div>
+                <div class="border-t border-[#d4af37]/10 my-1.5"></div>
+                <div class="px-4 py-1.5 text-xs text-[#d4af37] font-bold">طلاهای مینیمال✨</div>
                 
-                <button onclick="filterCategory('دستبند')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-300 hover:bg-black/30 rounded-xl transition-colors">🔹 دستبند</button>
-                <button onclick="filterCategory('گوشواره')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-300 hover:bg-black/30 rounded-xl transition-colors">🔹 گوشواره</button>
-                <button onclick="filterCategory('انگشتر')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-300 hover:bg-black/30 rounded-xl transition-colors">🔹 انگشتر</button>
-                <button onclick="filterCategory('گردنبند')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-300 hover:bg-black/30 rounded-xl transition-colors">🔹 گردنبند</button>
-                <button onclick="filterCategory('آویز')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-300 hover:bg-black/30 rounded-xl transition-colors">🔹 آویز</button>
-                <button onclick="filterCategory('نیم ست')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-300 hover:bg-black/30 rounded-xl transition-colors">🔹 نیم ست</button>
+                <button onclick="filterCategory('دستبند')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-200 hover:bg-black/20 rounded-xl transition-colors">🔹 دستبند</button>
+                <button onclick="filterCategory('گوشواره')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-200 hover:bg-black/20 rounded-xl transition-colors">🔹 گوشواره</button>
+                <button onclick="filterCategory('انگشتر')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-200 hover:bg-black/20 rounded-xl transition-colors">🔹 انگشتر</button>
+                <button onclick="filterCategory('گردنبند')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-200 hover:bg-black/20 rounded-xl transition-colors">🔹 گردنبند</button>
+                <button onclick="filterCategory('آویز')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-200 hover:bg-black/20 rounded-xl transition-colors">🔹 آویز</button>
+                <button onclick="filterCategory('نیم ست')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-200 hover:bg-black/20 rounded-xl transition-colors">🔹 نیم ست</button>
                 
-                <div class="border-t border-[#c5a880]/10 my-1.5"></div>
-                <button onclick="showAboutUs()" class="w-full text-right px-4 py-2 text-xs text-stone-300 hover:bg-black/30 rounded-xl transition-colors">ℹ️ درباره‌ی‌ ما</button>
+                <div class="border-t border-[#d4af37]/10 my-1.5"></div>
+                <button onclick="showAboutUs()" class="w-full text-right px-4 py-2 text-xs text-stone-200 hover:bg-black/20 rounded-xl transition-colors">ℹ️ درباره‌ی‌ ما</button>
                 <button onclick="logout()" class="w-full text-right px-4 py-2 text-xs text-rose-400 hover:bg-rose-950/40 rounded-xl transition-colors font-medium mt-1">🚪 خروج از حساب</button>
             </div>
         </div>
 
-        <!-- هدر لوکس سایت -->
-        <header class="flex flex-col sm:flex-row justify-between items-center pb-6 border-b border-[#c5a880]/20 mb-8 gap-4 pl-14">
+        <header class="flex flex-col sm:flex-row justify-between items-center pb-6 border-b border-[#d4af37]/20 mb-8 gap-4 pl-14">
             <div class="text-right">
-                <h1 class="text-3xl font-light tracking-widest text-[#967969] uppercase">SAMA ZARRIN</h1>
+                <h1 class="text-3xl font-light tracking-widest text-[#d4af37] uppercase drop-shadow-md">SAMA ZARRIN</h1>
                 <div class="flex items-center gap-2 mt-1">
-                    <p id="user-welcome" class="text-xs text-[#826a5c]"></p>
+                    <p id="user-welcome" class="text-xs text-[#bdf5f5]"></p>
                     <span id="vip-badge" class="hidden bg-amber-500/20 border border-amber-500/50 text-amber-400 text-[10px] px-2 py-0.5 rounded-full font-bold">VIP 👑</span>
                 </div>
             </div>
             
-            <div class="bg-[#223f3d] border border-[#c5a880]/30 rounded-2xl p-3.5 flex items-center gap-3 shadow-md">
+            <div class="bg-[#054344] border border-[#d4af37]/30 rounded-2xl p-3.5 flex items-center gap-3 shadow-md">
                 <div class="text-right">
-                    <label class="block text-[10px] font-bold text-[#967969] mb-1">نرخ امروز ۱ گرم طلای ۱۸ عیار (تومان):</label>
-                    <input type="text" id="gold-rate-input" oninput="handleGoldRateChange(this)" value="16,135,500" class="bg-[#0d1f1e] text-[#c5a880] px-3 py-1.5 rounded-xl border border-[#c5a880]/20 text-sm font-mono text-center w-44 focus:outline-none focus:ring-1 focus:ring-[#c5a880]" dir="ltr">
+                    <label class="block text-[10px] font-bold text-[#d4af37] mb-1">نرخ امروز ۱ گرم طلای ۱۸ عیار (تومان):</label>
+                    <input type="text" id="gold-rate-input" oninput="handleGoldRateChange(this)" value="16,135,500" class="bg-[#032425] text-[#d4af37] px-3 py-1.5 rounded-xl border border-[#d4af37]/20 text-sm font-mono text-center w-44 focus:outline-none focus:ring-1 focus:ring-[#d4af37]" dir="ltr">
                 </div>
             </div>
         </header>
 
-        <!-- 👑 بخش ادمین پیشرفته -->
-        <div id="admin-panel" class="hidden bg-[#1a3331] border border-[#c5a880]/30 rounded-3xl p-6 mb-8 text-right shadow-xl space-y-6">
-            <h3 class="text-md font-medium text-[#c5a880]">🛠️ مدیریت ویترین و مشتریان سما زرین</h3>
+        <div id="admin-panel" class="hidden bg-[#053d3e] border border-[#d4af37]/30 rounded-3xl p-6 mb-8 text-right shadow-xl space-y-6">
+            <h3 class="text-md font-medium text-[#d4af37]">🛠️ مدیریت ویترین و مشتریان سما زرین</h3>
             
-            <!-- فرم افزودن کالا -->
-            <form onsubmit="addNewProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 border-b border-[#c5a880]/10 pb-6">
-                <input type="text" id="prod-name" placeholder="نام محصول" required class="p-3 rounded-xl bg-[#0d1f1e] text-stone-200 text-xs border border-[#c5a880]/10">
-                <input type="number" step="0.01" id="prod-weight" placeholder="وزن به گرم" required class="p-3 rounded-xl bg-[#0d1f1e] text-stone-200 text-xs border border-[#c5a880]/10 text-center font-mono">
-                <input type="number" id="prod-wage" placeholder="درصد اجرت" required class="p-3 rounded-xl bg-[#0d1f1e] text-stone-200 text-xs border border-[#c5a880]/10 text-center font-mono">
-                <input type="number" id="prod-profit" placeholder="درصد سود" required class="p-3 rounded-xl bg-[#0d1f1e] text-stone-200 text-xs border border-[#c5a880]/10 text-center font-mono">
-                <input type="number" id="prod-discount-input" placeholder="درصد تخفیف کالا (در صورت وجود)" value="0" class="p-3 rounded-xl bg-[#0d1f1e] text-stone-200 text-xs border border-[#c5a880]/10 text-center font-mono">
-                <input type="url" id="prod-img" placeholder="لینک عکس محصول" required class="p-3 rounded-xl bg-[#0d1f1e] text-stone-200 text-xs border border-[#c5a880]/10">
+            <form onsubmit="addNewProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 border-b border-[#d4af37]/10 pb-6">
+                <input type="text" id="prod-name" placeholder="نام محصول" required class="p-3 rounded-xl bg-[#032425] text-stone-200 text-xs border border-[#d4af37]/10">
+                <input type="number" step="0.01" id="prod-weight" placeholder="وزن به گرم" required class="p-3 rounded-xl bg-[#032425] text-stone-200 text-xs border border-[#d4af37]/10 text-center font-mono">
+                <input type="number" id="prod-wage" placeholder="درصد اجرت" required class="p-3 rounded-xl bg-[#032425] text-stone-200 text-xs border border-[#d4af37]/10 text-center font-mono">
+                <input type="number" id="prod-profit" placeholder="درصد سود" required class="p-3 rounded-xl bg-[#032425] text-stone-200 text-xs border border-[#d4af37]/10 text-center font-mono">
+                <input type="number" id="prod-discount-input" placeholder="درصد تخفیف کالا (در صورت وجود)" value="0" class="p-3 rounded-xl bg-[#032425] text-stone-200 text-xs border border-[#d4af37]/10 text-center font-mono">
+                <input type="url" id="prod-img" placeholder="لینک عکس محصول" required class="p-3 rounded-xl bg-[#032425] text-stone-200 text-xs border border-[#d4af37]/10">
                 
-                <select id="prod-category" class="p-3 rounded-xl bg-[#0d1f1e] text-stone-300 text-xs border border-[#c5a880]/10">
+                <select id="prod-category" class="p-3 rounded-xl bg-[#032425] text-stone-300 text-xs border border-[#d4af37]/10">
                     <option value="دستبند">دستبند</option>
                     <option value="گوشواره">گوشواره</option>
                     <option value="انگشتر">انگشتر</option>
@@ -105,7 +99,7 @@
                     <option value="نیم ست">نیم ست</option>
                 </select>
 
-                <div class="flex items-center gap-6 md:col-span-2 bg-[#0d1f1e] p-3 rounded-xl border border-[#c5a880]/10">
+                <div class="flex items-center gap-6 md:col-span-2 bg-[#032425] p-3 rounded-xl border border-[#d4af37]/10">
                     <label class="inline-flex items-center text-xs text-stone-300 cursor-pointer">
                         <input type="checkbox" id="prod-stock" checked class="ml-2 accent-emerald-600"> طلا در انبار موجود است
                     </label>
@@ -113,41 +107,38 @@
                 <button type="submit" class="md:col-span-3 bg-black text-white text-xs font-medium py-3.5 rounded-xl hover:bg-stone-900 transition-colors cursor-pointer">➕ افزودن به ویترین</button>
             </form>
 
-            <!-- بخش مدیریت تعداد خرید مشتریان جهت ارتقای VIP -->
             <div>
-                <h4 class="text-xs font-bold text-stone-400 mb-2">📊 شبیه‌ساز تعداد خرید مشتری (جهت تست فعال‌سازی VIP):</h4>
+                <h4 class="text-xs font-bold text-stone-300 mb-2">📊 شبیه‌ساز تعداد خرید مشتری (جهت تست فعال‌سازی VIP):</h4>
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="setMockPurchases(1)" class="bg-[#0d1f1e] text-stone-300 text-[11px] px-3 py-2 rounded-xl border border-[#c5a880]/10">تنظیم خرید جاری روی ۱ بار</button>
+                    <button onclick="setMockPurchases(1)" class="bg-[#032425] text-stone-300 text-[11px] px-3 py-2 rounded-xl border border-[#d4af37]/10">تنظیم خرید جاری روی ۱ بار</button>
                     <button onclick="setMockPurchases(3)" class="bg-amber-950/40 text-amber-400 text-[11px] px-3 py-2 rounded-xl border border-amber-500/20">تنظیم خرید جاری روی ۳ بار (شرط خرید VIP)</button>
                 </div>
             </div>
         </div>
 
-        <!-- بخش ویترین محصولات -->
-        <h2 id="gallery-title" class="text-lg font-light text-[#967969] mb-6 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-[#c5a880]"></span> ✨ جدیدترین مجموعه‌های مینیمال سما زرین
+        <h2 id="gallery-title" class="text-lg font-light text-[#d4af37] mb-6 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-[#d4af37]"></span> ✨ جدیدترین مجموعه‌های مینیمال سما زرین
         </h2>
         
         <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
 
-        <!-- 👑 مودال و جدول مقایسه‌ای VIP -->
         <div id="vip-modal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center p-4 z-50">
-            <div class="bg-[#1a3331] border border-[#c5a880]/30 p-6 rounded-3xl max-w-xl w-full text-right space-y-6 shadow-2xl">
-                <div class="flex justify-between items-center border-b border-[#c5a880]/10 pb-3">
-                    <h3 class="text-lg font-medium text-amber-400 flex items-center gap-1">👑 مزایای اشتراک کاربری VIP</h3>
-                    <button onclick="closeVipModal()" class="text-stone-400 hover:text-white text-sm">✕</button>
+            <div class="bg-[#053d3e] border border-[#d4af37]/30 p-6 rounded-3xl max-w-xl w-full text-right space-y-6 shadow-2xl">
+                <div class="flex justify-between items-center border-b border-[#d4af37]/10 pb-3">
+                    <h3 class="text-lg font-medium text-[#d4af37] flex items-center gap-1">👑 مزایای اشتراک کاربری VIP</h3>
+                    <button onclick="closeVipModal()" class="text-stone-300 hover:text-white text-sm">✕</button>
                 </div>
 
-                <div class="overflow-hidden rounded-2xl border border-[#c5a880]/20 bg-[#0d1f1e]">
+                <div class="overflow-hidden rounded-2xl border border-[#d4af37]/20 bg-[#032425]">
                     <table class="w-full text-right text-xs">
                         <thead>
-                            <tr class="bg-black/40 text-[#967969] border-b border-[#c5a880]/10">
+                            <tr class="bg-black/40 text-[#d4af37] border-b border-[#d4af37]/10">
                                 <th class="p-3.5 font-bold">ویژگی‌ها و مزایا</th>
                                 <th class="p-3.5 text-center font-bold">اشتراک عادی</th>
                                 <th class="p-3.5 text-center font-bold text-amber-400">اشتراک VIP 👑</th>
                             </tr>
                         </thead>
-                        <tbody class="text-stone-300 divide-y divide-[#c5a880]/5">
+                        <tbody class="text-stone-200 divide-y divide-[#d4af37]/5">
                             <tr>
                                 <td class="p-3.5">تخفیف ویژه روی سود تمامی اجناس</td>
                                 <td class="p-3.5 text-center text-rose-400">❌ ندارد</td>
@@ -167,20 +158,19 @@
                     </table>
                 </div>
 
-                <p class="text-[11px] text-[#826a5c] leading-relaxed">⚠️ طبق قوانین گالری، ارتقا به سطح VIP تنها برای مشتریان وفاداری که بیش از ۲ بار خرید موفق از مجموعه سما زرین داشته‌اند امکان‌پذیر است.</p>
+                <p class="text-[11px] text-[#bdf5f5] leading-relaxed">⚠️ طبق قوانین گالری، ارتقا به سطح VIP تنها برای مشتریان وفاداری که بیش از ۲ بار خرید موفق از مجموعه سما زرین داشته‌اند امکان‌پذیر است.</p>
                 
                 <div class="flex gap-3">
-                    <button onclick="activateVip()" class="flex-1 bg-gradient-to-r from-amber-500 to-amber-600 text-black text-xs font-bold py-3 rounded-xl hover:from-amber-600 hover:to-amber-700 cursor-pointer shadow-lg">👑 درخواست فعال‌سازی و ارتقای حساب</button>
+                    <button onclick="activateVip()" class="flex-1 bg-gradient-to-r from-[#d4af37] to-[#b89327] text-stone-950 text-xs font-bold py-3 rounded-xl shadow-lg">👑 درخواست فعال‌سازی و ارتقای حساب</button>
                     <button onclick="closeVipModal()" class="px-6 bg-black text-white text-xs py-3 rounded-xl hover:bg-stone-900 cursor-pointer">بستن</button>
                 </div>
             </div>
         </div>
 
-        <!-- مودال درباره ما -->
         <div id="about-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50">
-            <div class="bg-[#1a3331] border border-[#c5a880]/30 p-6 rounded-3xl max-w-md w-full text-right space-y-4 shadow-2xl">
-                <h3 class="text-lg font-medium text-[#c5a880]">درباره گالری سما زرین</h3>
-                <p class="text-xs text-stone-300 leading-relaxed">گالری سما زرین ارائه‌دهنده لوکس‌ترین و ظریف‌ترین طلاهای مینیمال ۱۸ عیار است.</p>
+            <div class="bg-[#053d3e] border border-[#d4af37]/30 p-6 rounded-3xl max-w-md w-full text-right space-y-4 shadow-2xl">
+                <h3 class="text-lg font-medium text-[#d4af37]">درباره گالری سما زرین</h3>
+                <p class="text-xs text-stone-200 leading-relaxed">گالری سما زرین ارائه‌دهنده لوکس‌ترین و ظریف‌ترین طلاهای مینیمال ۱۸ عیار است.</p>
                 <button onclick="closeAboutUs()" class="w-full bg-black text-white text-xs py-2.5 rounded-xl hover:bg-stone-900 cursor-pointer">بستن پنجره</button>
             </div>
         </div>
@@ -350,7 +340,7 @@
             });
 
             if (filteredProducts.length === 0) {
-                grid.innerHTML = `<p class="text-center text-xs text-stone-400 col-span-full py-12">طلا یا دسته‌بندی انتخاب شده خالی است.</p>`;
+                grid.innerHTML = `<p class="text-center text-xs text-stone-200 col-span-full py-12">طلا یا دسته‌بندی انتخاب شده خالی است.</p>`;
                 return;
             }
 
@@ -358,22 +348,22 @@
                 const finalPrice = calculateGoldPrice(p.weight, p.wagePercent, p.profitPercent, currentRate, isVip, p.discountPercent);
                 
                 const card = `
-                    <div class="bg-[#183533] rounded-3xl overflow-hidden shadow-xl border border-[#c5a880]/10 hover:border-[#c5a880]/30 transition-all group">
+                    <div class="bg-[#054344] rounded-3xl overflow-hidden shadow-xl border border-[#d4af37]/20 hover:border-[#d4af37]/50 transition-all group">
                         <div class="h-64 bg-stone-900 relative overflow-hidden">
                             <img src="${p.img || 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500'}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90">
                             <div class="absolute top-3 right-3 flex flex-col gap-1">
-                                <span class="bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full text-[11px] font-mono text-[#c5a880]">${p.weight.toFixed(2)} گرم</span>
+                                <span class="bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full text-[11px] font-mono text-[#d4af37]">${p.weight.toFixed(2)} گرم</span>
                                 ${p.discountPercent > 0 ? `<span class="bg-amber-600/90 text-white text-[9px] px-2 py-0.5 rounded-full text-center">%${p.discountPercent} تخفیف</span>` : ''}
                                 ${p.isStock ? '<span class="bg-emerald-600/90 text-white text-[9px] px-2 py-0.5 rounded-full text-center">موجود</span>' : ''}
                             </div>
                         </div>
                         <div class="p-5 text-right space-y-3">
-                            <h3 class="text-sm font-medium text-stone-200">${p.name}</h3>
-                            <div class="flex justify-between items-center bg-[#0d1e1d] p-2.5 rounded-xl border border-[#c5a880]/5">
-                                <span class="text-xs text-[#826a5c]">قیمت نهایی روز:</span>
-                                <span class="text-sm font-bold text-[#c5a880] font-mono">${formatPrice(finalPrice)}</span>
+                            <h3 class="text-sm font-medium text-stone-100">${p.name}</h3>
+                            <div class="flex justify-between items-center bg-[#032425] p-2.5 rounded-xl border border-[#d4af37]/10">
+                                <span class="text-xs text-[#bdf5f5]">قیمت نهایی روز:</span>
+                                <span class="text-sm font-bold text-[#d4af37] font-mono">${formatPrice(finalPrice)}</span>
                             </div>
-                            <a href="https://t.me/${MY_TELEGRAM_ID}?text=${encodeURIComponent('سلام، قصد سفارش محصول «' + p.name + '» را دارم.')}" target="_blank" class="block text-center w-full bg-black text-white py-2.5 rounded-xl text-xs font-medium hover:bg-stone-900 transition-colors shadow-md">🛍️ مشاوره و خرید مستقیم</a>
+                            <a href="https://t.me/${MY_TELEGRAM_ID}?text=${encodeURIComponent('سلام، قصد سفارش محصول «' + p.name + '» را دارم.')}" target="_blank" class="block text-center w-full bg-[#d4af37] text-stone-950 py-2.5 rounded-xl text-xs font-bold hover:bg-[#b89327] transition-colors shadow-md">🛍️ مشاوره و خرید مستقیم</a>
                             ${isAdmin ? `<button onclick="deleteProduct(${p.id})" class="w-full bg-rose-950/40 text-rose-400 text-xs py-1.5 rounded-xl mt-2 hover:bg-rose-900/50 transition-colors">🗑️ حذف کالا</button>` : ''}
                         </div>
                     </div>
@@ -386,7 +376,7 @@
             const session = localStorage.getItem('sama_user');
             if (session) {
                 const user = JSON.parse(session);
-                document.getElementById('main-body').className = "p-4 md:p-8 block bg-gradient-to-tr from-[#1b5350] via-[#123331] to-[#362d24]";
+                document.getElementById('main-body').className = "p-4 md:p-8 block bg-gradient-to-tr from-[#005a5b] via-[#0a8082] to-[#20a4a6]";
                 document.getElementById('auth-box').classList.add('hidden');
                 document.getElementById('main-panel').classList.remove('hidden');
                 document.getElementById('user-welcome').innerText = `✨ ${user.name} خوش آمدید`;
