@@ -5,51 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>گالری طلا و جواهر سما زرین | SAMA ZARRIN</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <style>
-        body { background-color: #fcfbf9; font-family: system-ui, -apple-system, sans-serif; }
-    </style>
 </head>
-<body id="main-body" class="p-4 md:p-8 flex items-center justify-center min-h-screen">
+<body id="main-body" class="p-4 md:p-8 flex items-center justify-center min-h-screen bg-gradient-to-tr from-[#143d3b] via-[#0d2322] to-[#261f18]">
 
     <!-- 🔐 بخش فرم ورود مشتری -->
-    <div id="auth-box" class="w-full max-w-sm bg-white p-8 rounded-3xl shadow-sm border border-stone-100">
-        <h1 class="text-center text-2xl font-light tracking-widest text-stone-800 mb-2 uppercase">SAMA ZARRIN</h1>
-        <p class="text-center text-xs text-stone-400 mb-6">گالری طلا و جواهرات مینیمال</p>
+    <div id="auth-box" class="w-full max-w-sm bg-[#162a29]/90 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-[#c5a880]/20">
+        <h1 class="text-center text-2xl font-light tracking-widest text-[#967969] mb-2 uppercase">SAMA ZARRIN</h1>
+        <p class="text-center text-xs text-[#826a5c] mb-6">گالری طلا و جواهرات مینیمال</p>
         
         <form onsubmit="saveUser(event)" class="space-y-4">
             <div>
-                <label class="text-xs text-stone-500 mr-1">نام و نام‌خانوادگی</label>
-                <input type="text" id="name" required class="w-full p-3.5 mt-1 rounded-xl bg-stone-50 border border-stone-200 text-sm">
+                <label class="text-xs text-[#967969] mr-1">نام و نام‌خانوادگی</label>
+                <input type="text" id="name" required class="w-full p-3.5 mt-1 rounded-xl bg-[#0d1f1e] border border-[#c5a880]/20 text-stone-200 text-sm focus:outline-none focus:border-[#c5a880]">
             </div>
             <div>
-                <label class="text-xs text-stone-500 mr-1">شماره همراه</label>
-                <input type="tel" id="phone" required class="w-full p-3.5 mt-1 rounded-xl bg-stone-50 border border-stone-200 text-sm text-center font-mono" placeholder="09xxxxxxxxx">
+                <label class="text-xs text-[#967969] mr-1">شماره همراه</label>
+                <input type="tel" id="phone" required class="w-full p-3.5 mt-1 rounded-xl bg-[#0d1f1e] border border-[#c5a880]/20 text-stone-200 text-sm text-center font-mono focus:outline-none focus:border-[#c5a880]" placeholder="09xxxxxxxxx">
             </div>
-            <button type="submit" id="submit-btn" class="w-full bg-stone-900 text-white py-3.5 rounded-xl text-sm font-medium mt-2 hover:bg-stone-800 transition-all cursor-pointer">ورود به گالری</button>
+            <!-- دکمه مشکی یکدست -->
+            <button type="submit" id="submit-btn" class="w-full bg-black text-white py-3.5 rounded-xl text-sm font-medium mt-2 hover:bg-stone-900 transition-all cursor-pointer shadow-lg">ورود به گالری</button>
         </form>
     </div>
 
     <!-- 🛍️ پنل اصلی سایت (ویترین طلا) -->
     <div id="main-panel" class="w-full max-w-5xl mx-auto hidden">
         <!-- هدر لوکس سایت -->
-        <header class="flex flex-col sm:flex-row justify-between items-center pb-6 border-b border-stone-200/60 mb-8 gap-4">
+        <header class="flex flex-col sm:flex-row justify-between items-center pb-6 border-b border-[#c5a880]/20 mb-8 gap-4">
             <div class="text-right">
-                <h1 class="text-3xl font-light tracking-widest text-stone-900 uppercase">SAMA ZARRIN</h1>
-                <p id="user-welcome" class="text-xs text-stone-500 mt-1"></p>
+                <h1 class="text-3xl font-light tracking-widest text-[#967969] uppercase">SAMA ZARRIN</h1>
+                <p id="user-welcome" class="text-xs text-[#826a5c] mt-1"></p>
             </div>
             
             <!-- ماشین حساب/تنظیم نرخ طلا توسط شما -->
-            <div class="bg-amber-50/60 border border-amber-200/50 rounded-2xl p-3.5 flex items-center gap-3">
+            <div class="bg-[#1c3331] border border-[#c5a880]/30 rounded-2xl p-3.5 flex items-center gap-3 shadow-md">
                 <div class="text-right">
-                    <label class="block text-[10px] font-bold text-amber-800 mb-1">نرخ امروز ۱ گرم طلای ۱۸ عیار (تومان):</label>
-                    <input type="number" id="gold-rate-input" oninput="updateAllPrices()" value="4500000" class="bg-white px-3 py-1.5 rounded-xl border border-amber-200 text-sm font-mono text-center text-amber-900 w-36 focus:outline-none focus:ring-1 focus:ring-amber-400">
+                    <label class="block text-[10px] font-bold text-[#967969] mb-1">نرخ امروز ۱ گرم طلای ۱۸ عیار (تومان):</label>
+                    <input type="text" id="gold-rate-input" oninput="handleGoldRateChange(this)" value="16,135,500" class="bg-[#0d1f1e] text-[#c5a880] px-3 py-1.5 rounded-xl border border-[#c5a880]/20 text-sm font-mono text-center w-44 focus:outline-none focus:ring-1 focus:ring-[#c5a880]" dir="ltr">
                 </div>
             </div>
         </header>
 
         <!-- بخش ویترین محصولات -->
-        <h2 class="text-lg font-light text-stone-800 mb-6 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-amber-500"></span> ✨ جدیدترین مجموعه‌های مینیمال سما زرین
+        <h2 class="text-lg font-light text-[#967969] mb-6 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-[#c5a880]"></span> ✨ جدیدترین مجموعه‌های مینیمال سما زرین
         </h2>
         
         <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -61,7 +59,7 @@
         // تنظیمات ربات تلگرام و آیدی مدیریتی شما
         const BOT_TOKEN = "8940936882:AAG2OeXFfOsOwMPEuwhRHxfef9iBK68q3IU";
         const ADMIN_CHAT_ID = "6850239276"; 
-        const MY_TELEGRAM_ID = "sama_zarinn"; // آیدی جدید شما برای سفارش‌ها
+        const MY_TELEGRAM_ID = "sama_zarinn"; 
 
         // دیتابیس محصولات نمونه
         const products = [
@@ -82,8 +80,17 @@
             return price.toLocaleString('fa-IR') + " تومان";
         }
 
+        function handleGoldRateChange(input) {
+            let value = input.value.replace(/[^0-9]/g, '');
+            if (value === "") value = "0";
+            
+            input.value = parseInt(value).toLocaleString('en-US');
+            updateAllPrices();
+        }
+
         function updateAllPrices() {
-            const currentRate = parseFloat(document.getElementById('gold-rate-input').value) || 0;
+            const rawRate = document.getElementById('gold-rate-input').value.replace(/[^0-9]/g, '');
+            const currentRate = parseFloat(rawRate) || 0;
             const grid = document.getElementById('products-grid');
             grid.innerHTML = "";
 
@@ -91,21 +98,21 @@
                 const finalPrice = calculateGoldPrice(p.weight, p.wagePercent, p.profitPercent, currentRate);
                 
                 const card = `
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-stone-100 hover:shadow-md transition-all group">
-                        <div class="h-64 bg-stone-100 relative overflow-hidden">
-                            <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[11px] font-mono text-stone-700">
+                    <div class="bg-[#122423] rounded-3xl overflow-hidden shadow-xl border border-[#c5a880]/10 hover:border-[#c5a880]/30 transition-all group">
+                        <div class="h-64 bg-stone-900 relative overflow-hidden">
+                            <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90">
+                            <span class="absolute top-3 right-3 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full text-[11px] font-mono text-[#c5a880]">
                                 ${p.weight.toFixed(2)} گرم
                             </span>
                         </div>
                         <div class="p-5 text-right space-y-3">
-                            <h3 class="text-sm font-medium text-stone-800">${p.name}</h3>
-                            <div class="flex justify-between items-center bg-stone-50 p-2.5 rounded-xl">
-                                <span class="text-xs text-stone-400">قیمت نهایی روز:</span>
-                                <span class="text-sm font-bold text-amber-600 font-mono">${formatPrice(finalPrice)}</span>
+                            <h3 class="text-sm font-medium text-stone-200">${p.name}</h3>
+                            <div class="flex justify-between items-center bg-[#0d1e1d] p-2.5 rounded-xl border border-[#c5a880]/5">
+                                <span class="text-xs text-[#826a5c]">قیمت نهایی روز:</span>
+                                <span class="text-sm font-bold text-[#c5a880] font-mono">${formatPrice(finalPrice)}</span>
                             </div>
-                            <!-- لینک آپدیت شده به آیدی جدید تلگرام شما -->
-                            <a href="https://t.me/${MY_TELEGRAM_ID}?text=${encodeURIComponent('سلام، قصد سفارش محصول «' + p.name + '» را دارم.')}" target="_blank" class="block text-center w-full bg-stone-900 text-white py-2.5 rounded-xl text-xs font-medium hover:bg-amber-600 transition-colors">
+                            <!-- دکمه مشکی یکدست سفارش تلگرام -->
+                            <a href="https://t.me/${MY_TELEGRAM_ID}?text=${encodeURIComponent('سلام، قصد سفارش محصول «' + p.name + '» را دارم.')}" target="_blank" class="block text-center w-full bg-black text-white py-2.5 rounded-xl text-xs font-medium hover:bg-stone-900 transition-colors shadow-md">
                                 🛍️ مشاوره و خرید مستقیم در تلگرام
                             </a>
                         </div>
@@ -147,7 +154,7 @@
             const session = localStorage.getItem('sama_user');
             if (session) {
                 const user = JSON.parse(session);
-                document.getElementById('main-body').className = "p-4 md:p-8 block bg-[#fcfbf9]";
+                document.getElementById('main-body').className = "p-4 md:p-8 block bg-gradient-to-tr from-[#143d3b] via-[#0d2322] to-[#261f18]";
                 document.getElementById('auth-box').classList.add('hidden');
                 document.getElementById('main-panel').classList.remove('hidden');
                 document.getElementById('user-welcome').innerText = `✨ خوش آمدید، ${user.name} عزیز`;
