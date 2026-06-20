@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ورود به پنل مدیریت | گالری سما زرین</title>
+    <title>گالری طلا و جواهر سما زرین | SAMA ZARRIN</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         body { 
@@ -13,41 +13,57 @@
         }
     </style>
 </head>
-<body class="p-4 md:p-8 flex items-center justify-center min-h-screen">
+<body class="p-4 md:p-8 flex items-center justify-center min-h-screen" id="body-layout">
 
-    <!-- 🔐 بخش اول: صفحه لاگین اختصاصی در داخل سایت -->
-    <div id="login-section" class="w-full max-w-md mx-auto bg-white p-8 rounded-3xl shadow-md border border-stone-100 transition-all duration-300">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-light tracking-widest text-stone-800 uppercase">SAMA ZARRIN</h1>
-            <p class="text-xs text-stone-400 mt-2 tracking-wide">ورود امن به پنل مدیریت گالری</p>
-        </div>
+    <div id="auth-section" class="w-full max-w-md mx-auto bg-white p-8 rounded-3xl shadow-md border border-stone-100">
         
+        <div class="flex justify-center gap-6 mb-8 border-b pb-3 border-stone-100">
+            <button onclick="switchTab('login')" id="tab-login" class="text-sm font-semibold text-stone-900 border-b-2 border-stone-900 pb-2 px-2 cursor-pointer">ورود مشتری</button>
+            <button onclick="switchTab('signup')" id="tab-signup" class="text-sm font-medium text-stone-400 pb-2 px-2 cursor-pointer">ثبت‌نام مشتری جدید</button>
+        </div>
+
         <form id="login-form" class="space-y-5" onsubmit="handleLogin(event)">
-            <div>
-                <label class="block text-xs font-medium text-stone-500 mb-1.5 mr-1">09111543422</label>
-                <input type="tel" id="admin-phone" class="w-full bg-stone-50 p-3.5 rounded-xl text-stone-800 border border-stone-200 focus:outline-none focus:border-stone-500 text-sm tracking-widest text-center font-mono" placeholder="0912XXXXXXX" required>
+            <div class="text-center mb-4">
+                <h1 class="text-2xl font-light tracking-widest text-stone-800 uppercase">SAMA ZARRIN</h1>
+                <p class="text-xs text-stone-400 mt-1">ورود به گالری دیجیتال سما زرین</p>
             </div>
             <div>
-                <label class="block text-xs font-medium text-stone-500 mb-1.5 mr-1">211820sk</label>
-                <input type="password" id="admin-password" class="w-full bg-stone-50 p-3.5 rounded-xl text-stone-800 border border-stone-200 focus:outline-none focus:border-stone-500 text-sm text-center font-mono" placeholder="••••••••" required>
+                <label class="block text-xs font-medium text-stone-500 mb-1.5 mr-1">شماره تلفن همراه</label>
+                <input type="tel" id="user-phone" class="w-full bg-stone-50 p-3.5 rounded-xl text-stone-800 border border-stone-200 focus:outline-none focus:border-stone-500 text-sm text-center font-mono" placeholder="09XXXXXXXXX" required>
             </div>
-            
-            <button type="submit" class="w-full bg-stone-900 text-white font-medium py-3.5 rounded-xl hover:bg-stone-800 transition-colors text-sm shadow-sm mt-2">
-                ورود به سیستم
-            </button>
+            <div>
+                <label class="block text-xs font-medium text-stone-500 mb-1.5 mr-1">رمز عبور</label>
+                <input type="password" id="user-password" class="w-full bg-stone-50 p-3.5 rounded-xl text-stone-800 border border-stone-200 focus:outline-none focus:border-stone-500 text-sm text-center font-mono" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="w-full bg-stone-900 text-white font-medium py-3.5 rounded-xl hover:bg-stone-800 transition-colors text-sm shadow-sm">ورود به گالری</button>
+        </form>
+
+        <form id="signup-form" class="space-y-5 hidden" onsubmit="handleSignUp(event)">
+            <div class="text-center mb-4">
+                <h1 class="text-2xl font-light tracking-widest text-stone-800 uppercase">SAMA ZARRIN</h1>
+                <p class="text-xs text-stone-400 mt-1">ایجاد حساب کاربری مشتری</p>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-stone-500 mb-1.5 mr-1">نام و نام‌خانوادگی</label>
+                <input type="text" id="new-name" class="w-full bg-stone-50 p-3.5 rounded-xl text-stone-800 border border-stone-200 focus:outline-none focus:border-stone-500 text-sm px-4" placeholder="مثال: رضا احمدی" required>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-stone-500 mb-1.5 mr-1">شماره تلفن همراه</label>
+                <input type="tel" id="new-phone" class="w-full bg-stone-50 p-3.5 rounded-xl text-stone-800 border border-stone-200 focus:outline-none focus:border-stone-500 text-sm text-center font-mono" placeholder="09XXXXXXXXX" required>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-stone-500 mb-1.5 mr-1">تعیین رمز عبور</label>
+                <input type="password" id="new-password" class="w-full bg-stone-50 p-3.5 rounded-xl text-stone-800 border border-stone-200 focus:outline-none focus:border-stone-500 text-sm text-center font-mono" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="w-full bg-emerald-600 text-white font-medium py-3.5 rounded-xl hover:bg-emerald-700 transition-colors text-sm shadow-sm">عضویت در باشگاه مشتریان</button>
         </form>
     </div>
 
-    <!-- 🖥️ بخش دوم: پنل مدیریت اصلی (این بخش در ابتدا مخفی (hidden) است) -->
     <div id="main-panel" class="w-full max-w-6xl mx-auto hidden transition-all duration-300">
-        <!-- هدر پنل -->
         <header class="text-center mb-8 border-b pb-6 border-gray-200 relative">
-            <button onclick="handleLogout()" class="absolute left-0 top-0 text-xs bg-stone-100 hover:bg-stone-200 text-stone-600 px-3 py-2 rounded-xl transition-colors">
-                خروج از پنل
-            </button>
+            <button onclick="handleLogout()" class="absolute left-0 top-0 text-xs bg-stone-100 hover:bg-stone-200 text-stone-600 px-3 py-2 rounded-xl transition-colors">خروج</button>
             <h1 class="text-3xl font-light tracking-wide text-stone-800 uppercase">SAMA ZARRIN</h1>
-            <p class="text-xs text-stone-500 mt-1 tracking-widest">سامانه مدیریت قیمت ثانیه‌ای طلا</p>
-            
+            <p id="user-welcome" class="text-xs text-stone-500 mt-1 tracking-widest">خوش آمدید</p>
             <div class="mt-4 px-4 py-1.5 bg-white shadow-sm rounded-full inline-flex items-center gap-2 border border-gray-100 text-sm text-stone-600">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                 <span>نرخ زنده طلای ۱۸ عیار بازار:</span> 
@@ -55,10 +71,9 @@
             </div>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-            <!-- فرم ثبت محصول -->
+        <div id="admin-tools-section" class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 hidden">
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 lg:col-span-2">
-                <h2 class="text-lg font-medium mb-5 text-stone-800 border-b pb-2 border-gray-50">➕ ثبت طلا جدید</h2>
+                <h2 class="text-lg font-medium mb-5 text-stone-800 border-b pb-2 border-gray-50">🛠️ میز کار مدیریت | ثبت طلا جدید</h2>
                 <form id="gold-form" class="space-y-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
@@ -73,7 +88,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
                             <label class="block text-xs font-medium text-stone-500 mb-1">وزن (گرم)</label>
@@ -84,14 +98,13 @@
                             <input type="number" id="wage" class="w-full bg-stone-50 p-3 rounded-xl text-stone-800 border border-stone-200 focus:outline-none focus:border-stone-400 text-sm" placeholder="18" required>
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-stone-500 mb-1">سود شما (٪)</label>
+                            <label class="block text-xs font-medium text-stone-500 mb-1">سود گالری (٪)</label>
                             <input type="number" id="profit-rate" class="w-full bg-stone-50 p-3 rounded-xl text-stone-800 border border-stone-200 focus:outline-none focus:border-stone-400 text-sm" value="7" required>
                         </div>
                     </div>
-
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-medium text-stone-500 mb-1">مالیات بازار (٪)</label>
+                            <label class="block text-xs font-medium text-stone-500 mb-1">مالیات (٪)</label>
                             <input type="number" id="tax-rate" class="w-full bg-stone-50 p-3 rounded-xl text-stone-800 border border-stone-200 focus:outline-none focus:border-stone-400 text-sm" value="9" required>
                         </div>
                         <div>
@@ -99,29 +112,23 @@
                             <input type="file" id="image" accept="image/*" class="w-full text-xs text-stone-500 pt-2">
                         </div>
                     </div>
-
-                    <button type="button" onclick="addProduct()" class="w-full bg-stone-900 text-white font-medium py-3 rounded-xl hover:bg-stone-800 transition text-sm shadow-sm">ثبت کالا در لیست</button>
+                    <button type="button" onclick="addProduct()" class="w-full bg-stone-900 text-white font-medium py-3 rounded-xl hover:bg-stone-800 transition-colors text-sm shadow-sm">افزودن مستقیم به ویترین سایت</button>
                 </form>
             </div>
-
-            <!-- پیش‌نمایش فاکتور -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between">
-                <div>
-                    <h2 class="text-lg font-medium mb-5 text-stone-400 border-b pb-2 border-gray-50">👀 ویترین مغازه</h2>
-                    <div class="border border-stone-100 rounded-2xl p-4 bg-stone-50/50 text-center">
-                        <div id="preview-img-container" class="w-full h-36 bg-stone-100 rounded-xl mb-4 flex items-center justify-center text-xs text-stone-400">تصویر کالا</div>
-                        <h3 id="preview-title" class="text-base font-medium text-stone-800">نام کالا</h3>
-                        <p class="text-xs text-stone-500 mt-1">وزن: <span id="preview-weight">۰</span> گرم</p>
-                    </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <h2 class="text-lg font-medium mb-5 text-stone-400 border-b pb-2 border-gray-50">👀 پیش‌نمایش فاکتور</h2>
+                <div class="border border-stone-100 rounded-2xl p-4 bg-stone-50/50 text-center">
+                    <div id="preview-img-container" class="w-full h-36 bg-stone-100 rounded-xl mb-4 flex items-center justify-center text-xs text-stone-400">تصویر کالا</div>
+                    <h3 id="preview-title" class="text-base font-medium text-stone-800">نام کالا</h3>
+                    <p class="text-xs text-stone-500 mt-1">وزن: <span id="preview-weight">۰</span> گرم</p>
                 </div>
             </div>
         </div>
 
-        <!-- لیست طلاها با دکمه سه نقطه حذف -->
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h2 class="text-lg font-medium mb-5 text-stone-800 border-b pb-2 border-gray-50">📦 محصولات موجود در سیستم (<span id="total-count">۰</span>)</h2>
+            <h2 class="text-lg font-medium mb-5 text-stone-800 border-b pb-2 border-gray-50">✨ ویترین طلا و جواهرات سما زرین (<span id="total-count">۰</span>)</h2>
             <div id="products-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <p class="text-sm text-stone-400 text-center col-span-full py-4">هنوز هیچ طلایی اضافه نکرده‌اید.</p>
+                <p class="text-sm text-stone-400 text-center col-span-full py-4">در حال حاضر طلایی در ویترین موجود نیست.</p>
             </div>
         </div>
     </div>
@@ -129,37 +136,90 @@
     <script>
         let currentGoldPrice = 16200000; 
         let myProducts = []; 
+        let isAdminLoggedIn = false; // وضعیت مدیر بودن کاربر فعلی
 
-        // 🔐 مشخصات ورود به سایت (می‌توانی این دو عدد را تغییر دهی)
-        const ADMIN_PHONE = "09121234567"; 
-        const ADMIN_PASS = "123456";        
+        // حساب کاربری ثابت مدیریت (شما)
+        const ADMIN_PHONE = "09111543422";
+        const ADMIN_PASS = "211820sks";
 
-        // تابع مدیریت فرم لاگین سایت
+        // دیتابیس مشتریان در حافظه مرورگر
+        let customersDatabase = JSON.parse(localStorage.getItem('sama_customers')) || {};
+
+        function switchTab(type) {
+            if(type === 'login') {
+                document.getElementById('login-form').classList.remove('hidden');
+                document.getElementById('signup-form').classList.add('hidden');
+                document.getElementById('tab-login').className = "text-sm font-semibold text-stone-900 border-b-2 border-stone-900 pb-2 px-2 cursor-pointer";
+                document.getElementById('tab-signup').className = "text-sm font-medium text-stone-400 pb-2 px-2 cursor-pointer";
+            } else {
+                document.getElementById('login-form').classList.add('hidden');
+                document.getElementById('signup-form').classList.remove('hidden');
+                document.getElementById('tab-signup').className = "text-sm font-semibold text-stone-900 border-b-2 border-stone-900 pb-2 px-2 cursor-pointer";
+                document.getElementById('tab-login').className = "text-sm font-medium text-stone-400 pb-2 px-2 cursor-pointer";
+            }
+        }
+
+        // ثبت‌نام مشتری جدید
+        function handleSignUp(e) {
+            e.preventDefault();
+            const phone = document.getElementById('new-phone').value.trim();
+            const pass = document.getElementById('new-password').value.trim();
+            const name = document.getElementById('new-name').value.trim();
+
+            if(phone === ADMIN_PHONE || customersDatabase[phone]) {
+                alert("❌ این شماره تلفن قبلاً ثبت شده است یا متعلق به مدیریت است!");
+                return;
+            }
+
+            customersDatabase[phone] = { password: pass, name: name };
+            localStorage.setItem('sama_customers', JSON.stringify(customersDatabase));
+            
+            alert(`🎉 حساب مشتری با نام (${name}) با موفقیت ساخته شد. حالا وارد شوید.`);
+            document.getElementById('signup-form').reset();
+            switchTab('login');
+        }
+
+        // ورود هوشمند (تشخیص مشتری یا مدیر)
         function handleLogin(e) {
             e.preventDefault();
-            const phone = document.getElementById('admin-phone').value;
-            const pass = document.getElementById('admin-password').value;
+            const phone = document.getElementById('user-phone').value.trim();
+            const pass = document.getElementById('user-password').value.trim();
 
+            // بررسی اینکه آیا شخص خودِ شما (مدیر) هستید؟
             if (phone === ADMIN_PHONE && pass === ADMIN_PASS) {
-                // مخفی کردن فرم ورود و نشان دادن پنل طلاها
-                document.getElementById('login-section').style.display = 'none';
-                document.getElementById('main-panel').classList.remove('hidden');
-                document.body.classList.remove('flex', 'items-center', 'justify-center', 'min-h-screen');
-                document.body.classList.add('block');
+                isAdminLoggedIn = true;
+                document.getElementById('user-welcome').innerText = "👑 پنل مدیریت اصلی گالری سما زرین";
+                document.getElementById('admin-tools-section').classList.remove('hidden'); // نمایش ابزار ثبت طلا
+                enterApp();
+                return;
+            }
+
+            // بررسی ورود مشتری عادی
+            if (customersDatabase[phone] && customersDatabase[phone].password === pass) {
+                isAdminLoggedIn = false;
+                document.getElementById('user-welcome').innerText = `✨ مشتری گرامی، ${customersDatabase[phone].name} خوش آمدید`;
+                document.getElementById('admin-tools-section').classList.add('hidden'); // پنهان کردن ابزار مدیریت از مشتری
+                enterApp();
             } else {
                 alert("❌ شماره تلفن یا رمز ورود اشتباه است!");
             }
         }
 
-        // تابع خروج
-        function handleLogout() {
-            document.getElementById('main-panel').classList.add('hidden');
-            document.getElementById('login-section').style.display = 'block';
-            document.body.classList.add('flex', 'items-center', 'justify-center', 'min-h-screen');
-            document.getElementById('login-form').reset();
+        function enterApp() {
+            document.getElementById('auth-section').style.display = 'none';
+            document.getElementById('main-panel').classList.remove('hidden');
+            document.getElementById('body-layout').className = "p-4 md:p-8 block bg-[#f4f4f6]";
+            renderProducts();
         }
 
-        // نوسان قیمت آنلاین
+        function handleLogout() {
+            document.getElementById('main-panel').classList.add('hidden');
+            document.getElementById('auth-section').style.display = 'block';
+            document.getElementById('body-layout').className = "p-4 md:p-8 flex items-center justify-center min-h-screen bg-[#f4f4f6]";
+            document.getElementById('login-form').reset();
+            isAdminLoggedIn = false;
+        }
+
         async function fetchLivePrice() {
             const randomFluctuation = (Math.random() - 0.5) * 20000; 
             currentGoldPrice = Math.round(16200000 + randomFluctuation);
@@ -181,16 +241,7 @@
                 return;
             }
 
-            const newProduct = {
-                id: Date.now(), 
-                title: title,
-                karat: karat,
-                weight: weight,
-                wage: wage,
-                profit: profit,
-                tax: tax
-            };
-
+            const newProduct = { id: Date.now(), title, karat, weight, wage, profit, tax };
             myProducts.push(newProduct);
             renderProducts(); 
             document.getElementById('gold-form').reset();
@@ -199,13 +250,12 @@
         }
 
         function deleteProduct(id) {
-            myProducts = myProducts.filter(product => product.id !== id);
+            myProducts = myProducts.filter(p => p.id !== id);
             renderProducts(); 
         }
 
         function toggleMenu(id) {
-            const menu = document.getElementById(`menu-${id}`);
-            menu.classList.toggle('hidden');
+            document.getElementById(`menu-${id}`).classList.toggle('hidden');
         }
 
         function renderProducts() {
@@ -213,12 +263,11 @@
             document.getElementById('total-count').innerText = myProducts.length;
 
             if(myProducts.length === 0) {
-                listContainer.innerHTML = `<p class="text-sm text-stone-400 text-center col-span-full py-4">هنوز هیچ طلایی اضافه نکرده‌اید.</p>`;
+                listContainer.innerHTML = `<p class="text-sm text-stone-400 text-center col-span-full py-4">در حال حاضر طلایی در ویترین موجود نیست.</p>`;
                 return;
             }
 
             listContainer.innerHTML = ''; 
-
             myProducts.forEach(prod => {
                 const karatMultiplier = prod.karat === 24 ? (24 / 18) : 1;
                 const rawPrice = prod.weight * (currentGoldPrice * karatMultiplier);
@@ -228,24 +277,25 @@
                 const taxAmount = (priceWithWage + profitAmount) * (prod.tax / 100);
                 const finalPrice = Math.round(priceWithWage + profitAmount + taxAmount);
 
+                // دکمه مدیریت سه نقطه فقط اگر ادمین لاگین باشد ساخته می‌شود
+                const adminMenuHtml = isAdminLoggedIn ? `
+                    <div class="relative">
+                        <button onclick="toggleMenu(${prod.id})" class="text-stone-400 hover:text-stone-700 px-2 py-0.5 rounded-full font-bold">•••</button>
+                        <div id="menu-${prod.id}" class="hidden absolute left-0 top-6 w-24 bg-white border border-gray-100 rounded-lg shadow-md z-10 py-1">
+                            <button onclick="deleteProduct(${prod.id})" class="w-full text-right px-3 py-1.5 text-xs text-rose-600 hover:bg-rose-50 transition-colors">🗑️ حذف</button>
+                        </div>
+                    </div>
+                ` : '';
+
                 listContainer.innerHTML += `
-                    <div class="border border-stone-100 rounded-xl p-4 bg-stone-50/50 flex flex-col justify-between relative bg-white">
+                    <div class="border border-stone-100 rounded-xl p-4 flex flex-col justify-between relative bg-white shadow-sm">
                         <div>
                             <div class="flex justify-between items-start">
                                 <h3 class="font-medium text-stone-900 text-sm max-w-[80%]">${prod.title}</h3>
-                                <div class="relative">
-                                    <button onclick="toggleMenu(${prod.id})" class="text-stone-400 hover:text-stone-700 px-2 py-0.5 rounded-full font-bold">
-                                        •••
-                                    </button>
-                                    <div id="menu-${prod.id}" class="hidden absolute left-0 top-6 w-24 bg-white border border-gray-100 rounded-lg shadow-md z-10 py-1">
-                                        <button onclick="deleteProduct(${prod.id})" class="w-full text-right px-3 py-1.5 text-xs text-rose-600 hover:bg-rose-50 transition-colors">
-                                            🗑️ حذف
-                                        </button>
-                                    </div>
-                                </div>
+                                ${adminMenuHtml}
                             </div>
                             <p class="text-xs text-stone-500 mt-2">وزن: ${prod.weight} گرم | عیار: ${prod.karat}</p>
-                            <p class="text-[11px] text-stone-400">اجرت: ${prod.wage}٪ | سود: ${prod.profit}٪</p>
+                            <p class="text-[11px] text-stone-400">اجرت: ${prod.wage}٪</p>
                             <p class="text-sm font-semibold text-stone-800 mt-3">${finalPrice.toLocaleString('fa-IR')} <span class="text-xs font-normal text-stone-500">تومان</span></p>
                         </div>
                     </div>
