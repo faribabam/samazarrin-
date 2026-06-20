@@ -3,43 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پنل مدیریت حرفه‌ای سما زرین | Sama Zarrin</title>
+    <title>ورود به پنل مدیریت | گالری سما زرین</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         body { 
-            background-color: #f8f9fa; 
+            background-color: #f4f4f6; 
             color: #212529; 
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
         }
     </style>
 </head>
-<body class="p-4 md:p-8 bg-[#f4f4f6]">
+<body class="p-4 md:p-8 flex items-center justify-center min-h-screen">
 
-    <div class="max-w-6xl mx-auto">
-        <header class="text-center mb-8 border-b pb-6 border-gray-200">
+    <!-- 🔐 بخش اول: صفحه لاگین اختصاصی در داخل سایت -->
+    <div id="login-section" class="w-full max-w-md mx-auto bg-white p-8 rounded-3xl shadow-md border border-stone-100 transition-all duration-300">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-light tracking-widest text-stone-800 uppercase">SAMA ZARRIN</h1>
+            <p class="text-xs text-stone-400 mt-2 tracking-wide">ورود امن به پنل مدیریت گالری</p>
+        </div>
+        
+        <form id="login-form" class="space-y-5" onsubmit="handleLogin(event)">
+            <div>
+                <label class="block text-xs font-medium text-stone-500 mb-1.5 mr-1">شماره تلفن مدیریت</label>
+                <input type="tel" id="admin-phone" class="w-full bg-stone-50 p-3.5 rounded-xl text-stone-800 border border-stone-200 focus:outline-none focus:border-stone-500 text-sm tracking-widest text-center font-mono" placeholder="0912XXXXXXX" required>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-stone-500 mb-1.5 mr-1">رمز عبور پنل</label>
+                <input type="password" id="admin-password" class="w-full bg-stone-50 p-3.5 rounded-xl text-stone-800 border border-stone-200 focus:outline-none focus:border-stone-500 text-sm text-center font-mono" placeholder="••••••••" required>
+            </div>
+            
+            <button type="submit" class="w-full bg-stone-900 text-white font-medium py-3.5 rounded-xl hover:bg-stone-800 transition-colors text-sm shadow-sm mt-2">
+                ورود به سیستم
+            </button>
+        </form>
+    </div>
+
+    <!-- 🖥️ بخش دوم: پنل مدیریت اصلی (این بخش در ابتدا مخفی (hidden) است) -->
+    <div id="main-panel" class="w-full max-w-6xl mx-auto hidden transition-all duration-300">
+        <!-- هدر پنل -->
+        <header class="text-center mb-8 border-b pb-6 border-gray-200 relative">
+            <button onclick="handleLogout()" class="absolute left-0 top-0 text-xs bg-stone-100 hover:bg-stone-200 text-stone-600 px-3 py-2 rounded-xl transition-colors">
+                خروج از پنل
+            </button>
             <h1 class="text-3xl font-light tracking-wide text-stone-800 uppercase">SAMA ZARRIN</h1>
-            <p class="text-xs text-stone-500 mt-1 tracking-widest">پنل پیشرفته با قابلیت شخصی‌سازی عیار، سود و مالیات</p>
+            <p class="text-xs text-stone-500 mt-1 tracking-widest">سامانه مدیریت قیمت ثانیه‌ای طلا</p>
+            
             <div class="mt-4 px-4 py-1.5 bg-white shadow-sm rounded-full inline-flex items-center gap-2 border border-gray-100 text-sm text-stone-600">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span>نرخ مبنای طلای ۱۸ عیار بازار:</span> 
+                <span>نرخ زنده طلای ۱۸ عیار بازار:</span> 
                 <span id="live-gold-rate" class="font-bold text-stone-800">۱۶,۲۰۰,۰۰۰</span> تومان
             </div>
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- فرم ثبت محصول -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 lg:col-span-2">
-                <h2 class="text-lg font-medium mb-5 text-stone-800 border-b pb-2 border-gray-50">➕ ثبت طلا با مشخصات دلخواه</h2>
+                <h2 class="text-lg font-medium mb-5 text-stone-800 border-b pb-2 border-gray-50">➕ ثبت طلا جدید</h2>
                 <form id="gold-form" class="space-y-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-medium text-stone-500 mb-1">نام جواهر</label>
-                            <input type="text" id="title" class="w-full bg-stone-50 p-3 rounded-xl text-stone-800 border border-stone-200 focus:outline-none focus:border-stone-400 text-sm" placeholder="مثال: النگو آینه ای سما" required>
+                            <input type="text" id="title" class="w-full bg-stone-50 p-3 rounded-xl text-stone-800 border border-stone-200 focus:outline-none focus:border-stone-400 text-sm" placeholder="مثال: مدال ونکلیف سما" required>
                         </div>
                         <div>
                             <label class="block text-xs font-medium text-stone-500 mb-1">عیار طلا</label>
                             <select id="gold-karat" class="w-full bg-stone-50 p-3 rounded-xl text-stone-800 border border-stone-200 focus:outline-none focus:border-stone-400 text-sm">
                                 <option value="18">۱۸ عیار (۷۵۰)</option>
-                                <option value="24">۲۴ عیار (شمش / سکه)</option>
+                                <option value="24">۲۴ عیار (شمش)</option>
                             </select>
                         </div>
                     </div>
@@ -54,14 +84,14 @@
                             <input type="number" id="wage" class="w-full bg-stone-50 p-3 rounded-xl text-stone-800 border border-stone-200 focus:outline-none focus:border-stone-400 text-sm" placeholder="18" required>
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-stone-500 mb-1">سود گالری (٪)</label>
+                            <label class="block text-xs font-medium text-stone-500 mb-1">سود شما (٪)</label>
                             <input type="number" id="profit-rate" class="w-full bg-stone-50 p-3 rounded-xl text-stone-800 border border-stone-200 focus:outline-none focus:border-stone-400 text-sm" value="7" required>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-medium text-stone-500 mb-1">مالیات بر ارزش افزوده (٪)</label>
+                            <label class="block text-xs font-medium text-stone-500 mb-1">مالیات بازار (٪)</label>
                             <input type="number" id="tax-rate" class="w-full bg-stone-50 p-3 rounded-xl text-stone-800 border border-stone-200 focus:outline-none focus:border-stone-400 text-sm" value="9" required>
                         </div>
                         <div>
@@ -70,24 +100,26 @@
                         </div>
                     </div>
 
-                    <button type="button" onclick="addProduct()" class="w-full bg-stone-900 text-white font-medium py-3 rounded-xl hover:bg-stone-800 transition text-sm shadow-sm">ثبت و محاسبه سفارشی</button>
+                    <button type="button" onclick="addProduct()" class="w-full bg-stone-900 text-white font-medium py-3 rounded-xl hover:bg-stone-800 transition text-sm shadow-sm">ثبت کالا در لیست</button>
                 </form>
             </div>
 
+            <!-- پیش‌نمایش فاکتور -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between">
                 <div>
-                    <h2 class="text-lg font-medium mb-5 text-stone-400 border-b pb-2 border-gray-50">👀 فاکتور مشتری</h2>
+                    <h2 class="text-lg font-medium mb-5 text-stone-400 border-b pb-2 border-gray-50">👀 ویترین مغازه</h2>
                     <div class="border border-stone-100 rounded-2xl p-4 bg-stone-50/50 text-center">
                         <div id="preview-img-container" class="w-full h-36 bg-stone-100 rounded-xl mb-4 flex items-center justify-center text-xs text-stone-400">تصویر کالا</div>
                         <h3 id="preview-title" class="text-base font-medium text-stone-800">نام کالا</h3>
-                        <p class="text-xs text-stone-500 mt-1">وزن: <span id="preview-weight">۰</span> گرم | عیار: <span id="preview-karat">۱۸</span></p>
+                        <p class="text-xs text-stone-500 mt-1">وزن: <span id="preview-weight">۰</span> گرم</p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- لیست طلاها با دکمه سه نقطه حذف -->
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h2 class="text-lg font-medium mb-5 text-stone-800 border-b pb-2 border-gray-50">📦 لیست طلاهای Sama Zarrin (<span id="total-count">۰</span>)</h2>
+            <h2 class="text-lg font-medium mb-5 text-stone-800 border-b pb-2 border-gray-50">📦 محصولات موجود در سیستم (<span id="total-count">۰</span>)</h2>
             <div id="products-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 <p class="text-sm text-stone-400 text-center col-span-full py-4">هنوز هیچ طلایی اضافه نکرده‌اید.</p>
             </div>
@@ -98,6 +130,36 @@
         let currentGoldPrice = 16200000; 
         let myProducts = []; 
 
+        // 🔐 مشخصات ورود به سایت (می‌توانی این دو عدد را تغییر دهی)
+        const ADMIN_PHONE = "09121234567"; 
+        const ADMIN_PASS = "123456";        
+
+        // تابع مدیریت فرم لاگین سایت
+        function handleLogin(e) {
+            e.preventDefault();
+            const phone = document.getElementById('admin-phone').value;
+            const pass = document.getElementById('admin-password').value;
+
+            if (phone === ADMIN_PHONE && pass === ADMIN_PASS) {
+                // مخفی کردن فرم ورود و نشان دادن پنل طلاها
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('main-panel').classList.remove('hidden');
+                document.body.classList.remove('flex', 'items-center', 'justify-center', 'min-h-screen');
+                document.body.classList.add('block');
+            } else {
+                alert("❌ شماره تلفن یا رمز ورود اشتباه است!");
+            }
+        }
+
+        // تابع خروج
+        function handleLogout() {
+            document.getElementById('main-panel').classList.add('hidden');
+            document.getElementById('login-section').style.display = 'block';
+            document.body.classList.add('flex', 'items-center', 'justify-center', 'min-h-screen');
+            document.getElementById('login-form').reset();
+        }
+
+        // نوسان قیمت آنلاین
         async function fetchLivePrice() {
             const randomFluctuation = (Math.random() - 0.5) * 20000; 
             currentGoldPrice = Math.round(16200000 + randomFluctuation);
@@ -131,8 +193,6 @@
 
             myProducts.push(newProduct);
             renderProducts(); 
-            
-            // بازگرداندن مقادیر پیش‌فرض سود و مالیات بعد از ریست
             document.getElementById('gold-form').reset();
             document.getElementById('profit-rate').value = 7;
             document.getElementById('tax-rate').value = 9;
@@ -141,6 +201,11 @@
         function deleteProduct(id) {
             myProducts = myProducts.filter(product => product.id !== id);
             renderProducts(); 
+        }
+
+        function toggleMenu(id) {
+            const menu = document.getElementById(`menu-${id}`);
+            menu.classList.toggle('hidden');
         }
 
         function renderProducts() {
@@ -155,31 +220,34 @@
             listContainer.innerHTML = ''; 
 
             myProducts.forEach(prod => {
-                // فرمول بر اساس عیار انتخابی (طلای ۱۸ عیار مبنای بازار است، عیار ۲۴ ضریب بیشتری می‌گیرد)
                 const karatMultiplier = prod.karat === 24 ? (24 / 18) : 1;
                 const rawPrice = prod.weight * (currentGoldPrice * karatMultiplier);
-                
                 const wageAmount = rawPrice * (prod.wage / 100);
                 const priceWithWage = rawPrice + wageAmount;
                 const profitAmount = priceWithWage * (prod.profit / 100);
                 const taxAmount = (priceWithWage + profitAmount) * (prod.tax / 100);
-                
                 const finalPrice = Math.round(priceWithWage + profitAmount + taxAmount);
 
                 listContainer.innerHTML += `
-                    <div class="border border-stone-100 rounded-xl p-4 bg-stone-50/50 flex flex-col justify-between">
+                    <div class="border border-stone-100 rounded-xl p-4 bg-stone-50/50 flex flex-col justify-between relative bg-white">
                         <div>
                             <div class="flex justify-between items-start">
-                                <h3 class="font-medium text-stone-900 text-sm">${prod.title}</h3>
-                                <span class="text-[10px] bg-stone-100 text-stone-600 px-2 py-0.5 rounded-full">${prod.karat} عیار</span>
+                                <h3 class="font-medium text-stone-900 text-sm max-w-[80%]">${prod.title}</h3>
+                                <div class="relative">
+                                    <button onclick="toggleMenu(${prod.id})" class="text-stone-400 hover:text-stone-700 px-2 py-0.5 rounded-full font-bold">
+                                        •••
+                                    </button>
+                                    <div id="menu-${prod.id}" class="hidden absolute left-0 top-6 w-24 bg-white border border-gray-100 rounded-lg shadow-md z-10 py-1">
+                                        <button onclick="deleteProduct(${prod.id})" class="w-full text-right px-3 py-1.5 text-xs text-rose-600 hover:bg-rose-50 transition-colors">
+                                            🗑️ حذف
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <p class="text-xs text-stone-500 mt-2">وزن: ${prod.weight} گرم | اجرت: ${prod.wage}٪</p>
-                            <p class="text-xs text-stone-400">سود: ${prod.profit}٪ | مالیات: ${prod.tax}٪</p>
+                            <p class="text-xs text-stone-500 mt-2">وزن: ${prod.weight} گرم | عیار: ${prod.karat}</p>
+                            <p class="text-[11px] text-stone-400">اجرت: ${prod.wage}٪ | سود: ${prod.profit}٪</p>
                             <p class="text-sm font-semibold text-stone-800 mt-3">${finalPrice.toLocaleString('fa-IR')} <span class="text-xs font-normal text-stone-500">تومان</span></p>
                         </div>
-                        <button onclick="deleteProduct(${prod.id})" class="mt-4 w-full bg-rose-50 text-rose-600 hover:bg-rose-100 text-xs font-medium py-2 rounded-lg transition">
-                            🗑️ حذف این طلا
-                        </button>
                     </div>
                 `;
             });
