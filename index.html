@@ -8,35 +8,63 @@
 </head>
 <body id="main-body" class="p-4 md:p-8 flex items-center justify-center min-h-screen bg-gradient-to-tr from-[#143d3b] via-[#0d2322] to-[#261f18]">
 
-    <!-- 🔐 بخش فرم ورود مشتری -->
     <div id="auth-box" class="w-full max-w-sm bg-[#162a29]/90 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-[#c5a880]/20">
         <h1 class="text-center text-2xl font-light tracking-widest text-[#967969] mb-2 uppercase">SAMA ZARRIN</h1>
-        <p class="text-center text-xs text-[#826a5c] mb-6">گالری طلا و جواهرات مینیمال</p>
+        <p class="text-center text-xs text-[#826a5c] mb-6">ورود به گالری و پنل مدیریت</p>
         
-        <form onsubmit="saveUser(event)" class="space-y-4">
+        <form onsubmit="handleLogin(event)" class="space-y-4">
             <div>
-                <label class="text-xs text-[#967969] mr-1">نام و نام‌خانوادگی</label>
-                <input type="text" id="name" required class="w-full p-3.5 mt-1 rounded-xl bg-[#0d1f1e] border border-[#c5a880]/20 text-stone-200 text-sm focus:outline-none focus:border-[#c5a880]">
+                <label class="text-xs text-[#967969] mr-1">نام و نام‌خانوادگی (برای مشتریان)</label>
+                <input type="text" id="auth-name" class="w-full p-3.5 mt-1 rounded-xl bg-[#0d1f1e] border border-[#c5a880]/20 text-stone-200 text-sm focus:outline-none focus:border-[#c5a880]">
             </div>
             <div>
                 <label class="text-xs text-[#967969] mr-1">شماره همراه</label>
-                <input type="tel" id="phone" required class="w-full p-3.5 mt-1 rounded-xl bg-[#0d1f1e] border border-[#c5a880]/20 text-stone-200 text-sm text-center font-mono focus:outline-none focus:border-[#c5a880]" placeholder="09xxxxxxxxx">
+                <input type="tel" id="auth-phone" required class="w-full p-3.5 mt-1 rounded-xl bg-[#0d1f1e] border border-[#c5a880]/20 text-stone-200 text-sm text-center font-mono focus:outline-none focus:border-[#c5a880]" placeholder="09xxxxxxxxx">
             </div>
-            <!-- دکمه مشکی یکدست -->
-            <button type="submit" id="submit-btn" class="w-full bg-black text-white py-3.5 rounded-xl text-sm font-medium mt-2 hover:bg-stone-900 transition-all cursor-pointer shadow-lg">ورود به گالری</button>
+            <div>
+                <label class="text-xs text-[#967969] mr-1">رمز عبور (فقط مخصوص ادمین)</label>
+                <input type="password" id="auth-pass" class="w-full p-3.5 mt-1 rounded-xl bg-[#0d1f1e] border border-[#c5a880]/20 text-stone-200 text-sm text-center font-mono focus:outline-none focus:border-[#c5a880]" placeholder="••••••••">
+            </div>
+            <button type="submit" id="submit-btn" class="w-full bg-black text-white py-3.5 rounded-xl text-sm font-medium mt-2 hover:bg-stone-900 transition-all cursor-pointer shadow-lg">ورود به سیستم</button>
         </form>
     </div>
 
-    <!-- 🛍️ پنل اصلی سایت (ویترین طلا) -->
-    <div id="main-panel" class="w-full max-w-5xl mx-auto hidden">
-        <!-- هدر لوکس سایت -->
-        <header class="flex flex-col sm:flex-row justify-between items-center pb-6 border-b border-[#c5a880]/20 mb-8 gap-4">
+    <div id="main-panel" class="w-full max-w-5xl mx-auto hidden relative">
+        
+        <div class="absolute top-4 left-4 z-50">
+            <button onclick="toggleMenu()" class="w-10 h-10 rounded-full bg-[#1c3331] border border-[#c5a880]/30 flex items-center justify-center text-[#c5a880] hover:bg-[#223f3d] transition-colors cursor-pointer shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 17v.01" />
+                </svg>
+            </button>
+            
+            <div id="dropdown-menu" class="hidden absolute left-0 mt-2 w-64 bg-[#162a29] border border-[#c5a880]/20 rounded-2xl shadow-2xl p-2 text-right">
+                <button onclick="filterCategory('all')" class="w-full text-right px-4 py-2 text-xs text-stone-300 hover:bg-black/30 rounded-xl transition-colors">✨ نمایش همه محصولات</button>
+                <button onclick="filterCategory('discount')" class="w-full text-right px-4 py-2 text-xs text-[#c5a880] hover:bg-black/30 rounded-xl transition-colors font-medium">🏷️ تخفیفی ها</button>
+                <button onclick="filterCategory('stock')" class="w-full text-right px-4 py-2 text-xs text-emerald-400 hover:bg-black/30 rounded-xl transition-colors font-medium">📦 موجودی ها</button>
+                
+                <div class="border-t border-[#c5a880]/10 my-1.5"></div>
+                <div class="px-4 py-1.5 text-xs text-[#967969] font-bold">طلاهای مینیمال✨</div>
+                
+                <button onclick="filterCategory('دستبند')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-300 hover:bg-black/30 rounded-xl transition-colors">🔹 دستبند</button>
+                <button onclick="filterCategory('گوشواره')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-300 hover:bg-black/30 rounded-xl transition-colors">🔹 گوشواره</button>
+                <button onclick="filterCategory('انگشتر')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-300 hover:bg-black/30 rounded-xl transition-colors">🔹 انگشتر</button>
+                <button onclick="filterCategory('گردنبند')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-300 hover:bg-black/30 rounded-xl transition-colors">🔹 گردنبند</button>
+                <button onclick="filterCategory('آویز')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-300 hover:bg-black/30 rounded-xl transition-colors">🔹 آویز</button>
+                <button onclick="filterCategory('نیم ست')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-300 hover:bg-black/30 rounded-xl transition-colors">🔹 نیم ست</button>
+                
+                <div class="border-t border-[#c5a880]/10 my-1.5"></div>
+                <button onclick="showAboutUs()" class="w-full text-right px-4 py-2 text-xs text-stone-300 hover:bg-black/30 rounded-xl transition-colors">ℹ️ درباره‌ی‌ ما</button>
+                <button onclick="logout()" class="w-full text-right px-4 py-2 text-xs text-rose-400 hover:bg-rose-950/40 rounded-xl transition-colors font-medium mt-1">🚪 خروج از حساب</button>
+            </div>
+        </div>
+
+        <header class="flex flex-col sm:flex-row justify-between items-center pb-6 border-b border-[#c5a880]/20 mb-8 gap-4 pl-14">
             <div class="text-right">
                 <h1 class="text-3xl font-light tracking-widest text-[#967969] uppercase">SAMA ZARRIN</h1>
                 <p id="user-welcome" class="text-xs text-[#826a5c] mt-1"></p>
             </div>
             
-            <!-- ماشین حساب/تنظیم نرخ طلا توسط شما -->
             <div class="bg-[#1c3331] border border-[#c5a880]/30 rounded-2xl p-3.5 flex items-center gap-3 shadow-md">
                 <div class="text-right">
                     <label class="block text-[10px] font-bold text-[#967969] mb-1">نرخ امروز ۱ گرم طلای ۱۸ عیار (تومان):</label>
@@ -45,28 +73,148 @@
             </div>
         </header>
 
-        <!-- بخش ویترین محصولات -->
-        <h2 class="text-lg font-light text-[#967969] mb-6 flex items-center gap-2">
+        <div id="admin-panel" class="hidden bg-[#162a29] border border-[#c5a880]/30 rounded-3xl p-6 mb-8 text-right shadow-xl">
+            <h3 class="text-md font-medium text-[#c5a880] mb-4">🛠️ فرم مدیریت ویترین سما زرین</h3>
+            <form onsubmit="addNewProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <input type="text" id="prod-name" placeholder="نام محصول (مثلا: دستبند باران)" required class="p-3 rounded-xl bg-[#0d1f1e] text-stone-200 text-xs border border-[#c5a880]/10 focus:outline-none">
+                <input type="number" step="0.01" id="prod-weight" placeholder="وزن به گرم (مثلا: 2.45)" required class="p-3 rounded-xl bg-[#0d1f1e] text-stone-200 text-xs border border-[#c5a880]/10 text-center font-mono focus:outline-none">
+                <input type="number" id="prod-wage" placeholder="درصد اجرت (مثلا: 12)" required class="p-3 rounded-xl bg-[#0d1f1e] text-stone-200 text-xs border border-[#c5a880]/10 text-center font-mono focus:outline-none">
+                <input type="number" id="prod-profit" placeholder="درصد سود (مثلا: 9)" required class="p-3 rounded-xl bg-[#0d1f1e] text-stone-200 text-xs border border-[#c5a880]/10 text-center font-mono focus:outline-none">
+                <input type="url" id="prod-img" placeholder="لینک عکس تصویر محصول" required class="p-3 rounded-xl bg-[#0d1f1e] text-stone-200 text-xs border border-[#c5a880]/10 focus:outline-none">
+                
+                <select id="prod-category" class="p-3 rounded-xl bg-[#0d1f1e] text-stone-300 text-xs border border-[#c5a880]/10 focus:outline-none">
+                    <option value="دستبند">دستبند</option>
+                    <option value="گوشواره">گوشواره</option>
+                    <option value="انگشتر">انگشتر</option>
+                    <option value="گردنبند">گردنبند</option>
+                    <option value="آویز">آویز</option>
+                    <option value="نیم ست">نیم ست</option>
+                </select>
+
+                <div class="flex items-center gap-6 md:col-span-3 bg-[#0d1f1e] p-3 rounded-xl border border-[#c5a880]/10">
+                    <label class="inline-flex items-center text-xs text-stone-300 cursor-pointer">
+                        <input type="checkbox" id="prod-discount" class="ml-2 accent-amber-600"> قرارگیری در دسته‌بندی تخفیفی‌ها
+                    </label>
+                    <label class="inline-flex items-center text-xs text-stone-300 cursor-pointer">
+                        <input type="checkbox" id="prod-stock" checked class="ml-2 accent-emerald-600"> طلا در انبار موجود است
+                    </label>
+                </div>
+
+                <button type="submit" class="md:col-span-3 bg-black text-white text-xs font-medium py-3.5 rounded-xl hover:bg-stone-900 transition-colors cursor-pointer">➕ افزودن و انتشار در ویترین</button>
+            </form>
+        </div>
+
+        <h2 id="gallery-title" class="text-lg font-light text-[#967969] mb-6 flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-[#c5a880]"></span> ✨ جدیدترین مجموعه‌های مینیمال سما زرین
         </h2>
         
-        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            <!-- محصولات توسط جاوااسکریپت اینجا رندر می‌شوند -->
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
+
+        <div id="about-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50">
+            <div class="bg-[#162a29] border border-[#c5a880]/30 p-6 rounded-3xl max-w-md w-full text-right space-y-4 shadow-2xl">
+                <h3 class="text-lg font-medium text-[#c5a880]">درباره گالری سما زرین</h3>
+                <p class="text-xs text-stone-300 leading-relaxed">
+                    گالری سما زرین ارائه‌دهنده لوکس‌ترین و ظریف‌ترین طلاهای مینیمال ۱۸ عیار است. هدف ما خلق آثاری ماندگار، مدرن و متناسب با سلیقه‌های خاص و امروزی به صورت آنلاین و با تحویل فوری است.
+                </p>
+                <button onclick="closeAboutUs()" class="w-full bg-black text-white text-xs py-2.5 rounded-xl hover:bg-stone-900 cursor-pointer">بستن پنجره</button>
+            </div>
         </div>
     </div>
 
     <script>
-        // تنظیمات ربات تلگرام و آیدی مدیریتی شما
         const BOT_TOKEN = "8940936882:AAG2OeXFfOsOwMPEuwhRHxfef9iBK68q3IU";
         const ADMIN_CHAT_ID = "6850239276"; 
         const MY_TELEGRAM_ID = "sama_zarinn"; 
 
-        // دیتابیس محصولات نمونه
-        const products = [
-            { id: 1, name: "دستبند زنجیری مینیمال باران", weight: 2.45, wagePercent: 12, profitPercent: 9, img: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&auto=format&fit=crop&q=60" },
-            { id: 2, name: "انگشتر گره طلا ۱۸ عیار", weight: 1.82, wagePercent: 15, profitPercent: 9, img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=500&auto=format&fit=crop&q=60" },
-            { id: 3, name: "گردنبند پلاک سکه‌ای مدرن", weight: 4.10, wagePercent: 10, profitPercent: 9, img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&auto=format&fit=crop&q=60" }
+        // اطلاعات ادمین ست شده بر اساس مشخصات شما
+        const ADMIN_PHONE = "09111543422";
+        const ADMIN_PASS = "211820sk";
+
+        // بارگذاری دیتابیس محصولات از حافظه یا قرار دادن نمونه‌های اولیه
+        let products = JSON.parse(localStorage.getItem('sama_products')) || [
+            { id: 1, name: "دستبند زنجیری مینیمال باران", weight: 2.45, wagePercent: 12, profitPercent: 9, category: "دستبند", isDiscount: true, isStock: true, img: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&auto=format&fit=crop&q=60" },
+            { id: 2, name: "انگشتر گره طلا ۱۸ عیار", weight: 1.82, wagePercent: 15, profitPercent: 9, category: "انگشتر", isDiscount: false, isStock: true, img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=500&auto=format&fit=crop&q=60" }
         ];
+
+        let currentFilter = 'all';
+
+        function toggleMenu() { document.getElementById('dropdown-menu').classList.toggle('hidden'); }
+        function logout() { localStorage.removeItem('sama_user'); location.reload(); }
+        function showAboutUs() { document.getElementById('about-modal').classList.remove('hidden'); toggleMenu(); }
+        function closeAboutUs() { document.getElementById('about-modal').classList.add('hidden'); }
+
+        // تفکیک ورود ادمین و مشتری
+        async function handleLogin(e) {
+            e.preventDefault();
+            const name = document.getElementById('auth-name').value.trim();
+            const phone = document.getElementById('auth-phone').value.trim();
+            const pass = document.getElementById('auth-pass').value.trim();
+
+            if (phone === ADMIN_PHONE && pass === ADMIN_PASS) {
+                localStorage.setItem('sama_user', JSON.stringify({ name: "مدیریت گالری", phone: phone, role: "admin" }));
+                alert("👑 با موفقیت وارد پنل مدیریت شدید.");
+                location.reload();
+                return;
+            }
+
+            // ارسال پیام ورود مشتری به تلگرام ادمین
+            const btn = document.getElementById('submit-btn');
+            btn.innerText = "در حال اتصال...";
+            btn.disabled = true;
+
+            const msg = `🔔 مشتری جدید وارد سایت شد:
+👤 نام: ${name || 'ناشناس'}
+📱 شماره: ${phone}`;
+
+            try {
+                const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(msg)}`;
+                new Image().src = url;
+
+                localStorage.setItem('sama_user', JSON.stringify({ name: name || "مشتری گرامی", phone: phone, role: "customer" }));
+                checkLoginState();
+            } catch (err) {
+                alert("خطایی رخ داد.");
+                btn.disabled = false;
+                btn.innerText = "ورود به سیستم";
+            }
+        }
+
+        // افزودن محصول جدید توسط ادمین و ذخیره در LocalStorage
+        function addNewProduct(e) {
+            e.preventDefault();
+            const newProd = {
+                id: Date.now(),
+                name: document.getElementById('prod-name').value,
+                weight: parseFloat(document.getElementById('prod-weight').value),
+                wagePercent: parseInt(document.getElementById('prod-wage').value),
+                profitPercent: parseInt(document.getElementById('prod-profit').value),
+                img: document.getElementById('prod-img').value,
+                category: document.getElementById('prod-category').value,
+                isDiscount: document.getElementById('prod-discount').checked,
+                isStock: document.getElementById('prod-stock').checked
+            };
+
+            products.push(newProd);
+            localStorage.setItem('sama_products', JSON.stringify(products));
+            alert("✨ طلا با موفقیت به دسته‌بندی و ویترین اضافه شد!");
+            e.target.reset();
+            updateAllPrices();
+        }
+
+        // حذف محصول (فقط مخصوص ادمین)
+        function deleteProduct(id) {
+            if(confirm("آیا مایل به حذف این طلا از ویترین هستید؟")) {
+                products = products.filter(p => p.id !== id);
+                localStorage.setItem('sama_products', JSON.stringify(products));
+                updateAllPrices();
+            }
+        }
+
+        function filterCategory(filter) {
+            currentFilter = filter;
+            document.getElementById('dropdown-menu').classList.add('hidden');
+            updateAllPrices();
+        }
 
         function calculateGoldPrice(weight, wagePercent, profitPercent, currentRate) {
             const basePrice = weight * currentRate;
@@ -76,14 +224,10 @@
             return Math.round(subTotal + profitAmount);
         }
 
-        function formatPrice(price) {
-            return price.toLocaleString('fa-IR') + " تومان";
-        }
-
+        function formatPrice(price) { return price.toLocaleString('fa-IR') + " تومان"; }
         function handleGoldRateChange(input) {
             let value = input.value.replace(/[^0-9]/g, '');
             if (value === "") value = "0";
-            
             input.value = parseInt(value).toLocaleString('en-US');
             updateAllPrices();
         }
@@ -94,16 +238,34 @@
             const grid = document.getElementById('products-grid');
             grid.innerHTML = "";
 
-            products.forEach(p => {
+            const session = JSON.parse(localStorage.getItem('sama_user'));
+            const isAdmin = session && session.role === 'admin';
+
+            const filteredProducts = products.filter(p => {
+                if (currentFilter === 'all') return true;
+                if (currentFilter === 'discount') return p.isDiscount;
+                if (currentFilter === 'stock') return p.isStock;
+                return p.category === currentFilter;
+            });
+
+            if (filteredProducts.length === 0) {
+                grid.innerHTML = `<p class="text-center text-xs text-stone-400 col-span-full py-12">طلا یا دسته‌بندی انتخاب شده خالی است.</p>`;
+                return;
+            }
+
+            filteredProducts.forEach(p => {
                 const finalPrice = calculateGoldPrice(p.weight, p.wagePercent, p.profitPercent, currentRate);
                 
                 const card = `
                     <div class="bg-[#122423] rounded-3xl overflow-hidden shadow-xl border border-[#c5a880]/10 hover:border-[#c5a880]/30 transition-all group">
                         <div class="h-64 bg-stone-900 relative overflow-hidden">
                             <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90">
-                            <span class="absolute top-3 right-3 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full text-[11px] font-mono text-[#c5a880]">
-                                ${p.weight.toFixed(2)} گرم
-                            </span>
+                            <div class="absolute top-3 right-3 flex flex-col gap-1">
+                                <span class="bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full text-[11px] font-mono text-[#c5a880]">${p.weight.toFixed(2)} گرم</span>
+                                ${p.isDiscount ? '<span class="bg-amber-600/90 text-white text-[9px] px-2 py-0.5 rounded-full text-center">تخفیف</span>' : ''}
+                                ${p.isStock ? '<span class="bg-emerald-600/90 text-white text-[9px] px-2 py-0.5 rounded-full text-center">موجود</span>' : ''}
+                                <span class="bg-black/40 text-stone-300 text-[9px] px-2 py-0.5 rounded-full text-center">${p.category}</span>
+                            </div>
                         </div>
                         <div class="p-5 text-right space-y-3">
                             <h3 class="text-sm font-medium text-stone-200">${p.name}</h3>
@@ -111,43 +273,13 @@
                                 <span class="text-xs text-[#826a5c]">قیمت نهایی روز:</span>
                                 <span class="text-sm font-bold text-[#c5a880] font-mono">${formatPrice(finalPrice)}</span>
                             </div>
-                            <!-- دکمه مشکی یکدست سفارش تلگرام -->
-                            <a href="https://t.me/${MY_TELEGRAM_ID}?text=${encodeURIComponent('سلام، قصد سفارش محصول «' + p.name + '» را دارم.')}" target="_blank" class="block text-center w-full bg-black text-white py-2.5 rounded-xl text-xs font-medium hover:bg-stone-900 transition-colors shadow-md">
-                                🛍️ مشاوره و خرید مستقیم در تلگرام
-                            </a>
+                            <a href="https://t.me/${MY_TELEGRAM_ID}?text=${encodeURIComponent('سلام، قصد سفارش محصول «' + p.name + '» را دارم.')}" target="_blank" class="block text-center w-full bg-black text-white py-2.5 rounded-xl text-xs font-medium hover:bg-stone-900 transition-colors shadow-md">🛍️ مشاوره و خرید مستقیم</a>
+                            ${isAdmin ? `<button onclick="deleteProduct(${p.id})" class="w-full bg-rose-950/40 text-rose-400 text-xs py-1.5 rounded-xl mt-2 hover:bg-rose-900/50 transition-colors">🗑️ حذف این کالا از ویترین</button>` : ''}
                         </div>
                     </div>
                 `;
                 grid.insertAdjacentHTML('beforeend', card);
             });
-        }
-
-        async function saveUser(e) {
-            e.preventDefault();
-            const btn = document.getElementById('submit-btn');
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-
-            btn.innerText = "در حال اتصال...";
-            btn.disabled = true;
-
-            const msg = `🔔 مشتری جدید وارد سایت شد:
-👤 نام: ${name}
-📱 شماره: ${phone}
-🆔 لطفا جهت احراز هویت با او تماس بگیرید.`;
-
-            try {
-                const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(msg)}`;
-                const img = new Image();
-                img.src = url;
-
-                localStorage.setItem('sama_user', JSON.stringify({ name, phone }));
-                checkLoginState();
-            } catch (err) {
-                alert("خطایی رخ داد.");
-                btn.disabled = false;
-                btn.innerText = "ورود به گالری";
-            }
         }
 
         function checkLoginState() {
@@ -157,7 +289,11 @@
                 document.getElementById('main-body').className = "p-4 md:p-8 block bg-gradient-to-tr from-[#143d3b] via-[#0d2322] to-[#261f18]";
                 document.getElementById('auth-box').classList.add('hidden');
                 document.getElementById('main-panel').classList.remove('hidden');
-                document.getElementById('user-welcome').innerText = `✨ خوش آمدید، ${user.name} عزیز`;
+                document.getElementById('user-welcome').innerText = `✨ ${user.name} خوش آمدید`;
+                
+                if (user.role === 'admin') {
+                    document.getElementById('admin-panel').classList.remove('hidden');
+                }
                 updateAllPrices();
             }
         }
