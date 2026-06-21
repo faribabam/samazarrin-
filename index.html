@@ -6,10 +6,8 @@
     <title>گالری طلا و جواهر سما زرین | SAMA ZARRIN</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<!-- 🎨 تغییر رنگ پس‌زمینه به آبی تیفانی یکدست (#0abab5) -->
 <body id="main-body" class="p-4 md:p-8 flex items-center justify-center min-h-screen bg-[#0abab5]">
 
-    <!-- 🔐 بخش فرم ورود و ثبت‌نام (شیشه‌ای و شفاف بدون پس‌زمینه سفید صلب) -->
     <div id="auth-box" class="w-full max-w-sm bg-cyan-50/30 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/40">
         <h1 class="text-center text-2xl font-light tracking-widest text-[#a68015] mb-2 uppercase">SAMA ZARRIN</h1>
         <p class="text-center text-xs text-[#2c5354] mb-6">ورود / ثبت‌نام در گالری سما زرین</p>
@@ -31,10 +29,8 @@
         </form>
     </div>
 
-         <!-- 🛍️ پنل اصلی سایت -->
     <div id="main-panel" class="w-full max-w-5xl mx-auto hidden relative">
         
-        <!-- منوی کشویی سه‌نقطه دسته‌بندی -->
         <div class="absolute top-4 left-4 z-50">
             <button onclick="toggleMenu()" class="w-10 h-10 rounded-full bg-white/40 backdrop-blur-md border border-white/50 flex items-center justify-center text-[#a68015] hover:bg-white/60 transition-colors cursor-pointer shadow-md">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -66,7 +62,6 @@
             </div>
         </div>
 
-        <!-- هدر لوکس سایت با ته‌رنگ طلایی و آبی تیفانی روشن -->
         <header class="flex flex-col sm:flex-row justify-between items-center pb-6 border-b border-white/30 mb-8 gap-4 pl-14">
             <div class="text-right">
                 <h1 class="text-3xl font-light tracking-widest text-[#a68015] uppercase drop-shadow-sm">SAMA ZARRIN</h1>
@@ -84,18 +79,23 @@
             </div>
         </header>
 
-        <!-- 👑 بخش ادمین پیشرفته (شفاف و یکدست) -->
         <div id="admin-panel" class="hidden bg-white/30 border border-white/40 rounded-3xl p-6 mb-8 text-right shadow-xl space-y-6 backdrop-blur-md">
             <h3 class="text-md font-medium text-[#a68015]">🛠️ مدیریت ویترین و مشتریان سما زرین</h3>
             
-            <!-- فرم افزودن کالا -->
             <form onsubmit="addNewProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 border-b border-white/20 pb-6">
                 <input type="text" id="prod-name" placeholder="نام محصول" required class="p-3 rounded-xl bg-white/50 text-stone-800 text-xs border border-white/30 focus:outline-none focus:border-[#b89327]">
                 <input type="number" step="0.01" id="prod-weight" placeholder="وزن به گرم" required class="p-3 rounded-xl bg-white/50 text-stone-800 text-xs border border-white/30 text-center font-mono focus:outline-none focus:border-[#b89327]">
                 <input type="number" id="prod-wage" placeholder="درصد اجرت" required class="p-3 rounded-xl bg-white/50 text-stone-800 text-xs border border-white/30 text-center font-mono focus:outline-none focus:border-[#b89327]">
                 <input type="number" id="prod-profit" placeholder="درصد سود" required class="p-3 rounded-xl bg-white/50 text-stone-800 text-xs border border-white/30 text-center font-mono focus:outline-none focus:border-[#b89327]">
                 <input type="number" id="prod-discount-input" placeholder="درصد تخفیف کالا (در صورت وجود)" value="0" class="p-3 rounded-xl bg-white/50 text-stone-800 text-xs border border-white/30 text-center font-mono focus:outline-none focus:border-[#b89327]">
-                <input type="url" id="prod-img" placeholder="لینک عکس محصول" required class="p-3 rounded-xl bg-white/50 text-stone-800 text-xs border border-white/30 focus:outline-none focus:border-[#b89327]">
+                
+                <div class="relative flex items-center bg-white/50 rounded-xl border border-white/30 px-3 overflow-hidden group">
+                    <label for="prod-img-file" class="w-full text-right text-xs text-stone-500 cursor-pointer flex justify-between items-center py-3">
+                        <span id="file-label-text">🖼️ انتخاب عکس از گالری</span>
+                        <span class="bg-stone-800 text-white text-[10px] px-2 py-1 rounded-md">برو به گالری</span>
+                    </label>
+                    <input type="file" id="prod-img-file" accept="image/*" required onchange="handleFileSelect(this)" class="hidden">
+                </div>
                 
                 <select id="prod-category" class="p-3 rounded-xl bg-white/50 text-stone-700 text-xs border border-white/30 focus:outline-none focus:border-[#b89327]">
                     <option value="دستبند">دستبند</option>
@@ -114,7 +114,6 @@
                 <button type="submit" class="md:col-span-3 bg-stone-900 text-white text-xs font-medium py-3.5 rounded-xl hover:bg-black transition-colors cursor-pointer">➕ افزودن به ویترین</button>
             </form>
 
-            <!-- بخش مدیریت تعداد خرید مشتریان جهت ارتقای VIP -->
             <div>
                 <h4 class="text-xs font-bold text-stone-600 mb-2">📊 شبیه‌ساز تعداد خرید مشتری (جهت تست فعال‌سازی VIP):</h4>
                 <div class="flex flex-wrap gap-2">
@@ -124,14 +123,12 @@
             </div>
         </div>
 
-        <!-- بخش ویترین محصولات -->
         <h2 id="gallery-title" class="text-lg font-light text-[#a68015] mb-6 flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-[#b89327]"></span> ✨ جدیدترین مجموعه‌های مینیمال سما زرین
         </h2>
         
         <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
 
-        <!-- 👑 مودال و جدول مقایسه‌ای VIP -->
         <div id="vip-modal" class="hidden fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4 z-50">
             <div class="bg-cyan-50/90 backdrop-blur-xl border border-white/50 p-6 rounded-3xl max-w-xl w-full text-right space-y-6 shadow-2xl">
                 <div class="flex justify-between items-center border-b border-black/5 pb-3">
@@ -177,7 +174,6 @@
             </div>
         </div>
 
-        <!-- ℹ️ مودال درباره ما به همراه راه‌های ارتباطی -->
         <div id="about-modal" class="hidden fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4 z-50">
             <div class="bg-cyan-50/90 backdrop-blur-xl border border-white/50 p-6 rounded-3xl max-w-md w-full text-right space-y-5 shadow-2xl">
                 <h3 class="text-lg font-medium text-[#a68015]">درباره گالری سما زرین</h3>
@@ -187,7 +183,6 @@
                     <h4 class="text-xs font-bold text-[#a68015]">📱 شبکه‌های اجتماعی و ارتباط با ما:</h4>
                     
                     <div class="flex flex-col gap-2">
-                        <!-- دکمه اینستاگرام -->
                         <a href="https://www.instagram.com/sama_zarinn?igsh=MTB4ZW1iY2VzZ255aA==" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-purple-50/60 to-pink-50/60 border border-pink-300 text-pink-700 text-xs font-medium hover:scale-[1.02] transition-transform backdrop-blur-sm">
                             <span class="flex items-center gap-2">
                                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
@@ -196,7 +191,6 @@
                             <span dir="ltr" class="font-mono text-[10px] text-pink-700 opacity-90">@sama_zarinn</span>
                         </a>
 
-                        <!-- دکمه تلگرام -->
                         <a href="https://t.me/sama_zarinn" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-blue-50/60 to-cyan-50/60 border border-blue-300 text-blue-700 text-xs font-medium hover:scale-[1.02] transition-transform backdrop-blur-sm">
                             <span class="flex items-center gap-2">
                                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0011.944 0zm5.556 8.16l-1.896 8.93c-.144.636-.522.792-1.056.492l-2.89-2.13-1.394 1.342c-.154.154-.284.284-.582.284l.206-2.93 5.334-4.82c.232-.206-.05-.32-.36-.114l-6.594 4.15-2.84-.89c-.616-.192-.628-.616.13-.91l11.1-4.28c.513-.192.96.114.748.924z"/></svg>
@@ -226,6 +220,7 @@
         ];
 
         let currentFilter = 'all';
+        let selectedImageBase64 = ""; // متغیر برای ذخیره موقت کد عکس انتخابی از گالری
 
         function toggleMenu() { document.getElementById('dropdown-menu').classList.toggle('hidden'); }
         function logout() { localStorage.removeItem('sama_user'); location.reload(); }
@@ -240,6 +235,25 @@
                 user.purchases = count;
                 localStorage.setItem('sama_user', JSON.stringify(user));
                 alert(`تعداد خرید کاربر روی ${count} تنظیم شد.`);
+            }
+        }
+
+        // تابع خواندن فایل از گالری و تبدیل به Base64
+        function handleFileSelect(input) {
+            const file = input.files[0];
+            if (file) {
+                // بررسی حجم فایل (اختیاری: جهت بهینه‌سازی حافظه مرورگر بهتره عکس خیلی سنگین نباشد)
+                if (file.size > 2 * 1024 * 1024) { 
+                    alert("❌ لطفاً عکسی با حجم کمتر از ۲ مگابایت انتخاب کنید.");
+                    input.value = "";
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    selectedImageBase64 = e.target.result;
+                    document.getElementById('file-label-text').innerText = "✅ عکس انتخاب شد: " + file.name.substring(0, 15) + "...";
+                };
+                reader.readAsDataURL(file);
             }
         }
 
@@ -299,6 +313,12 @@
 
         function addNewProduct(e) {
             e.preventDefault();
+            
+            if(!selectedImageBase64) {
+                alert("❌ لطفا ابتدا یک عکس از گالری انتخاب کنید.");
+                return;
+            }
+
             const newProd = {
                 id: Date.now(),
                 name: document.getElementById('prod-name').value,
@@ -308,14 +328,20 @@
                 discountPercent: parseInt(document.getElementById('prod-discount-input').value) || 0,
                 category: document.getElementById('prod-category').value,
                 isStock: document.getElementById('prod-stock').checked,
-                img: document.getElementById('prod-img').value
+                img: selectedImageBase64 // ذخیره مستقیم کد عکس گالری
             };
 
             products.push(newProd);
-            localStorage.setItem('sama_products', JSON.stringify(products));
-            alert("✨ طلا با موفقیت اضافه شد!");
-            e.target.reset();
-            updateAllPrices();
+            try {
+                localStorage.setItem('sama_products', JSON.stringify(products));
+                alert("✨ طلا با موفقیت اضافه شد!");
+                selectedImageBase64 = ""; // ریسیت کردن مقدار عکس بعد از ذخیره موفق
+                document.getElementById('file-label-text').innerText = "🖼️ انتخاب عکس از گالری";
+                e.target.reset();
+                updateAllPrices();
+            } catch (error) {
+                alert("❌ خطای حافظه! حجم عکس انتخابی شما خیلی بالا است. لطفا عکس سبک‌تر یا کم‌حجم‌تری انتخاب کنید.");
+            }
         }
 
         function deleteProduct(id) {
@@ -333,20 +359,13 @@
         }
 
         function calculateGoldPrice(weight, wagePercent, profitPercent, currentRate, isVip, itemDiscountPercent) {
-            if (isVip) {
-                profitPercent = Math.max(0, profitPercent - 2);
-            }
-            
+            if (isVip) { profitPercent = Math.max(0, profitPercent - 2); }
             const basePrice = weight * currentRate;
             const wageAmount = basePrice * (wagePercent / 100);
             const subTotal = basePrice + wageAmount;
             const profitAmount = subTotal * (profitPercent / 100);
             let finalPrice = subTotal + profitAmount;
-
-            if (itemDiscountPercent > 0) {
-                finalPrice = finalPrice * ((100 - itemDiscountPercent) / 100);
-            }
-
+            if (itemDiscountPercent > 0) { finalPrice = finalPrice * ((100 - itemDiscountPercent) / 100); }
             return Math.round(finalPrice);
         }
 
@@ -386,7 +405,7 @@
                 const card = `
                     <div class="bg-white/30 rounded-3xl overflow-hidden shadow-lg border border-white/20 hover:border-white/50 transition-all group backdrop-blur-sm">
                         <div class="h-64 bg-stone-200/50 relative overflow-hidden">
-                            <img src="${p.img || 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500'}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <div class="absolute top-3 right-3 flex flex-col gap-1">
                                 <span class="bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full text-[11px] font-mono text-[#a68015] font-bold shadow-sm">${p.weight.toFixed(2)} گرم</span>
                                 ${p.discountPercent > 0 ? `<span class="bg-amber-500 text-white text-[9px] px-2 py-0.5 rounded-full text-center font-bold shadow-sm">%${p.discountPercent} تخفیف</span>` : ''}
@@ -412,7 +431,6 @@
             const session = localStorage.getItem('sama_user');
             if (session) {
                 const user = JSON.parse(session);
-                /* 🎨 اصلاح استایل بدنه در اینجا برای ماندن رنگ ثابت آبی تیفانی پس از لاگین */
                 document.getElementById('main-body').className = "p-4 md:p-8 block bg-[#0abab5]";
                 document.getElementById('auth-box').classList.add('hidden');
                 document.getElementById('main-panel').classList.remove('hidden');
