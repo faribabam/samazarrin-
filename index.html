@@ -17,6 +17,7 @@
 </head>
 <body id="main-body" class="p-4 md:p-8 flex items-center justify-center min-h-screen bg-[#faf8f5]" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 80 80&quot;><path d=&quot;M40 10 C48 25, 60 25, 60 40 C60 55, 48 55, 40 70 C32 55, 20 55, 20 40 C20 25, 32 25, 40 10 Z&quot; fill=&quot;none&quot; stroke=&quot;%23d4af37&quot; stroke-width=&quot;0.6&quot; opacity=&quot;0.12&quot;/></svg>');">
 
+    <!-- 🔐 بخش ورود / ثبت نام -->
     <div id="auth-box" class="w-full max-w-sm bg-white p-8 rounded-3xl shadow-xl border border-[#e5d5c5]">
         <h1 class="text-center text-2xl font-light tracking-widest text-[#a68015] mb-2 uppercase">SAMA ZARRIN</h1>
         <p class="text-center text-xs text-stone-500 mb-6">ورود / ثبت‌نام در گالری سما زرین</p>
@@ -38,8 +39,10 @@
         </form>
     </div>
 
+    <!-- 🛍️ پنل اصلی ویترین گالری -->
     <div id="main-panel" class="w-full max-w-5xl mx-auto hidden relative">
         
+        <!-- ☰ منوی سه خط اختصاصی مدیریت (فقط برای ادمین) -->
         <div id="admin-hamburger-zone" class="absolute top-4 right-4 z-50 hidden">
             <button onclick="toggleAdminMenu()" class="w-10 h-10 rounded-full bg-stone-900 flex items-center justify-center text-white hover:bg-black transition-colors cursor-pointer shadow-md">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -59,6 +62,7 @@
             </div>
         </div>
 
+        <!-- 💬 منوی دکمه سه نقطه مشتری -->
         <div class="absolute top-4 left-4 z-50">
             <button onclick="toggleMenu()" class="w-10 h-10 rounded-full bg-white border border-[#e5d5c5] flex items-center justify-center text-[#a68015] hover:bg-stone-50 transition-colors cursor-pointer shadow-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -92,6 +96,7 @@
             </div>
         </div>
 
+        <!-- هدر بالایی ویترین -->
         <header class="flex flex-col sm:flex-row justify-between items-center pb-6 border-b border-stone-200 mb-6 gap-4 pl-14 pr-14">
             <div class="text-right">
                 <h1 class="text-3xl font-light tracking-widest text-[#a68015] uppercase drop-shadow-sm">SAMA ZARRIN</h1>
@@ -112,37 +117,40 @@
             </div>
         </header>
 
-        <div id="customer-filter-area" class="bg-white border border-[#e5d5c5] rounded-2xl p-4 mb-8 shadow-sm text-right grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 items-center">
+        <!-- 🔍 بخش جستجو و فیلترهای کاملاً آزاد و عددی مشتری -->
+        <div id="customer-filter-area" class="bg-white border border-[#e5d5c5] rounded-2xl p-5 mb-8 shadow-sm text-right grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 items-end">
             <div>
                 <label class="block text-[11px] text-stone-500 font-medium mb-1.5">🔍 جستجوی نام کالا</label>
-                <input type="text" id="search-input" oninput="updateAllPrices()" placeholder="مثلا: انگشتر گره، دستبند..." class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs focus:outline-none focus:border-[#b89327]">
+                <input type="text" id="search-input" oninput="updateAllPrices()" placeholder="مثلا: انگشتر گره..." class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs focus:outline-none focus:border-[#b89327]">
             </div>
+            
             <div>
-                <label class="block text-[11px] text-stone-500 font-medium mb-1.5">⚖️ فیلتر بر اساس وزن طلا</label>
-                <select id="filter-weight" onchange="updateAllPrices()" class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs focus:outline-none focus:border-[#b89327]">
-                    <option value="all">همه وزن‌ها</option>
-                    <option value="light">✨ ظریف و سبک (زیر ۲ گرم)</option>
-                    <option value="medium">💎 متوسط (۲ تا ۵ گرم)</option>
-                    <option value="heavy">👑 لوکس و سنگین (بالای ۵ گرم)</option>
-                </select>
+                <label class="block text-[11px] text-stone-500 font-medium mb-1.5">⚖️ محدوده وزن (گرم)</label>
+                <div class="flex items-center gap-2">
+                    <input type="number" step="0.01" id="filter-weight-min" oninput="updateAllPrices()" placeholder="از" class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs text-center font-mono focus:outline-none focus:border-[#b89327]">
+                    <span class="text-stone-400 text-xs">تا</span>
+                    <input type="number" step="0.01" id="filter-weight-max" oninput="updateAllPrices()" placeholder="تا" class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs text-center font-mono focus:outline-none focus:border-[#b89327]">
+                </div>
             </div>
+
             <div>
-                <label class="block text-[11px] text-stone-500 font-medium mb-1.5">💰 فیلتر بر اساس حدود قیمت</label>
-                <select id="filter-price" onchange="updateAllPrices()" class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs focus:outline-none focus:border-[#b89327]">
-                    <option value="all">همه قیمت‌ها</option>
-                    <option value="low">اقتصادی (زیر ۱۰ میلیون)</option>
-                    <option value="mid">متوسط (۱۰ تا ۳۰ میلیون)</option>
-                    <option value="high">خاص (بالای ۳۰ میلیون تومان)</option>
-                </select>
+                <label class="block text-[11px] text-stone-500 font-medium mb-1.5">💰 محدوده قیمت (تومان)</label>
+                <div class="flex items-center gap-2">
+                    <input type="number" id="filter-price-min" oninput="updateAllPrices()" placeholder="از قیمت" class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs text-center font-mono focus:outline-none focus:border-[#b89327]">
+                    <span class="text-stone-400 text-xs">تا</span>
+                    <input type="number" id="filter-price-max" oninput="updateAllPrices()" placeholder="تا قیمت" class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs text-center font-mono focus:outline-none focus:border-[#b89327]">
+                </div>
             </div>
-            <div class="flex items-center h-full pt-4 sm:pt-0 sm:justify-center">
+
+            <div class="flex items-center h-full sm:justify-center">
                 <label class="inline-flex items-center text-xs text-stone-700 cursor-pointer bg-stone-50 px-4 py-3 rounded-xl border border-stone-200 w-full justify-between sm:justify-start">
-                    <span>📦 فقط طلاهای موجود در انبار</span>
+                    <span>📦 فقط طلاهای موجود</span>
                     <input type="checkbox" id="filter-only-stock" onchange="updateAllPrices()" class="mr-3 accent-[#b89327] w-4 h-4">
                 </label>
             </div>
         </div>
 
+        <!-- 🛠️ پنل مدیریت جامع با تنظیمات پیشرفته (پیشفرض مخفی) -->
         <div id="admin-panel" class="hidden bg-white border border-[#e5d5c5] rounded-3xl p-6 mb-8 text-right shadow-md space-y-6">
             <h3 class="text-md font-medium text-[#a68015]">🛠️ مدیریت ویترین و مشتریان سما زرین</h3>
             
@@ -189,8 +197,10 @@
             </div>
         </div>
 
+        <!-- 📥 بخش ردیف‌های اسلایدی هوشمند و مستقل -->
         <div id="sliders-container" class="space-y-8"></div>
 
+        <!-- 👑 مودال مقایسه‌ای اشتراک vip -->
         <div id="vip-modal" class="hidden fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center p-4 z-50">
             <div class="bg-white border border-[#e5d5c5] p-6 rounded-3xl max-w-xl w-full text-right space-y-6 shadow-2xl">
                 <div class="flex justify-between items-center border-b border-stone-100 pb-3">
@@ -241,6 +251,7 @@
             </div>
         </div>
 
+        <!-- ☎️ مودال صفحه پشتیبانی -->
         <div id="support-modal" class="hidden fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center p-4 z-50">
             <div class="bg-white border border-[#e5d5c5] p-6 rounded-3xl max-w-sm w-full text-right space-y-5 shadow-2xl">
                 <div class="flex justify-between items-center border-b border-stone-100 pb-2">
@@ -268,6 +279,7 @@
             </div>
         </div>
 
+        <!-- ℹ️ مودال درباره ما -->
         <div id="about-modal" class="hidden fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center p-4 z-50">
             <div class="bg-white border border-[#e5d5c5] p-6 rounded-3xl max-w-md w-full text-right space-y-5 shadow-2xl">
                 <h3 class="text-lg font-medium text-[#a68015]">درباره گالری سما زرین</h3>
@@ -300,7 +312,6 @@
         function toggleMenu() { document.getElementById('dropdown-menu').classList.toggle('hidden'); }
         function toggleAdminMenu() { document.getElementById('admin-dropdown-menu').classList.toggle('hidden'); }
         
-        // کنترل جابجایی بین نمای ویترین و پنل مدیریت برای ادمین
         function switchAdminView(view) {
             document.getElementById('admin-dropdown-menu').classList.add('hidden');
             const adminPanel = document.getElementById('admin-panel');
@@ -505,9 +516,12 @@
             const isAdmin = session && session.role === 'admin';
             const isVip = session && session.isVip === true;
 
+            // خواندن مقادیر فیلترهای کاملاً آزاد متنی و عددی
             const searchQuery = document.getElementById('search-input').value.trim().toLowerCase();
-            const weightFilter = document.getElementById('filter-weight').value;
-            const priceFilter = document.getElementById('filter-price').value;
+            const weightMin = parseFloat(document.getElementById('filter-weight-min').value) || 0;
+            const weightMax = parseFloat(document.getElementById('filter-weight-max').value) || Infinity;
+            const priceMin = parseFloat(document.getElementById('filter-price-min').value) || 0;
+            const priceMax = parseFloat(document.getElementById('filter-price-max').value) || Infinity;
             const onlyStock = document.getElementById('filter-only-stock').checked;
 
             let filteredList = products.filter(p => {
@@ -521,30 +535,19 @@
                 filteredList = filteredList.filter(p => p.name.toLowerCase().includes(searchQuery));
             }
 
-            if (weightFilter !== "all") {
-                filteredList = filteredList.filter(p => {
-                    if (weightFilter === "light") return p.weight < 2;
-                    if (weightFilter === "medium") return p.weight >= 2 && p.weight <= 5;
-                    if (weightFilter === "heavy") return p.weight > 5;
-                    return true;
-                });
-            }
+            // فیلتر بازه وزن بر اساس ورودی دلخواه ادمین/مشتری
+            filteredList = filteredList.filter(p => p.weight >= weightMin && p.weight <= weightMax);
 
             if (onlyStock) {
                 filteredList = filteredList.filter(p => p.isStock);
             }
 
-            if (priceFilter !== "all") {
-                filteredList = filteredList.filter(p => {
-                    const itemTax = p.taxPercent !== undefined ? p.taxPercent : 9;
-                    const calculatedPrice = calculateGoldPrice(p.weight, p.wagePercent, p.profitPercent, itemTax, currentRate, isVip, p.discountPercent);
-                    
-                    if (priceFilter === "low") return calculatedPrice < 10000000;
-                    if (priceFilter === "mid") return calculatedPrice >= 10000000 && calculatedPrice <= 30000000;
-                    if (priceFilter === "high") return calculatedPrice > 30000000;
-                    return true;
-                });
-            }
+            // فیلتر بازه قیمت بر اساس محاسبات پویا و نهایی
+            filteredList = filteredList.filter(p => {
+                const itemTax = p.taxPercent !== undefined ? p.taxPercent : 9;
+                const calculatedPrice = calculateGoldPrice(p.weight, p.wagePercent, p.profitPercent, itemTax, currentRate, isVip, p.discountPercent);
+                return calculatedPrice >= priceMin && calculatedPrice <= priceMax;
+            });
 
             if (filteredList.length === 0) {
                 container.innerHTML = `<div class="bg-white border border-[#e5d5c5] rounded-3xl p-12 text-center text-xs text-stone-500">هیچ طلایی با مشخصات جستجو شده یافت نشد.</div>`;
@@ -618,12 +621,10 @@
                 
                 if (user.isVip) { document.getElementById('vip-badge').classList.remove('hidden'); }
                 
-                // بررسی دقیق شماره ادمین جهت فعال‌سازی دکمه سه خط جدید
                 if (user.role === 'admin' && user.phone === ADMIN_PHONE) { 
                     document.getElementById('admin-hamburger-zone').classList.remove('hidden'); 
                 }
                 
-                // در بدو ورود، پنل مدیریت مخفی است و کاربر مستقیماً ویترین را می‌بیند.
                 switchAdminView('showcase');
                 startLiveGoldRate(); 
             }
