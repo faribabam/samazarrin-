@@ -6,12 +6,11 @@
     <title>گالری طلا و جواهر سما زرین | SAMA ZARRIN</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        /* مخفی کردن نوار اسکرول زشت اسلایدرها در ویندوز و آیفون جهت زیبایی ویترین */
         .horizontal-slider::-webkit-scrollbar {
             display: none;
         }
         .horizontal-slider {
-            -webkit-overflow-scrolling: touch; /* اسکرول فوق‌العاده نرم در آیفون */
+            -webkit-overflow-scrolling: touch;
         }
     </style>
 </head>
@@ -47,7 +46,7 @@
                 </svg>
             </button>
             
-            <div id="dropdown-menu" class="hidden absolute left-0 mt-2 w-64 bg-white border border-[#e5d5c5] rounded-2xl shadow-xl p-2 text-right">
+            <div id="dropdown-menu" class="hidden absolute left-0 mt-2 w-64 bg-white border border-[#e5d5c5] rounded-2xl shadow-xl p-2 text-right z-50">
                 <button onclick="filterCategory('all')" class="w-full text-right px-4 py-2 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">✨ نمایش همه مجموعه‌ها</button>
                 <button onclick="filterCategory('discount')" class="w-full text-right px-4 py-2 text-xs text-[#a68015] hover:bg-stone-50 rounded-xl transition-colors font-medium">🏷️ تخفیفی ها</button>
                 <button onclick="filterCategory('stock')" class="w-full text-right px-4 py-2 text-xs text-emerald-700 hover:bg-stone-50 rounded-xl transition-colors font-medium">📦 موجودی ها</button>
@@ -56,18 +55,20 @@
                 <button onclick="showVipModal()" class="w-full text-right px-4 py-2 text-xs text-amber-800 bg-amber-50/60 rounded-xl transition-colors font-medium">👑 اشتراک ویژه VIP</button>
                 
                 <div class="border-t border-stone-100 my-1.5"></div>
-                <div class="px-4 py-1.5 text-xs text-[#a68015] font-bold">دسته‌بندی‌های ویترین✨</div>
+                <div class="px-4 py-1.5 text-xs text-[#a68015] font-bold">طلاهای مینیمال ✨</div>
                 
-                <button onclick="filterCategory('دستبند')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">🔹 دستبند</button>
-                <button onclick="filterCategory('گوشواره')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">🔹 گوشواره</button>
-                <button onclick="filterCategory('انگشتر')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">🔹 انگشتر</button>
-                <button onclick="filterCategory('گردنبند')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">🔹 گردنبند</button>
-                <button onclick="filterCategory('آویز')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">🔹 آویز</button>
-                <button onclick="filterCategory('نیم ست')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">🔹 نیم ست</button>
+                <button onclick="filterCategory('دستبند')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">- دستبند ها</button>
+                <button onclick="filterCategory('گوشواره')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">- گوشواره ها</button>
+                <button onclick="filterCategory('انگشتر')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">- انگشتر ها</button>
+                <button onclick="filterCategory('گردنبند')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">- گردنبند ها</button>
+                <button onclick="filterCategory('آویز')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">- آویز ها</button>
+                <button onclick="filterCategory('پلاک')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">- پلاک ها</button>
+                <button onclick="filterCategory('نیم ست')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">- نیم ست ها</button>
                 
                 <div class="border-t border-stone-100 my-1.5"></div>
-                <button onclick="showAboutUs()" class="w-full text-right px-4 py-2 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">ℹ️ درباره‌ی‌ ما</button>
-                <button onclick="logout()" class="w-full text-right px-4 py-2 text-xs text-rose-600 hover:bg-rose-50 rounded-xl transition-colors font-medium mt-1">🚪 خروج از حساب</button>
+                <button onclick="showAboutUs()" class="w-full text-right px-4 py-2 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">درباره‌ی ما ℹ️</button>
+                <button onclick="showSupportModal()" class="w-full text-right px-4 py-2 text-xs text-blue-700 hover:bg-stone-50 rounded-xl transition-colors">پشتیبانی ☎️</button>
+                <button onclick="logout()" class="w-full text-right px-4 py-2 text-xs text-rose-600 hover:bg-rose-50 rounded-xl transition-colors font-medium mt-1">خروج از حساب 🚪</button>
             </div>
         </div>
 
@@ -84,7 +85,7 @@
                 <div class="text-right">
                     <label class="block text-[10px] font-bold text-[#a68015] mb-1 flex items-center gap-1">
                         نرخ لحظه‌ای ۱ گرم طلای ۱۸ عیار (تومان):
-                        <span id="rate-trend-indicator" class="text-xs transition-all duration-300"></span>
+                        <span id="rate-trend-indicator" class="text-sm transition-all duration-300"></span>
                     </label>
                     <input type="text" id="gold-rate-input" oninput="handleGoldRateChange(this)" value="16,135,500" class="bg-stone-50 text-[#a68015] px-3 py-1.5 rounded-xl border border-stone-200 text-sm font-mono text-center w-44 focus:outline-none focus:ring-1 focus:ring-[#b89327]" dir="ltr">
                 </div>
@@ -99,11 +100,12 @@
                 <input type="number" step="0.01" id="prod-weight" placeholder="وزن به گرم" required class="p-3 rounded-xl bg-white text-stone-800 text-xs border border-[#e5d5c5] text-center font-mono focus:outline-none focus:border-[#b89327]">
                 <input type="number" id="prod-wage" placeholder="درصد اجرت" required class="p-3 rounded-xl bg-white text-stone-800 text-xs border border-[#e5d5c5] text-center font-mono focus:outline-none focus:border-[#b89327]">
                 <input type="number" id="prod-profit" placeholder="درصد سود" required class="p-3 rounded-xl bg-white text-stone-800 text-xs border border-[#e5d5c5] text-center font-mono focus:outline-none focus:border-[#b89327]">
-                <input type="number" id="prod-discount-input" placeholder="درصد تخفیف کالا (در صورت وجود)" value="0" class="p-3 rounded-xl bg-white text-stone-800 text-xs border border-[#e5d5c5] text-center font-mono focus:outline-none focus:border-[#b89327]">
+                <input type="number" id="prod-tax" placeholder="درصد مالیات" required class="p-3 rounded-xl bg-white text-stone-800 text-xs border border-[#e5d5c5] text-center font-mono focus:outline-none focus:border-[#b89327]">
+                <input type="number" id="prod-discount-input" placeholder="درصد تخفیف کالا" value="0" class="p-3 rounded-xl bg-white text-stone-800 text-xs border border-[#e5d5c5] text-center font-mono focus:outline-none focus:border-[#b89327]">
                 
                 <div class="relative flex items-center bg-white rounded-xl border border-[#e5d5c5] px-3 overflow-hidden group">
                     <label for="prod-img-file" class="w-full text-right text-xs text-stone-500 cursor-pointer flex justify-between items-center py-3">
-                        <span id="file-label-text">🖼️ انتخاب عکس از گالری</span>
+                        <span id="file-label-text">🖼️ انتخاب مستقیم عکس از گالری</span>
                         <span class="bg-stone-800 text-white text-[10px] px-2 py-1 rounded-md">برو به گالری</span>
                     </label>
                     <input type="file" id="prod-img-file" accept="image/*" required onchange="handleFileSelect(this)" class="hidden">
@@ -115,10 +117,11 @@
                     <option value="انگشتر">انگشتر</option>
                     <option value="گردنبند">گردنبند</option>
                     <option value="آویز">آویز</option>
+                    <option value="پلاک">پلاک</option>
                     <option value="نیم ست">نیم ست</option>
                 </select>
 
-                <div class="flex items-center gap-6 md:col-span-2 bg-stone-50 p-3 rounded-xl border border-stone-100">
+                <div class="flex items-center gap-6 bg-stone-50 p-3 rounded-xl border border-stone-100">
                     <label class="inline-flex items-center text-xs text-stone-700 cursor-pointer">
                         <input type="checkbox" id="prod-stock" checked class="ml-2 accent-emerald-600"> طلا در انبار موجود است
                     </label>
@@ -127,7 +130,7 @@
             </form>
 
             <div>
-                <h4 class="text-xs font-bold text-stone-500 mb-2">📊 شبیه‌ساز تعداد خرید مشتری (جهتر تست فعال‌سازی VIP):</h4>
+                <h4 class="text-xs font-bold text-stone-500 mb-2">📊 شبیه‌ساز تعداد خرید مشتری (جهت تست فعال‌سازی VIP):</h4>
                 <div class="flex flex-wrap gap-2">
                     <button onclick="setMockPurchases(1)" class="bg-stone-50 text-stone-700 text-[11px] px-3 py-2 rounded-xl border border-stone-200">تنظیم خرید جاری روی ۱ بار</button>
                     <button onclick="setMockPurchases(3)" class="bg-amber-50/60 text-amber-800 text-[11px] px-3 py-2 rounded-xl border border-amber-200">تنظیم خرید جاری روی ۳ بار (شرط خرید VIP)</button>
@@ -135,13 +138,12 @@
             </div>
         </div>
 
-        <div id="sliders-container" class="space-y-8">
-            </div>
+        <div id="sliders-container" class="space-y-8"></div>
 
         <div id="vip-modal" class="hidden fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center p-4 z-50">
             <div class="bg-white border border-[#e5d5c5] p-6 rounded-3xl max-w-xl w-full text-right space-y-6 shadow-2xl">
                 <div class="flex justify-between items-center border-b border-stone-100 pb-3">
-                    <h3 class="text-lg font-medium text-[#a68015] flex items-center gap-1">👑 مزایای اشتراک کاربری VIP</h3>
+                    <h3 class="text-lg font-medium text-[#a68015] flex items-center gap-1">👑 جدول مقایسه و مزایای اشتراک کاربری VIP</h3>
                     <button onclick="closeVipModal()" class="text-stone-400 hover:text-stone-700 text-sm">✕</button>
                 </div>
 
@@ -156,25 +158,30 @@
                         </thead>
                         <tbody class="text-stone-700 divide-y divide-stone-100">
                             <tr>
-                                <td class="p-3.5">تخفیف ویژه روی سود تمامی اجناس</td>
+                                <td class="p-3.5">۲٪ تخفیف ویژه روی سود تمامی اجناس</td>
                                 <td class="p-3.5 text-center text-rose-600">❌ ندارد</td>
                                 <td class="p-3.5 text-center text-emerald-700 font-bold">✅ فعال</td>
                             </tr>
                             <tr>
-                                <td class="p-3.5">پشتیبانی اختصاصی در اینستاگرام و تلگرام</td>
+                                <td class="p-3.5">ضمانت کالا (اصالت و سلامت)</td>
+                                <td class="p-3.5 text-center text-rose-600">❌ ندارد</td>
+                                <td class="p-3.5 text-center text-emerald-700 font-bold">✅ گارانتی کامل</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3.5">پشتیبانی اختصاصی و ۲۴ ساعته</td>
                                 <td class="p-3.5 text-center text-rose-600">❌ ندارد</td>
                                 <td class="p-3.5 text-center text-emerald-700 font-bold">✅ ۲۴ ساعته</td>
                             </tr>
                             <tr>
-                                <td class="p-3.5">ضمانت اصالت و سلامت روی تمامی محصولات</td>
+                                <td class="p-3.5">بسته بندی مخصوص اشتراک ویژه</td>
                                 <td class="p-3.5 text-center text-rose-600">❌ ندارد</td>
-                                <td class="p-3.5 text-center text-emerald-700 font-bold">✅ گارانتی کامل</td>
+                                <td class="p-3.5 text-center text-emerald-700 font-bold">✅ پرمیوم</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <p class="text-[11px] text-stone-500 leading-relaxed">⚠️ طبق قوانین گالری، ارتقا به سطح VIP تنها برای مشتریان وفاداری که بیش از ۲ بار خرید موفق از مجموعه سما زرین داشته‌اند امکان‌پذیر است.</p>
+                <p class="text-[11px] text-stone-500 leading-relaxed">⚠️ طبق قوانین گالری، ارتقا به سطح VIP تنها برای مشتریان وفاداری که بیش از ۲ بار خرید موفق (حداقل ۳ خرید) از مجموعه سما زرین داشته‌اند امکان‌پذیر است.</p>
                 
                 <div class="flex gap-3">
                     <button onclick="activateVip()" class="flex-1 bg-gradient-to-r from-[#b89327] to-[#a68015] text-white text-xs font-bold py-3 rounded-xl shadow-md">👑 درخواست فعال‌سازی و ارتقای حساب</button>
@@ -183,32 +190,38 @@
             </div>
         </div>
 
+        <div id="support-modal" class="hidden fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+            <div class="bg-white border border-[#e5d5c5] p-6 rounded-3xl max-w-sm w-full text-right space-y-5 shadow-2xl">
+                <div class="flex justify-between items-center border-b border-stone-100 pb-2">
+                    <h3 class="text-md font-bold text-[#a68015]">☎️ مرکز پشتیبانی سما زرین</h3>
+                    <button onclick="closeSupportModal()" class="text-stone-400 hover:text-stone-700 text-sm">✕</button>
+                </div>
+                <p class="text-xs text-stone-500">جهت ارتباط با کارشناسان و روند پیگیری سفارشات خود، یکی از پلتفرم‌های زیر را انتخاب نمایید:</p>
+                
+                <div class="flex flex-col gap-3.5">
+                    <a href="https://www.instagram.com/sama_zarinn?igsh=MTB4ZW1iY2VzZ255aA==" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-gradient-to-r from-purple-50 to-pink-50 border border-pink-200 text-pink-700 text-xs font-bold hover:scale-[1.02] transition-transform">
+                        <span>📱 پشتیبانی اینستاگرام</span>
+                        <span dir="ltr" class="font-mono text-[10px]">@sama_zarinn</span>
+                    </a>
+                    
+                    <a href="https://t.me/sama_zarinn" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 text-blue-700 text-xs font-bold hover:scale-[1.02] transition-transform">
+                        <span>✈️ پشتیبانی تلگرام</span>
+                        <span dir="ltr" class="font-mono text-[10px]">@sama_zarinn</span>
+                    </a>
+                    
+                    <button onclick="alert('پشتیبانی پیام‌رسان بله به زودی فعال می‌گردد.')" class="flex items-center justify-between p-3.5 rounded-xl bg-stone-50 border border-stone-200 text-stone-400 text-xs font-bold cursor-not-allowed">
+                        <span>🌱 پشتیبانی بله</span>
+                        <span class="text-[10px] bg-stone-200 px-1.5 py-0.5 rounded-md text-stone-500">به زودی</span>
+                    </button>
+                </div>
+                <button onclick="closeSupportModal()" class="w-full bg-stone-900 text-white text-xs py-2.5 rounded-xl hover:bg-black transition-colors">بستن پنجره</button>
+            </div>
+        </div>
+
         <div id="about-modal" class="hidden fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center p-4 z-50">
             <div class="bg-white border border-[#e5d5c5] p-6 rounded-3xl max-w-md w-full text-right space-y-5 shadow-2xl">
                 <h3 class="text-lg font-medium text-[#a68015]">درباره گالری سما زرین</h3>
                 <p class="text-xs text-stone-600 leading-relaxed">گالری سما زرین ارائه‌دهنده لوکس‌ترین و ظریف‌ترین طلاهای مینیمال ۱۸ عیار است. ما در تلاشیم تا زیبایی و سادگی را در قالب قطعاتی ماندگار به شما هدیه دهیم.</p>
-                
-                <div class="border-t border-stone-100 pt-4 space-y-3">
-                    <h4 class="text-xs font-bold text-[#a68015]">📱 شبکه‌های اجتماعی و ارتباط با ما:</h4>
-                    <div class="flex flex-col gap-2">
-                        <a href="https://www.instagram.com/sama_zarinn?igsh=MTB4ZW1iY2VzZ255aA==" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-stone-50 border border-pink-200 text-pink-700 text-xs font-medium hover:scale-[1.01] transition-transform">
-                            <span class="flex items-center gap-2">
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                                دنبال کردن در اینستاگرام
-                            </span>
-                            <span dir="ltr" class="font-mono text-[10px] text-pink-700 opacity-90">@sama_zarinn</span>
-                        </a>
-
-                        <a href="https://t.me/sama_zarinn" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-stone-50 border border-blue-200 text-blue-700 text-xs font-medium hover:scale-[1.01] transition-transform">
-                            <span class="flex items-center gap-2">
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0011.944 0zm5.556 8.16l-1.896 8.93c-.144.636-.522.792-1.056.492l-2.89-2.13-1.394 1.342c-.154.154-.284.284-.582.284l.206-2.93 5.334-4.82c.232-.206-.05-.32-.36-.114l-6.594 4.15-2.84-.89c-.616-.192-.628-.616.13-.91l11.1-4.28c.513-.192.96.114.748.924z"/></svg>
-                                عضویت در کانال تلگرام
-                            </span>
-                            <span dir="ltr" class="font-mono text-[10px] text-blue-700 opacity-90">@sama_zarinn</span>
-                        </a>
-                    </div>
-                </div>
-
                 <button onclick="closeAboutUs()" class="w-full bg-stone-900 text-white text-xs py-2.5 rounded-xl hover:bg-black cursor-pointer shadow-sm">بستن پنجره</button>
             </div>
         </div>
@@ -222,12 +235,12 @@
         const ADMIN_PHONE = "09111543422";
         const ADMIN_PASS = "211820sk";
 
-        // لیست تمام دسته‌بندی‌های رسمی سایت جهت پوشه‌بندی اسلایدی خودکار
-        const ALL_CATEGORIES = ["دستبند", "گوشواره", "انگشتر", "گردنبند", "آویز", "نیم ست"];
+        // مجموعۀ دسته‌بندی‌های رسمی درخواستی شما
+        const ALL_CATEGORIES = ["دستبند", "گوشواره", "انگشتر", "گردنبند", "آویز", "پلاک", "نیم ست"];
 
         let products = JSON.parse(localStorage.getItem('sama_products')) || [
-            { id: 1, name: "دستبند زنجیری مینیمال باران", weight: 2.45, wagePercent: 12, profitPercent: 9, discountPercent: 5, category: "دستبند", isStock: true, img: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&auto=format&fit=crop&q=60" },
-            { id: 2, name: "انگشتر گره طلا ۱۸ عیار", weight: 1.82, wagePercent: 15, profitPercent: 9, discountPercent: 0, category: "انگشتر", isStock: true, img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=500&auto=format&fit=crop&q=60" }
+            { id: 1, name: "دستبند زنجیری مینیمال باران", weight: 2.45, wagePercent: 12, profitPercent: 9, taxPercent: 9, discountPercent: 5, category: "دستبند", isStock: true, img: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&auto=format&fit=crop&q=60" },
+            { id: 2, name: "انگشتر گره طلا ۱۸ عیار", weight: 1.82, wagePercent: 15, profitPercent: 9, taxPercent: 9, discountPercent: 0, category: "انگشتر", isStock: true, img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=500&auto=format&fit=crop&q=60" }
         ];
 
         let currentFilter = 'all';
@@ -241,6 +254,8 @@
         function closeAboutUs() { document.getElementById('about-modal').classList.add('hidden'); }
         function showVipModal() { document.getElementById('vip-modal').classList.remove('hidden'); toggleMenu(); }
         function closeVipModal() { document.getElementById('vip-modal').classList.add('hidden'); }
+        function showSupportModal() { document.getElementById('support-modal').classList.remove('hidden'); toggleMenu(); }
+        function closeSupportModal() { document.getElementById('support-modal').classList.add('hidden'); }
 
         function setMockPurchases(count) {
             const user = JSON.parse(localStorage.getItem('sama_user'));
@@ -309,39 +324,36 @@
                 let allUsers = JSON.parse(localStorage.getItem('sama_registered_users')) || [];
                 allUsers = allUsers.map(u => u.phone === user.phone ? { ...u, isVip: true } : u);
                 localStorage.setItem('sama_registered_users', JSON.stringify(allUsers));
-                alert("👑 تبریک! حساب شما به سطح VIP ارتقا یافت و ۲٪ سود کمتر روی اجناس فعال شد.");
+                alert("👑 حساب شما به سطح VIP ارتقا یافت و ویژگی‌ها برای شما فعال شد.");
                 closeVipModal();
                 location.reload();
             } else {
-                alert(`❌ عدم امکان ارتقا! شما تا کنون ${user.purchases} بار خرید داشته‌اید. فعال‌سازی نیاز به بیش از ۲ بار خرید دارد.`);
+                alert(`❌ عدم امکان ارتقا! شما تا کنون ${user.purchases} بار خرید داشته‌اید. فعال‌سازی نیاز به بیش از ۲ بار خرید موفق دارد.`);
             }
         }
 
+        // سیستم هوشمند دریافت نرخ و نوسان سنجی با اموجی‌های جدید درخواستی شما
         function startLiveGoldRate() {
             setInterval(() => {
                 const inputElement = document.getElementById('gold-rate-input');
                 if(!inputElement) return;
 
                 const currentRate = parseInt(inputElement.value.replace(/[^0-9]/g, '')) || 16135500;
-                previousGoldRate = currentRate;
 
                 const change = (Math.floor(Math.random() * 50) - 25) * 1000; 
                 const newRate = Math.max(5000000, currentRate + change);
 
-                if(newRate > previousGoldRate) {
+                if(newRate > currentRate) {
                     currentTrend = "up";
-                    document.getElementById('rate-trend-indicator').innerHTML = "<span class='text-emerald-600 font-bold animate-pulse'>🔼</span>";
-                } else if(newRate < previousGoldRate) {
+                    document.getElementById('rate-trend-indicator').innerHTML = "<span class='text-emerald-600 font-bold animate-pulse'>📈</span>";
+                } else if(newRate < currentRate) {
                     currentTrend = "down";
-                    document.getElementById('rate-trend-indicator').innerHTML = "<span class='text-rose-600 font-bold animate-pulse'>🔽</span>";
-                } else {
-                    currentTrend = "";
-                    document.getElementById('rate-trend-indicator').innerHTML = "";
+                    document.getElementById('rate-trend-indicator').innerHTML = "<span class='text-rose-600 font-bold animate-pulse'>📉</span>";
                 }
 
                 inputElement.value = newRate.toLocaleString('en-US');
                 updateAllPrices();
-            }, 5000); 
+            }, 5000); // به روزرسانی لحظه‌ای ۵ ثانیه‌ای جهت تست سریع نوسانات بازار
         }
 
         function addNewProduct(e) {
@@ -356,6 +368,7 @@
                 weight: parseFloat(document.getElementById('prod-weight').value),
                 wagePercent: parseInt(document.getElementById('prod-wage').value),
                 profitPercent: parseInt(document.getElementById('prod-profit').value),
+                taxPercent: parseInt(document.getElementById('prod-tax').value) || 0,
                 discountPercent: parseInt(document.getElementById('prod-discount-input').value) || 0,
                 category: document.getElementById('prod-category').value,
                 isStock: document.getElementById('prod-stock').checked,
@@ -366,11 +379,11 @@
                 localStorage.setItem('sama_products', JSON.stringify(products));
                 alert("✨ طلا با موفقیت اضافه شد!");
                 selectedImageBase64 = ""; 
-                document.getElementById('file-label-text').innerText = "🖼️ انتخاب عکس از گالری";
+                document.getElementById('file-label-text').innerText = "🖼️ انتخاب مستقیم عکس از گالری";
                 e.target.reset();
                 updateAllPrices();
             } catch (error) {
-                alert("❌ خطای حافظه! حجم عکس انتخابی شما خیلی بالا است. لطفا عکس سبک‌تر یا کم‌حجم‌تری انتخاب کنید.");
+                alert("❌ خطای حافظه حافظه! لطفا حجم عکس انتخابی را کمی بهینه‌تر و کمتر کنید.");
             }
         }
 
@@ -388,13 +401,17 @@
             updateAllPrices();
         }
 
-        function calculateGoldPrice(weight, wagePercent, profitPercent, currentRate, isVip, itemDiscountPercent) {
+        // فرمول استاندارد و جامع صرافی: قیمت کل = (قیمت خام + اجرت) + سود + مالیات و سپس اعمال کسر تخفیف کالایی
+        function calculateGoldPrice(weight, wagePercent, profitPercent, taxPercent, currentRate, isVip, itemDiscountPercent) {
             if (isVip) { profitPercent = Math.max(0, profitPercent - 2); }
             const basePrice = weight * currentRate;
             const wageAmount = basePrice * (wagePercent / 100);
-            const subTotal = basePrice + wageAmount;
-            const profitAmount = subTotal * (profitPercent / 100);
-            let finalPrice = subTotal + profitAmount;
+            const subTotal1 = basePrice + wageAmount;
+            const profitAmount = subTotal1 * (profitPercent / 100);
+            const subTotal2 = subTotal1 + profitAmount;
+            const taxAmount = subTotal2 * (taxPercent / 100);
+            let finalPrice = subTotal2 + taxAmount;
+            
             if (itemDiscountPercent > 0) { finalPrice = finalPrice * ((100 - itemDiscountPercent) / 100); }
             return Math.round(finalPrice);
         }
@@ -408,19 +425,17 @@
             updateAllPrices();
         }
 
-        // 🔄 بازنویسی کامل بخش رندر جهت ایجاد ویترین اسلایدی افقی تفکیک شده و پوشه‌بندی شده
         function updateAllPrices() {
             const rawRate = document.getElementById('gold-rate-input').value.replace(/[^0-9]/g, '');
             const currentRate = parseFloat(rawRate) || 0;
             
             const container = document.getElementById('sliders-container');
-            container.innerHTML = ""; // پاک کردن ویترین قبلی
+            container.innerHTML = ""; 
 
             const session = JSON.parse(localStorage.getItem('sama_user'));
             const isAdmin = session && session.role === 'admin';
             const isVip = session && session.isVip === true;
 
-            // فیلتر کردن محصولات کل بانک اطلاعاتی طبق درخواست منو
             const globalFilteredProducts = products.filter(p => {
                 if (currentFilter === 'all') return true;
                 if (currentFilter === 'discount') return p.discountPercent > 0;
@@ -433,29 +448,28 @@
                 return;
             }
 
-            // پوشه‌بندی و رندر اسلایدر افقی مجزا برای هر دسته‌بندی طلا
             ALL_CATEGORIES.forEach(cat => {
-                // پیدا کردن محصولاتی که متعلق به این دسته‌بندی خاص هستند
                 const catProducts = globalFilteredProducts.filter(p => p.category === cat);
                 
-                // اگر این دسته‌بندی محصولی داشت، اسلایدر افقی آن را بساز و رندر کن
                 if (catProducts.length > 0) {
                     let sliderHtml = `
                         <div class="space-y-3">
                             <h2 class="text-md font-medium text-[#a68015] flex items-center gap-1.5 px-1">
-                                <span class="w-1.5 h-1.5 rounded-full bg-[#b89327]"></span> ردیف اسلایدی ${cat}‌ها
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#b89327]"></span> ردیف ${cat}‌ها
                             </h2>
                             <div class="horizontal-slider flex gap-4 overflow-x-auto pb-4 pt-1 px-1 scroll-snap-type-x-mandatory">
                     `;
 
                     catProducts.forEach(p => {
-                        const finalPrice = calculateGoldPrice(p.weight, p.wagePercent, p.profitPercent, currentRate, isVip, p.discountPercent);
+                        // پاس دادن فیلد مالیات (taxPercent) که ممکن است در آرایه محصولات قدیمی نباشد (اگر نبود پیش‌فرض 9 درصد)
+                        const itemTax = p.taxPercent !== undefined ? p.taxPercent : 9;
+                        const finalPrice = calculateGoldPrice(p.weight, p.wagePercent, p.profitPercent, itemTax, currentRate, isVip, p.discountPercent);
                         
                         let cardTrendBadge = "";
                         if(currentTrend === "up") {
-                            cardTrendBadge = "<span class='text-emerald-600 ml-1 text-xs font-bold'>▲</span>";
+                            cardTrendBadge = "<span class='text-emerald-600 ml-1 text-xs font-bold'>📈</span>";
                         } else if(currentTrend === "down") {
-                            cardTrendBadge = "<span class='text-rose-600 ml-1 text-xs font-bold'>▼</span>";
+                            cardTrendBadge = "<span class='text-rose-600 ml-1 text-xs font-bold'>📉</span>";
                         }
 
                         sliderHtml += `
