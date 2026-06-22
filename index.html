@@ -3,81 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ویترین گالری سما زرین</title>
+    <title>گالری طلا و جواهر سما زرین</title>
     <style>
-        /* 🎨 ۱. تغییر رنگ بک‌گراند به خیلی روشن + وکتورهای طلایی */
+        /* 🎨 ۱. بک‌گراند بسیار روشن همراه با وکتورهای طلایی محو */
         body {
-            background-color: #faf8f5; /* رنگ کرم-سفید بسیار روشن */
-            /* اضافه کردن وکتورهای طلا/اسلیمی به صورت بک‌گراند تکرارشونده و محو */
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><path d="M30 5 C35 15, 45 15, 45 25 C45 35, 35 35, 30 45 C25 35, 15 35, 15 25 C15 15, 25 15, 30 5 Z" fill="none" stroke="%23d4af37" stroke-width="0.7" opacity="0.15"/></svg>');
-            font-family: Tahoma, sans-serif;
+            background-color: #faf8f5; 
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><path d="M40 10 C48 25, 60 25, 60 40 C60 55, 48 55, 40 70 C32 55, 20 55, 20 40 C20 25, 32 25, 40 10 Z" fill="none" stroke="%23d4af37" stroke-width="0.6" opacity="0.12"/></svg>');
+            font-family: Arial, Tahoma, sans-serif;
             margin: 0;
             padding: 15px;
             color: #333;
         }
 
-        /* 🤍 ۲. سفید کردن کامل جاهای نوشتنی (باکس‌ها و اینپوت‌ها) */
-        .input-box, .search-container input, .info-card {
-            background-color: #ffffff !important; /* سفید خالص */
+        .header {
+            text-align: center;
+            padding: 15px 0;
+        }
+        .header h1 {
+            font-size: 1.6rem;
+            color: #bc932b;
+            margin: 0;
+        }
+
+        /* 🤍 ۲. سفید کردن کامل جاهای نوشتنی و کادرها */
+        .search-box, .admin-panel input, .admin-panel select, .admin-panel button {
+            background-color: #ffffff !important;
             border: 1px solid #e5d5c5;
             border-radius: 12px;
             padding: 12px;
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.06); /* سایه بسیار ملایم طلایی */
-            color: #222;
+            width: 100%;
+            box-sizing: border-box;
+            outline: none;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.04);
         }
 
-        /* 📦 ۳. ساختار ردیف اسلایدی (پوشه‌بندی محصولات) */
+        .admin-panel button {
+            background-color: #bc932b !important;
+            color: white !important;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* 📦 ۳. استایل دسته‌بندی و ردیف‌های اسلایدی دینامیک */
         .category-section {
             margin-bottom: 30px;
+            display: none; /* در ابتدا مخفی است و اگر محصولی باشد ظاهر می‌شود */
         }
 
         .category-title {
             font-size: 1.1rem;
             color: #b8860b;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
 
-        /* ردیف اسلایدی افقی مخصوص موبایل و آیفون */
         .horizontal-slider {
             display: flex;
             gap: 15px;
-            overflow-x: auto; /* فعال کردن اسکرول افقی */
-            padding-bottom: 10px;
+            overflow-x: auto;
+            padding: 5px 5px 15px 5px;
             scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch; /* اسکرول نرم در آیفون */
+            -webkit-overflow-scrolling: touch;
         }
 
-        /* حذف کردن نوار اسکرول زشت برای زیبایی */
         .horizontal-slider::-webkit-scrollbar {
             display: none;
         }
 
-        /* کارت‌های داخل اسلایدر */
         .product-card {
-            flex: 0 0 160px; /* عرض ثابت برای هر محصول در اسلاید */
+            flex: 0 0 160px;
             scroll-snap-align: start;
-            background: #ffffff;
-            border-radius: 15px;
-            border: 1px solid #f0e6df;
-            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 18px;
+            border: 1px solid #f2e9e1;
+            padding: 12px;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+            position: relative;
         }
 
         .product-card img {
             width: 100%;
             height: 140px;
             object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 8px;
+            border-radius: 12px;
+            margin-bottom: 10px;
         }
 
         .product-title {
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             margin: 5px 0;
             color: #444;
         }
@@ -87,46 +104,154 @@
             color: #d4af37;
             font-weight: bold;
         }
+
+        /* دکمه حذف محصول برای ادمین */
+        .delete-btn {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            line-height: 20px;
+        }
+
+        /* خط جداکننده پنل مدیریت */
+        .divider {
+            border-top: 2px dashed #e5d5c5;
+            margin: 40px 0;
+        }
+
+        .admin-title {
+            color: #bc932b;
+            text-align: center;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="category-section">
-        <div class="search-container">
-            <input type="text" class="input-box" placeholder="🔍 جستجو در محصولات سما زرین..." style="width: 100%; box-sizing: border-box;">
-        </div>
+    <div class="header">
+        <h1>گالری سما زرین</h1>
     </div>
 
-    <div class="category-section">
-        <div class="category-title">✨ ردیف اسلایدی دستبندها</div>
-        <div class="horizontal-slider">
+    <input type="text" class="search-box" placeholder="🔍 جستجو در مدل‌های سما زرین...">
+
+    <div class="category-section" id="sec-bracelets">
+        <div class="category-title">✨ دستبندها</div>
+        <div class="horizontal-slider" id="slider-bracelets"></div>
+    </div>
+
+    <div class="category-section" id="sec-rings">
+        <div class="category-title">✨ انگشترها</div>
+        <div class="horizontal-slider" id="slider-rings"></div>
+    </div>
+
+    <div class="category-section" id="sec-necklaces">
+        <div class="category-title">✨ گردنبندها</div>
+        <div class="horizontal-slider" id="slider-necklaces"></div>
+    </div>
+
+    <div class="category-section" id="sec-earrings">
+        <div class="category-title">✨ گوشواره‌ها</div>
+        <div class="horizontal-slider" id="slider-earrings"></div>
+    </div>
+
+
+    <div class="divider"></div>
+
+
+    <div class="admin-panel">
+        <h3 class="admin-title">🛠️ پنل مدیریت مدیریت سما زرین</h3>
+        
+        <input type="text" id="prod-title" placeholder="نام محصول (مثلا: گوشواره لوتوس)">
+        <input type="text" id="prod-price" placeholder="قیمت (مثلا: ۸,۵۰۰,۰۰۰ تومان)">
+        <input type="text" id="prod-img" placeholder="آدرس یا اسم عکس (مثلا: img/earrings/e1.jpg)">
+        
+        <select id="prod-category">
+            <option value="bracelets">دستبندها</option>
+            <option value="rings">انگشترها</option>
+            <option value="necklaces">گردنبندها</option>
+            <option value="earrings">گوشواره‌ها</option>
+        </select>
+        
+        <button onclick="addProduct()">➕ افزودن به ویترین اسلایدی</button>
+    </div>
+
+    <script>
+        // خواندن محصولات ذخیره شده قبلی
+        let products = JSON.parse(localStorage.getItem('gallery_products')) || [];
+
+        // نمایش دادن محصولات در دسته‌بندی خودشان
+        function renderProducts() {
+            // خالی کردن اسلایدرها قبل از رندر جدید
+            const categories = ['bracelets', 'rings', 'necklaces', 'earrings'];
+            categories.forEach(cat => {
+                document.getElementById(`slider-${cat}`).innerHTML = '';
+                document.getElementById(`sec-${cat}`).style.display = 'none';
+            });
+
+            // پخش کردن هر محصول در پوشه/اسلایدر خودش
+            products.forEach((prod, index) => {
+                const slider = document.getElementById(`slider-${prod.category}`);
+                const section = document.getElementById(`sec-${prod.category}`);
+                
+                if (slider && section) {
+                    section.style.display = 'block'; // ردیف را روشن کن
+                    
+                    const card = `
+                        <div class="product-card">
+                            <button class="delete-btn" onclick="deleteProduct(${index})">×</button>
+                            <img src="${prod.img}" alt="${prod.title}">
+                            <div class="product-title">${prod.title}</div>
+                            <div class="product-price">${prod.price}</div>
+                        </div>
+                    `;
+                    slider.innerHTML += card;
+                }
+            });
+        }
+
+        // عملکرد دکمه افزودن محصول جدید
+        function addProduct() {
+            const title = document.getElementById('prod-title').value;
+            const price = document.getElementById('prod-price').value;
+            const img = document.getElementById('prod-img').value;
+            const category = document.getElementById('prod-category').value;
+
+            if(!title || !price || !img) {
+                alert('لطفا تمام کادرها را پر کنید!');
+                return;
+            }
+
+            // اضافه کردن به آرایه
+            products.push({ title, price, img, category });
+            // ذخیره در حافظه مرورگر
+            localStorage.setItem('gallery_products', JSON.stringify(products));
             
-            <div class="product-card">
-                <img src="img/bracelets/b1.jpg" alt="دستبند کارتیر">
-                <h4 class="product-title">دستبند کارتیر مدرن</h4>
-                <div class="product-price">۱۴,۵۰۰,۰۰۰ تومان</div>
-            </div>
+            // فرم را خالی کن
+            document.getElementById('prod-title').value = '';
+            document.getElementById('prod-price').value = '';
+            document.getElementById('prod-img').value = '';
+            
+            // بروزرسانی ویترین
+            renderProducts();
+        }
 
-            <div class="product-card">
-                <img src="img/bracelets/b2.jpg" alt="دستbند مینیمال">
-                <h4 class="product-title">دستبند برلیان مینیمال</h4>
-                <div class="product-price">۹,۲۰۰,۰۰۰ تومان</div>
-            </div>
+        // حذف محصول
+        function deleteProduct(index) {
+            products.splice(index, 1);
+            localStorage.setItem('gallery_products', JSON.stringify(products));
+            renderProducts();
+        }
 
-            <div class="product-card">
-                <img src="img/bracelets/b3.jpg" alt="دستبند زنجیری">
-                <h4 class="product-title">دستبند زنجیری البرز</h4>
-                <div class="product-price">۱۱,۸۰۰,۰۰۰ تومان</div>
-            </div>
-
-            <div class="product-card">
-                <img src="img/bracelets/b4.jpg" alt="دستبند لوتوس">
-                <h4 class="product-title">دستبند طرح لوتوس</h4>
-                <div class="product-price">۱۸,۶۰۰,۰۰۰ تومان</div>
-            </div>
-
-        </div>
-    </div>
-
+        // اجرای اولیه هنگام باز شدن صفحه
+        renderProducts();
+    </script>
 </body>
 </html>
