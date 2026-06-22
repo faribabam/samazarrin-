@@ -17,7 +17,6 @@
 </head>
 <body id="main-body" class="p-4 md:p-8 flex items-center justify-center min-h-screen bg-[#faf8f5]" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 80 80&quot;><path d=&quot;M40 10 C48 25, 60 25, 60 40 C60 55, 48 55, 40 70 C32 55, 20 55, 20 40 C20 25, 32 25, 40 10 Z&quot; fill=&quot;none&quot; stroke=&quot;%23d4af37&quot; stroke-width=&quot;0.6&quot; opacity=&quot;0.12&quot;/></svg>');">
 
-    <!-- 🔐 بخش ورود / ثبت نام -->
     <div id="auth-box" class="w-full max-w-sm bg-white p-8 rounded-3xl shadow-xl border border-[#e5d5c5]">
         <h1 class="text-center text-2xl font-light tracking-widest text-[#a68015] mb-2 uppercase">SAMA ZARRIN</h1>
         <p class="text-center text-xs text-stone-500 mb-6">ورود / ثبت‌نام در گالری سما زرین</p>
@@ -39,10 +38,27 @@
         </form>
     </div>
 
-    <!-- 🛍️ پنل اصلی ویترین گالری -->
     <div id="main-panel" class="w-full max-w-5xl mx-auto hidden relative">
         
-        <!-- منوی دکمه سه نقطه (همبرگری پیشرفته) -->
+        <div id="admin-hamburger-zone" class="absolute top-4 right-4 z-50 hidden">
+            <button onclick="toggleAdminMenu()" class="w-10 h-10 rounded-full bg-stone-900 flex items-center justify-center text-white hover:bg-black transition-colors cursor-pointer shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+            
+            <div id="admin-dropdown-menu" class="hidden absolute right-0 mt-2 w-56 bg-white border border-stone-200 rounded-2xl shadow-xl p-2 text-right z-50">
+                <button onclick="switchAdminView('showcase')" class="w-full text-right px-4 py-2.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors font-medium flex items-center justify-between">
+                    <span>🛍️ مشاهده ویترین مغازه</span>
+                    <span class="text-[10px] text-stone-400">لینک ویترین</span>
+                </button>
+                <button onclick="switchAdminView('panel')" class="w-full text-right px-4 py-2.5 text-xs text-[#a68015] hover:bg-stone-50 rounded-xl transition-colors font-bold flex items-center justify-between border-t border-stone-100 mt-1">
+                    <span>🛠️ ورود به پنل مدیریت</span>
+                    <span class="text-[9px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded-md">ادمین</span>
+                </button>
+            </div>
+        </div>
+
         <div class="absolute top-4 left-4 z-50">
             <button onclick="toggleMenu()" class="w-10 h-10 rounded-full bg-white border border-[#e5d5c5] flex items-center justify-center text-[#a68015] hover:bg-stone-50 transition-colors cursor-pointer shadow-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -76,8 +92,7 @@
             </div>
         </div>
 
-        <!-- هدر بالایی ویترین -->
-        <header class="flex flex-col sm:flex-row justify-between items-center pb-6 border-b border-stone-200 mb-6 gap-4 pl-14">
+        <header class="flex flex-col sm:flex-row justify-between items-center pb-6 border-b border-stone-200 mb-6 gap-4 pl-14 pr-14">
             <div class="text-right">
                 <h1 class="text-3xl font-light tracking-widest text-[#a68015] uppercase drop-shadow-sm">SAMA ZARRIN</h1>
                 <div class="flex items-center gap-2 mt-1">
@@ -97,8 +112,7 @@
             </div>
         </header>
 
-        <!-- 🔍 بخش جستجو و فیلترهای پیشرفته مشتری -->
-        <div class="bg-white border border-[#e5d5c5] rounded-2xl p-4 mb-8 shadow-sm text-right grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 items-center">
+        <div id="customer-filter-area" class="bg-white border border-[#e5d5c5] rounded-2xl p-4 mb-8 shadow-sm text-right grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 items-center">
             <div>
                 <label class="block text-[11px] text-stone-500 font-medium mb-1.5">🔍 جستجوی نام کالا</label>
                 <input type="text" id="search-input" oninput="updateAllPrices()" placeholder="مثلا: انگشتر گره، دستبند..." class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs focus:outline-none focus:border-[#b89327]">
@@ -129,7 +143,6 @@
             </div>
         </div>
 
-        <!-- 🛠️ پنل مدیریت جامع با تنظیمات پیشرفته -->
         <div id="admin-panel" class="hidden bg-white border border-[#e5d5c5] rounded-3xl p-6 mb-8 text-right shadow-md space-y-6">
             <h3 class="text-md font-medium text-[#a68015]">🛠️ مدیریت ویترین و مشتریان سما زرین</h3>
             
@@ -176,10 +189,8 @@
             </div>
         </div>
 
-        <!-- 📥 بخش ردیف‌های اسلایدی هوشمند و مستقل -->
         <div id="sliders-container" class="space-y-8"></div>
 
-        <!-- 👑 مودال مقایسه‌ای اشتراک vip -->
         <div id="vip-modal" class="hidden fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center p-4 z-50">
             <div class="bg-white border border-[#e5d5c5] p-6 rounded-3xl max-w-xl w-full text-right space-y-6 shadow-2xl">
                 <div class="flex justify-between items-center border-b border-stone-100 pb-3">
@@ -230,7 +241,6 @@
             </div>
         </div>
 
-        <!-- ☎️ مودال صفحه پشتیبانی با سه دکمه اختصاصی -->
         <div id="support-modal" class="hidden fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center p-4 z-50">
             <div class="bg-white border border-[#e5d5c5] p-6 rounded-3xl max-w-sm w-full text-right space-y-5 shadow-2xl">
                 <div class="flex justify-between items-center border-b border-stone-100 pb-2">
@@ -258,7 +268,6 @@
             </div>
         </div>
 
-        <!-- ℹ️ مودال درباره ما -->
         <div id="about-modal" class="hidden fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center p-4 z-50">
             <div class="bg-white border border-[#e5d5c5] p-6 rounded-3xl max-w-md w-full text-right space-y-5 shadow-2xl">
                 <h3 class="text-lg font-medium text-[#a68015]">درباره گالری سما زرین</h3>
@@ -289,6 +298,27 @@
         let currentTrend = ""; 
 
         function toggleMenu() { document.getElementById('dropdown-menu').classList.toggle('hidden'); }
+        function toggleAdminMenu() { document.getElementById('admin-dropdown-menu').classList.toggle('hidden'); }
+        
+        // کنترل جابجایی بین نمای ویترین و پنل مدیریت برای ادمین
+        function switchAdminView(view) {
+            document.getElementById('admin-dropdown-menu').classList.add('hidden');
+            const adminPanel = document.getElementById('admin-panel');
+            const slidersContainer = document.getElementById('sliders-container');
+            const customerFilterArea = document.getElementById('customer-filter-area');
+
+            if (view === 'panel') {
+                adminPanel.classList.remove('hidden');
+                slidersContainer.classList.add('hidden');
+                customerFilterArea.classList.add('hidden');
+            } else {
+                adminPanel.classList.add('hidden');
+                slidersContainer.classList.remove('hidden');
+                customerFilterArea.classList.remove('hidden');
+                updateAllPrices();
+            }
+        }
+
         function logout() { localStorage.removeItem('sama_user'); location.reload(); }
         function showAboutUs() { document.getElementById('about-modal').classList.remove('hidden'); toggleMenu(); }
         function closeAboutUs() { document.getElementById('about-modal').classList.add('hidden'); }
@@ -423,7 +453,7 @@
                 e.target.reset();
                 updateAllPrices();
             } catch (error) {
-                alert("❌ خطای حافظه حافظه! لطفا حجم عکس انتخابی را کمی بهینه‌تر و کمتر کنید.");
+                alert("❌ خطای حافظه! لطفا حجم عکس انتخابی را کمی بهینه‌تر و کمتر کنید.");
             }
         }
 
@@ -464,7 +494,6 @@
             updateAllPrices();
         }
 
-        // تابع اصلی آپدیت ویترین به همراه اعمال فیلترهای سرچ مشتری
         function updateAllPrices() {
             const rawRate = document.getElementById('gold-rate-input').value.replace(/[^0-9]/g, '');
             const currentRate = parseFloat(rawRate) || 0;
@@ -476,13 +505,11 @@
             const isAdmin = session && session.role === 'admin';
             const isVip = session && session.isVip === true;
 
-            // دریافت مقادیر فیلترها از نوار ابزار مشتری
             const searchQuery = document.getElementById('search-input').value.trim().toLowerCase();
             const weightFilter = document.getElementById('filter-weight').value;
             const priceFilter = document.getElementById('filter-price').value;
             const onlyStock = document.getElementById('filter-only-stock').checked;
 
-            // فیلتر اولیه بر اساس منوی سه نقطه (تخفیفی‌ها، موجودی‌ها و...)
             let filteredList = products.filter(p => {
                 if (currentFilter === 'all') return true;
                 if (currentFilter === 'discount') return p.discountPercent > 0;
@@ -490,12 +517,10 @@
                 return p.category === currentFilter;
             });
 
-            // اعمال فیلتر سرچ نام کالا
             if (searchQuery !== "") {
                 filteredList = filteredList.filter(p => p.name.toLowerCase().includes(searchQuery));
             }
 
-            // اعمال فیلتر وزن
             if (weightFilter !== "all") {
                 filteredList = filteredList.filter(p => {
                     if (weightFilter === "light") return p.weight < 2;
@@ -505,12 +530,10 @@
                 });
             }
 
-            // اعمال فیلتر انبار (فقط موجودها)
             if (onlyStock) {
                 filteredList = filteredList.filter(p => p.isStock);
             }
 
-            // اعمال فیلتر قیمت (نیاز به محاسبه تک به تک قیمت نهایی کالا دارد)
             if (priceFilter !== "all") {
                 filteredList = filteredList.filter(p => {
                     const itemTax = p.taxPercent !== undefined ? p.taxPercent : 9;
@@ -594,8 +617,14 @@
                 document.getElementById('user-welcome').innerText = `✨ ${user.name} خوش آمدید`;
                 
                 if (user.isVip) { document.getElementById('vip-badge').classList.remove('hidden'); }
-                if (user.role === 'admin') { document.getElementById('admin-panel').classList.remove('hidden'); }
-                updateAllPrices();
+                
+                // بررسی دقیق شماره ادمین جهت فعال‌سازی دکمه سه خط جدید
+                if (user.role === 'admin' && user.phone === ADMIN_PHONE) { 
+                    document.getElementById('admin-hamburger-zone').classList.remove('hidden'); 
+                }
+                
+                // در بدو ورود، پنل مدیریت مخفی است و کاربر مستقیماً ویترین را می‌بیند.
+                switchAdminView('showcase');
                 startLiveGoldRate(); 
             }
         }
