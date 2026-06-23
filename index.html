@@ -17,15 +17,63 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.15); /* تاری و تاریکی ملایم */
+            background: rgba(0, 0, 0, 0.12); /* تاری و تاریکی ملایم */
             z-index: -1;
             pointer-events: none;
         }
+
+        /* بوم اصلی پس‌زمینه کل سایت که المان‌های ادمین روش رندر میشن */
+        #site-canvas-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            pointer-events: none; /* مشتری‌ها نتوانند المان‌ها را جابجا کنند */
+        }
+
+        /* وقتی ادمین در پنل مدیریت است، بوم پس‌زمینه قابل کلیک و ویرایش می‌شود */
+        body.admin-editing-bg #site-canvas-background {
+            pointer-events: auto !important;
+            z-index: 40 !important;
+            border: 4px dashed #b89327;
+        }
+
+        /* نوار راهنمای ادیتور بکگراند زنده */
+        #admin-bg-editor-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background: rgba(15, 15, 25, 0.95);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
     </style>
 </head>
-<body id="main-body" class="p-4 md:p-8 flex items-center justify-center min-h-screen bg-[#faf8f5] bg-cover bg-center bg-no-repeat bg-fixed transition-all duration-500">
+<body id="main-body" class="p-4 md:p-8 flex items-center justify-center min-h-screen transition-all duration-500">
+
+    <canvas id="site-canvas-background"></canvas>
 
     <div class="bg-overlay"></div>
+
+    <div id="admin-bg-editor-bar" class="hidden flex-wrap items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl text-white">
+        <span class="text-xs font-bold text-amber-400 border-l border-stone-700 pl-3 ml-1">🎬 حالت ویرایش زنده پس‌زمینه سایت</span>
+        
+        <label for="bg-element-file" class="bg-[#b89327] hover:bg-[#a68015] text-white text-[11px] font-bold px-3 py-2 rounded-xl cursor-pointer transition-all">
+            ＋ افزودن وکتور/عکس بدون بکگراند (PNG)
+        </label>
+        <input type="file" id="bg-element-file" accept="image/*" onchange="addVectorToBackground(this)" class="hidden">
+
+        <button onclick="deleteSelectedBgObject()" class="bg-rose-600 hover:bg-rose-700 text-white text-[11px] px-3 py-2 rounded-xl transition-all">
+            🗑️ حذف آیتم انتخابی
+        </button>
+        
+        <button onclick="saveLiveBackgroundDesign()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold px-5 py-2 rounded-xl transition-all">
+            💾 ذخیره چیدمان بکگراند
+        </button>
+    </div>
 
     <div id="auth-box" class="w-full max-w-sm bg-white/95 backdrop-blur-md p-8 rounded-3xl shadow-xl border border-[#e5d5c5] z-10">
         <h1 class="text-center text-2xl font-light tracking-widest text-[#a68015] mb-2 uppercase">SAMA ZARRIN</h1>
@@ -99,7 +147,6 @@
                 
                 <div class="border-t border-stone-100 my-1.5"></div>
                 <div class="px-4 py-1.5 text-xs text-[#a68015] font-bold">دسته‌بندی‌های طلا ✨</div>
-                
                 <div id="dynamic-menu-categories" class="space-y-0.5"></div>
                 
                 <div class="border-t border-stone-100 my-1.5"></div>
@@ -233,7 +280,7 @@
                     </div>
                     
                     <div>
-                        <label class="text-[11px] text-stone-500 block mb-1">دسته‌بندی طلا</label>
+                        <label class="text-[11px] text-stone-500 block mb-1">دسته‌ب بندی طلا</label>
                         <select id="prod-category" class="w-full p-3 rounded-xl bg-white border border-[#e5d5c5] text-xs"></select>
                     </div>
 
@@ -244,31 +291,29 @@
                     </div>
                     <button type="submit" class="md:col-span-3 bg-stone-900 text-white text-xs font-medium py-3.5 rounded-xl hover:bg-black cursor-pointer">➕ افزودن کالا به ویترین گالری</button>
                 </form>
-                <div>
-                    <h4 class="text-xs font-bold text-stone-500 mb-2">📊 شبیه‌ساز تعداد دور خرید جهت فعال‌سازی دکمه تست VIP:</h4>
-                    <div class="flex flex-wrap gap-2">
-                        <button onclick="setMockPurchases(1)" class="bg-stone-50 text-stone-700 text-[11px] px-3 py-2 rounded-xl border border-stone-200 cursor-pointer">تنظیم خرید روی ۱ دور (غیرمجاز)</button>
-                        <button onclick="setMockPurchases(2)" class="bg-amber-50/60 text-amber-800 text-[11px] px-3 py-2 rounded-xl border border-amber-200 cursor-pointer">تنظیم خرید روی ۲ دور (شرط فعال‌سازی VIP)</button>
-                    </div>
-                </div>
             </div>
 
             <div class="bg-white border border-[#e5d5c5] rounded-3xl p-6 shadow-md space-y-6">
                 <h3 class="text-md font-medium text-[#a68015] flex items-center gap-1">⚙️ تنظیمات عمومی و شخصی‌سازی کل سایت</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="space-y-4">
+                        
                         <div class="bg-gradient-to-r from-stone-900 to-stone-950 p-5 rounded-2xl border border-stone-800 text-right space-y-3 shadow-lg">
-                            <label class="text-xs font-bold text-amber-400 block flex items-center gap-1">🎬 استودیو پس‌زمینه سایت (مخصوص شما)</label>
-                            <p class="text-[10px] text-stone-400">عکس دلخواهت رو آپلود کن تا پس‌زمینه کل سایت تغییر کنه.</p>
+                            <label class="text-xs font-bold text-amber-400 block flex items-center gap-1">🎬 استودیو پس‌زمینه زنده سایت (کپ‌کات استایل)</label>
+                            <p class="text-[10px] text-stone-400">عکس پس‌زمینه اصلی را تغییر بده و وکتورهای طلا (بدون پس‌زمینه) را به دلخواه در گوشه‌ها بچین.</p>
                             
-                            <div class="flex gap-2 items-center">
-                                <label for="admin-bg-file" class="bg-[#b89327] hover:bg-[#a68015] text-white text-xs font-bold px-4 py-2.5 rounded-xl cursor-pointer shadow-sm transition-all text-center flex-1">
-                                    ＋ انتخاب عکس پس‌زمینه از گالری
+                            <div class="grid grid-cols-1 gap-2 pt-1">
+                                <label for="admin-bg-file" class="bg-[#b89327] hover:bg-[#a68015] text-white text-xs font-bold p-3 rounded-xl cursor-pointer shadow-sm transition-all text-center block">
+                                    🖼️ ۱. تغییر عکس پس‌زمینه اصلی سایت
                                 </label>
                                 <input type="file" id="admin-bg-file" accept="image/*" onchange="handleAdminBackgroundUpload(this)" class="hidden">
                                 
-                                <button type="button" onclick="resetToDefaultBackground()" class="bg-stone-800 hover:bg-stone-700 text-stone-300 text-[11px] px-4 py-2.5 rounded-xl transition-all">
-                                    ریست پس‌زمینه
+                                <button type="button" onclick="enterLiveBgEditMode()" class="bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold p-3 rounded-xl transition-all shadow-sm">
+                                    ✨ ۲. ورود به حالت چیدمان وکتورها روی بکگراند زنده
+                                </button>
+                                
+                                <button type="button" onclick="resetToDefaultBackground()" class="bg-stone-800 hover:bg-stone-700 text-stone-400 text-[10px] py-2 rounded-xl transition-all">
+                                    ریست کامل پس‌زمینه و المان‌ها
                                 </button>
                             </div>
                         </div>
@@ -430,7 +475,8 @@
             telegramUrl: "https://t.me/sama_zarinn",
             telegramHandle: "sama_zarinn",
             backgroundStyle: "#faf8f5",
-            customBackgroundImage: "", // نگهداری عکس پس‌زمینه کاستوم ادمین
+            customBackgroundImage: "", 
+            canvasLayoutJSON: "", // ذخیره کل وکتورها و آیتم‌های چیده شده روی پس‌زمینه
             categories: ["دستبند", "گوشواره", "انگشتر", "گردنبند", "آویز", "پلاک", "نیم ست"]
         };
 
@@ -447,12 +493,155 @@
         
         let fabricCanvasInitialized = false;
         let canvas;
+        
+        // 🌟 متغیرهای مربوط به بوم پس‌زمینه زنده سایت
+        let bgCanvas;
 
         window.addEventListener('click', function() {
             document.getElementById('dropdown-menu').classList.add('hidden');
             const adminMenu = document.getElementById('admin-dropdown-menu');
             if(adminMenu) adminMenu.classList.add('hidden');
         });
+
+        // تنظیم و رندر بوم پس‌زمینه در کل ابعاد نمایشگر
+        function initGlobalBackgroundCanvas() {
+            const canvasEl = document.getElementById('site-canvas-background');
+            canvasEl.width = window.innerWidth;
+            canvasEl.height = window.innerHeight;
+
+            bgCanvas = new fabric.Canvas('site-canvas-background', {
+                width: window.innerWidth,
+                height: window.innerHeight,
+                selection: false
+            });
+
+            // لود کردن طراحی‌های ذخیره شده قبلی وکتورها توسط ادمین
+            if (siteSettings.canvasLayoutJSON) {
+                bgCanvas.loadFromJSON(siteSettings.canvasLayoutJSON, function() {
+                    // غیرفعال کردن کلیک روی المان‌ها برای مشتری عادی به صورت پیش‌فرض
+                    bgCanvas.forEachObject(obj => {
+                        obj.selectable = false;
+                        obj.evented = false;
+                    });
+                    bgCanvas.renderAll();
+                });
+            }
+            
+            applyBackgroundImageToCanvas();
+        }
+
+        function applyBackgroundImageToCanvas() {
+            if(!bgCanvas) return;
+            
+            if (siteSettings.customBackgroundImage) {
+                fabric.Image.fromURL(siteSettings.customBackgroundImage, function(img) {
+                    // فیت کردن عکس اصلی در بکگراند مثل کپ‌کات
+                    const canvasAspect = bgCanvas.width / bgCanvas.height;
+                    const imgAspect = img.width / img.height;
+                    let scaleFactor;
+                    
+                    if (canvasAspect >= imgAspect) {
+                        scaleFactor = bgCanvas.width / img.width;
+                    } else {
+                        scaleFactor = bgCanvas.height / img.height;
+                    }
+                    
+                    bgCanvas.setBackgroundImage(img, bgCanvas.renderAll.bind(bgCanvas), {
+                        scaleX: scaleFactor,
+                        scaleY: scaleFactor,
+                        originX: 'left',
+                        originY: 'top'
+                    });
+                });
+            } else {
+                bgCanvas.setBackgroundImage(null, bgCanvas.renderAll.bind(bgCanvas));
+                bgCanvas.backgroundColor = siteSettings.backgroundStyle || "#faf8f5";
+                bgCanvas.renderAll();
+            }
+        }
+
+        // ورود ادمین به حالت ادیت کپ‌کاتیِ زنده روی بکگراند سایت
+        function enterLiveBgEditMode() {
+            document.body.classList.add('admin-editing-bg');
+            document.getElementById('admin-bg-editor-bar').classList.remove('hidden');
+            
+            // فعال کردن کنترل‌ها جهت تغییر سایز و چیدمان وکتورها توسط ادمین
+            bgCanvas.forEachObject(obj => {
+                obj.selectable = true;
+                obj.evented = true;
+                obj.cornerColor = '#b89327';
+                obj.cornerSize = 18;
+                obj.transparentCorners = false;
+            });
+            bgCanvas.selection = true;
+            bgCanvas.renderAll();
+            
+            alert("🎬 وارد حالت ادیت زنده شدی! حالا هر گوشه سایت که دوست داری کلیک کن، عکس بدون بکگراند اضافه کن، بچرخون یا جابجا کن.");
+        }
+
+        // افزودن مستقیم وکتور طلا یا عکس ریموو بکگراند شده به بوم اصلی صفحه
+        function addVectorToBackground(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(f) {
+                fabric.Image.fromURL(f.target.result, function(img) {
+                    img.scaleToWidth(180); // سایز پیش‌فرض اولیه وکتورها
+                    img.set({
+                        left: bgCanvas.width / 2,
+                        top: bgCanvas.height / 2,
+                        originX: 'center',
+                        originY: 'center',
+                        cornerColor: '#b89327',
+                        borderColor: '#b89327',
+                        cornerSize: 20,
+                        transparentCorners: false,
+                        selectable: true,
+                        evented: true
+                    });
+                    bgCanvas.add(img);
+                    bgCanvas.setActiveObject(img);
+                    bgCanvas.renderAll();
+                });
+            };
+            reader.readAsDataURL(file);
+            input.value = '';
+        }
+
+        function deleteSelectedBgObject() {
+            const activeObject = bgCanvas.getActiveObject();
+            if (activeObject) {
+                bgCanvas.remove(activeObject);
+                bgCanvas.discardActiveObject();
+                bgCanvas.renderAll();
+            } else {
+                alert('لطفاً ابتدا روی وکتور یا المان مورد نظر روی بکگراند کلیک کنید.');
+            }
+        }
+
+        // ذخیره سازی نهایی کل بوم طراحی و لوکیشن دقیق المان‌ها در دیتابیس محلی مرورگر
+        function saveLiveBackgroundDesign() {
+            bgCanvas.discardActiveObject();
+            bgCanvas.renderAll();
+
+            // ذخیره وضعیت ساختار گرافیکی بوم
+            siteSettings.canvasLayoutJSON = JSON.stringify(bgCanvas.toJSON());
+            localStorage.setItem('sama_site_settings', JSON.stringify(siteSettings));
+
+            // غیرفعال کردن دوباره قابلیت درگ برای مشتری‌ها
+            bgCanvas.forEachObject(obj => {
+                obj.selectable = false;
+                obj.evented = false;
+            });
+            bgCanvas.selection = false;
+            bgCanvas.renderAll();
+
+            document.body.classList.remove('admin-editing-bg');
+            document.getElementById('admin-bg-editor-bar').classList.add('hidden');
+            
+            alert("💾 دمت گرم! چیدمان وکتورها و عکس‌های گوشه پس‌زمینه با موفقیت در کل قالب سایت فیکس و ذخیره شد.");
+        }
 
         function toggleMenu(e) { 
             e.stopPropagation();
@@ -532,8 +721,6 @@
                 canvas.remove(activeObject);
                 canvas.discardActiveObject();
                 canvas.renderAll();
-            } else {
-                alert('لطفاً ابتدا روی طلا یا جواهر مورد نظر ضربه بزنید.');
             }
         }
 
@@ -541,7 +728,6 @@
             if(!canvas) return;
             canvas.discardActiveObject();
             canvas.renderAll();
-
             const dataURL = canvas.toDataURL({ format: 'png', quality: 1.0 });
             const link = document.createElement('a');
             link.download = 'sama-zarrin-design.png';
@@ -549,32 +735,31 @@
             link.click();
         }
 
-        /* 🎬 تابع اختصاصی ادمین برای آپلود و تبدیل عکس گالری آیفون به بکگراند کل سایت */
         function handleAdminBackgroundUpload(input) {
             const file = input.files[0];
             if (!file) return;
-
-            if (file.size > 5 * 1024 * 1024) { 
-                alert("❌ حجم تصویر پس‌زمینه پیشنهادی شما بالاست (حداکثر ۵ مگابایت)"); 
-                return; 
-            }
 
             const reader = new FileReader();
             reader.onload = function(e) {
                 siteSettings.customBackgroundImage = e.target.result;
                 localStorage.setItem('sama_site_settings', JSON.stringify(siteSettings));
-                applyLiveSiteSettings();
-                alert("🎬 پس‌زمینه اختصاصی شما با موفقیت برای کل سایت روی هوا اعمال شد!");
+                applyBackgroundImageToCanvas();
+                alert("🎬 تصویر پس‌زمینه اصلی با موفقیت هماهنگ شد!");
             };
             reader.readAsDataURL(file);
         }
 
-        /* ریست کردن بکگراند به حالت رنگ طلایی/کرم اولیه */
         function resetToDefaultBackground() {
-            siteSettings.customBackgroundImage = "";
-            localStorage.setItem('sama_site_settings', JSON.stringify(siteSettings));
-            applyLiveSiteSettings();
-            alert("پس‌زمینه سایت به حالت پیش‌فرض گالری بازگشت.");
+            if (confirm("آیا مایلید تمام وکتورها و بکگراند شخصی‌سازی شده پاک شود؟")) {
+                siteSettings.customBackgroundImage = "";
+                siteSettings.canvasLayoutJSON = "";
+                localStorage.setItem('sama_site_settings', JSON.stringify(siteSettings));
+                if(bgCanvas) {
+                    bgCanvas.clear();
+                    applyBackgroundImageToCanvas();
+                }
+                alert("تمامی المان‌ها و پس‌زمینه ریست شدند.");
+            }
         }
 
         function loadAdminSettingsPanel() {
@@ -628,16 +813,6 @@
         }
 
         function applyLiveSiteSettings() {
-            const bodyEl = document.getElementById('main-body');
-            
-            /* چک کردن اینکه آیا ادمین عکس آپلود کرده یا نه */
-            if (siteSettings.customBackgroundImage) {
-                bodyEl.style.backgroundImage = `url('${siteSettings.customBackgroundImage}')`;
-            } else {
-                bodyEl.style.backgroundImage = "none";
-                bodyEl.style.backgroundColor = siteSettings.backgroundStyle || "#faf8f5";
-            }
-
             document.getElementById('about-modal-text-content').innerText = siteSettings.aboutText;
             
             document.getElementById('support-links-container').innerHTML = `
@@ -673,12 +848,13 @@
         function logout() { localStorage.removeItem('sama_user'); localStorage.removeItem('sama_cart'); location.reload(); }
         function showAboutUs() { document.getElementById('about-modal').classList.remove('hidden'); }
         function closeAboutUs() { document.getElementById('about-modal').classList.add('hidden'); }
+        function showSupportModal() { document.getElementById('support-modal').classList.remove('hidden'); }
+        function closeSupportModal() { document.getElementById('support-modal').classList.add('hidden'); }
         
         function showVipModal() { 
             const user = JSON.parse(localStorage.getItem('sama_user'));
             const msgEl = document.getElementById('vip-eligibility-msg');
             const btnEl = document.getElementById('activate-vip-btn');
-            
             if(user) {
                 if(user.purchases >= 2) {
                     msgEl.className = "text-[11px] text-center text-emerald-600 font-bold";
@@ -692,31 +868,20 @@
             }
             document.getElementById('vip-modal').classList.remove('hidden'); 
         }
-        
         function closeVipModal() { document.getElementById('vip-modal').classList.add('hidden'); }
-        function showSupportModal() { document.getElementById('support-modal').classList.remove('hidden'); }
-        function closeSupportModal() { document.getElementById('support-modal').classList.add('hidden'); }
 
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
             if(!product) return;
             if(cart.find(item => item.id === productId)) { alert("✨ این کالا در سبد شما موجود است."); return; }
-            cart.push(product);
-            saveCart();
+            cart.push(product); saveCart();
             alert(`🛒 کالا «${product.name}» اضافه شد.`);
         }
 
         function removeFromCart(productId) {
-            cart = cart.filter(item => item.id !== productId);
-            saveCart();
-            renderCartPage();
+            cart = cart.filter(item => item.id !== productId); saveCart(); renderCartPage();
         }
-
-        function saveCart() {
-            localStorage.setItem('sama_cart', JSON.stringify(cart));
-            updateCartBadges();
-        }
-
+        function saveCart() { localStorage.setItem('sama_cart', JSON.stringify(cart)); updateCartBadges(); }
         function updateCartBadges() {
             document.getElementById('cart-badge-count').innerText = cart.length;
             document.getElementById('menu-cart-count').innerText = `${cart.length} کالا`;
@@ -724,15 +889,13 @@
 
         function renderCartPage() {
             const container = document.getElementById('cart-items-list');
-            if(!container) return;
-            container.innerHTML = "";
+            if(!container) return; container.innerHTML = "";
 
             if(cart.length === 0) {
                 container.innerHTML = `<div class="bg-white border border-[#e5d5c5] rounded-3xl p-12 text-center text-xs text-stone-500">سبد خرید اختصاصی شما خالی است.</div>`;
                 document.getElementById('checkout-btn').disabled = true;
                 document.getElementById('checkout-btn').classList.add('opacity-50', 'cursor-not-allowed');
-                resetSummary();
-                return;
+                resetSummary(); return;
             }
 
             document.getElementById('checkout-btn').disabled = false;
@@ -749,9 +912,7 @@
                 const itemTax = p.taxPercent !== undefined ? p.taxPercent : 9;
                 const normalPrice = calculateGoldPrice(p.weight, p.wagePercent, p.profitPercent, itemTax, currentRate, false, p.discountPercent);
                 const finalPrice = calculateGoldPrice(p.weight, p.wagePercent, p.profitPercent, itemTax, currentRate, isVip, p.discountPercent);
-                
-                totalWeight += p.weight;
-                totalFinalPrice += finalPrice;
+                totalWeight += p.weight; totalFinalPrice += finalPrice;
                 if(isVip) { totalVipDiscount += (normalPrice - finalPrice); }
 
                 container.innerHTML += `
@@ -810,27 +971,13 @@
             cart = []; saveCart(); closeOrderModal(); navigateTo('showcase');
         }
 
-        function setMockPurchases(count) {
-            const user = JSON.parse(localStorage.getItem('sama_user'));
-            if(user) {
-                user.purchases = count;
-                localStorage.setItem('sama_user', JSON.stringify(user));
-                alert(`تعداد دور خرید کاربر جهت تست روی ${count} دور ذخیره شد.`);
-            }
-        }
-
         function handleFileSelect(input) {
             const file = input.files[0];
             if (file) {
-                if (file.size > 4 * 1024 * 1024) { 
-                    alert("❌ حجم تصویر بیش از حد مجاز است."); 
-                    clearSelectedImage();
-                    return; 
-                }
                 const reader = new FileReader();
                 reader.onload = e => {
                     selectedImageBase64 = e.target.result;
-                    document.getElementById('file-label-text').innerText = "✅ عکس گالری با موفقیت بارگذاری شد";
+                    document.getElementById('file-label-text').innerText = "✅ عکس با موفقیت بارگذاری شد";
                     document.getElementById('live-preview-img').src = selectedImageBase64;
                     document.getElementById('live-image-preview-zone').classList.remove('hidden');
                 };
@@ -839,12 +986,10 @@
         }
 
         function clearSelectedImage(e) {
-            if(e) e.preventDefault();
-            selectedImageBase64 = "";
+            if(e) e.preventDefault(); selectedImageBase64 = "";
             document.getElementById('prod-img-file').value = "";
             document.getElementById('file-label-text').innerText = "🖼️ انتخاب مستقیم از گالری عکس";
             document.getElementById('live-image-preview-zone').classList.add('hidden');
-            document.getElementById('live-preview-img').src = "";
         }
 
         async function handleAuth(e) {
@@ -873,40 +1018,23 @@
             checkLoginState();
         }
 
-        function activateVip() {
-            let user = JSON.parse(localStorage.getItem('sama_user'));
-            if(user && user.purchases >= 2) {
-                user.isVip = true;
-                localStorage.setItem('sama_user', JSON.stringify(user));
-                alert("👑 حساب شما به سطح VIP ارتقا یافت.");
-                location.reload();
-            }
-        }
-
         function startLiveGoldRate() {
             const bridgeContainer = document.getElementById('tgju-hidden-bridge');
             const inputElement = document.getElementById('gold-rate-input');
             const indicator = document.getElementById('rate-trend-indicator');
-
             if (!bridgeContainer) return;
 
             const observer = new MutationObserver((mutations) => {
                 const fullText = bridgeContainer.innerText || bridgeContainer.textContent || "";
                 const matches = fullText.match(/\d+/g);
-                
                 if (matches && matches.length > 0) {
-                    const goldPriceMatch = matches.find(numStr => {
-                        const val = parseInt(numStr);
-                        return val > 1000000;
-                    });
-
+                    const goldPriceMatch = matches.find(numStr => parseInt(numStr) > 1000000);
                     if (goldPriceMatch) {
                         let newRate = parseInt(goldPriceMatch);
                         if (newRate !== lastGoldPrice) {
                             if (newRate > 25000000) { newRate = Math.round(newRate / 10); }
                             if (lastGoldPrice && newRate > lastGoldPrice) { indicator.innerText = "📈"; } 
                             else if (lastGoldPrice && newRate < lastGoldPrice) { indicator.innerText = "📉"; }
-
                             lastGoldPrice = newRate;
                             inputElement.value = newRate.toLocaleString('en-US');
                             updateAllPrices();
@@ -914,13 +1042,12 @@
                     }
                 }
             });
-
             observer.observe(bridgeContainer, { childList: true, subtree: true, characterData: true });
         }
 
         function addNewProduct(e) {
             e.preventDefault();
-            if(!selectedImageBase64) { alert("لطفا ابتدا عکسی از گالری انتخاب کنید."); return; }
+            if(!selectedImageBase64) { alert("لطفا عکس کالا را انتخاب کنید."); return; }
             const newProd = {
                 id: Date.now(),
                 name: document.getElementById('prod-name').value,
@@ -935,9 +1062,7 @@
             };
             products.push(newProd);
             localStorage.setItem('sama_products', JSON.stringify(products));
-            updateAllPrices();
-            e.target.reset();
-            clearSelectedImage();
+            updateAllPrices(); e.target.reset(); clearSelectedImage();
             alert("✨ کالا با موفقیت به ویترین افزوده شد.");
         }
 
@@ -969,8 +1094,7 @@
             let numericVal = parseInt(value || 0);
             if(numericVal > lastGoldPrice) document.getElementById('rate-trend-indicator').innerText = "📈";
             else if(numericVal < lastGoldPrice) document.getElementById('rate-trend-indicator').innerText = "📉";
-            lastGoldPrice = numericVal;
-            input.value = numericVal.toLocaleString('en-US');
+            lastGoldPrice = numericVal; input.value = numericVal.toLocaleString('en-US');
             updateAllPrices();
         }
 
@@ -978,8 +1102,7 @@
             const rawRate = document.getElementById('gold-rate-input').value.replace(/[^0-9]/g, '');
             const currentRate = parseFloat(rawRate) || 0;
             const container = document.getElementById('sliders-container');
-            if(!container) return;
-            container.innerHTML = ""; 
+            if(!container) return; container.innerHTML = ""; 
 
             const session = JSON.parse(localStorage.getItem('sama_user'));
             const isAdmin = session && session.role === 'admin';
@@ -1002,7 +1125,7 @@
             siteSettings.categories.forEach(cat => {
                 const catProducts = filteredList.filter(p => p.category === cat);
                 if (catProducts.length > 0) {
-                    let sliderHtml = `<div class="space-y-3"><h2 class="text-md font-medium text-[#a68015] px-1 bg-white/60 inline-block rounded-lg px-2">✨ مجموعه ${cat}‌های لوکس</h2><div class="horizontal-slider flex gap-4 overflow-x-auto pb-4 pt-1 px-1">`;
+                    let sliderHtml = `<div class="space-y-3"><h2 class="text-md font-medium text-[#a68015] bg-white/60 inline-block rounded-lg px-2">✨ مجموعه ${cat}‌های لوکس</h2><div class="horizontal-slider flex gap-4 overflow-x-auto pb-4 pt-1 px-1">`;
                     catProducts.forEach(p => {
                         const itemTax = p.taxPercent !== undefined ? p.taxPercent : 9;
                         const finalPrice = calculateGoldPrice(p.weight, p.wagePercent, p.profitPercent, itemTax, currentRate, isVip, p.discountPercent);
@@ -1039,7 +1162,7 @@
             
             if (session) {
                 const user = JSON.parse(session);
-                document.getElementById('main-body').className = "p-4 md:p-8 block transition-all duration-500 bg-cover bg-center bg-no-repeat bg-fixed min-h-screen";
+                document.getElementById('main-body').className = "p-4 md:p-8 block transition-all duration-500 min-h-screen";
                 document.getElementById('auth-box').classList.add('hidden');
                 document.getElementById('main-panel').classList.remove('hidden');
                 document.getElementById('user-welcome').innerText = `✨ ${user.name} خوش آمدید`;
@@ -1050,8 +1173,19 @@
                 updateCartBadges();
                 navigateTo('showcase');
                 startLiveGoldRate();
+                // فعال‌سازی بوم لایه بکگراند زنده
+                initGlobalBackgroundCanvas();
             }
         }
+
+        // واکنش گرا کردن ابعاد بوم پس‌زمینه هنگام چرخاندن یا تغییر اندازه صفحه آیفون
+        window.addEventListener('resize', () => {
+            if(bgCanvas) {
+                bgCanvas.setWidth(window.innerWidth);
+                bgCanvas.setHeight(window.innerHeight);
+                applyBackgroundImageToCanvas();
+            }
+        });
 
         checkLoginState();
     </script>
