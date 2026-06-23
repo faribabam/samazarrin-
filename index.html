@@ -6,13 +6,17 @@
     <title>گالری طلا و جواهر سما زرین | SAMA ZARRIN</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        .horizontal-slider::-webkit-scrollbar { display: none; }
-        .horizontal-slider { -webkit-overflow-scrolling: touch; }
+        /* مخفی کردن نوار اسکرول زشت اسلایدرها در ویندوز و آیفون جهت زیبایی ویترین */
+        .horizontal-slider::-webkit-scrollbar {
+            display: none;
+        }
+        .horizontal-slider {
+            -webkit-overflow-scrolling: touch; /* اسکرول فوق‌العاده نرم در آیفون */
+        }
     </style>
 </head>
 <body id="main-body" class="p-4 md:p-8 flex items-center justify-center min-h-screen bg-[#faf8f5]" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 80 80&quot;><path d=&quot;M40 10 C48 25, 60 25, 60 40 C60 55, 48 55, 40 70 C32 55, 20 55, 20 40 C20 25, 32 25, 40 10 Z&quot; fill=&quot;none&quot; stroke=&quot;%23d4af37&quot; stroke-width=&quot;0.6&quot; opacity=&quot;0.12&quot;/></svg>');">
 
-    <!-- 🔐 بخش ورود / ثبت نام -->
     <div id="auth-box" class="w-full max-w-sm bg-white p-8 rounded-3xl shadow-xl border border-[#e5d5c5]">
         <h1 class="text-center text-2xl font-light tracking-widest text-[#a68015] mb-2 uppercase">SAMA ZARRIN</h1>
         <p class="text-center text-xs text-stone-500 mb-6">ورود / ثبت‌نام در گالری سما زرین</p>
@@ -34,10 +38,8 @@
         </form>
     </div>
 
-    <!-- 🛍️ پنل اصلی ویترین گالری -->
     <div id="main-panel" class="w-full max-w-5xl mx-auto hidden relative">
         
-        <!-- ☰ منوی سه خط اختصاصی مدیریت (فقط برای ادمین) -->
         <div id="admin-hamburger-zone" class="absolute top-4 right-4 z-50 hidden">
             <button onclick="toggleAdminMenu()" class="w-10 h-10 rounded-full bg-stone-900 flex items-center justify-center text-white hover:bg-black transition-colors cursor-pointer shadow-md">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -46,18 +48,17 @@
             </button>
             
             <div id="admin-dropdown-menu" class="hidden absolute right-0 mt-2 w-56 bg-white border border-stone-200 rounded-2xl shadow-xl p-2 text-right z-50">
-                <button onclick="switchAdminView('showcase')" class="w-full text-right px-4 py-2.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors font-medium flex items-center justify-between">
+                <button onclick="switchAdminView('showcase')" class="w-full text-right px-4 py-2.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors font-medium flex items-center justify-between cursor-pointer">
                     <span>🛍️ مشاهده ویترین مغازه</span>
                     <span class="text-[10px] text-stone-400">لینک ویترین</span>
                 </button>
-                <button onclick="switchAdminView('panel')" class="w-full text-right px-4 py-2.5 text-xs text-[#a68015] hover:bg-stone-50 rounded-xl transition-colors font-bold flex items-center justify-between border-t border-stone-100 mt-1">
+                <button onclick="switchAdminView('panel')" class="w-full text-right px-4 py-2.5 text-xs text-[#a68015] hover:bg-stone-50 rounded-xl transition-colors font-bold flex items-center justify-between border-t border-stone-100 mt-1 cursor-pointer">
                     <span>🛠️ ورود به پنل مدیریت</span>
                     <span class="text-[9px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded-md">ادمین</span>
                 </button>
             </div>
         </div>
 
-        <!-- 💬 منوی دکمه سه نقطه مشتری -->
         <div class="absolute top-4 left-4 z-50">
             <button onclick="toggleMenu()" class="w-10 h-10 rounded-full bg-white border border-[#e5d5c5] flex items-center justify-center text-[#a68015] hover:bg-stone-50 transition-colors cursor-pointer shadow-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -66,32 +67,31 @@
             </button>
             
             <div id="dropdown-menu" class="hidden absolute left-0 mt-2 w-64 bg-white border border-[#e5d5c5] rounded-2xl shadow-xl p-2 text-right z-50">
-                <button onclick="filterCategory('all')" class="w-full text-right px-4 py-2 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">✨ نمایش همه مجموعه‌ها</button>
-                <button onclick="filterCategory('discount')" class="w-full text-right px-4 py-2 text-xs text-[#a68015] hover:bg-stone-50 rounded-xl transition-colors font-medium">🏷️ تخفیفی ها</button>
-                <button onclick="filterCategory('stock')" class="w-full text-right px-4 py-2 text-xs text-emerald-700 hover:bg-stone-50 rounded-xl transition-colors font-medium">📦 موجودی ها</button>
+                <button onclick="filterCategory('all')" class="w-full text-right px-4 py-2 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">✨ نمایش همه مجموعه‌ها</button>
+                <button onclick="filterCategory('discount')" class="w-full text-right px-4 py-2 text-xs text-[#a68015] hover:bg-stone-50 rounded-xl transition-colors font-medium cursor-pointer">🏷️ تخفیفی ها</button>
+                <button onclick="filterCategory('stock')" class="w-full text-right px-4 py-2 text-xs text-emerald-700 hover:bg-stone-50 rounded-xl transition-colors font-medium cursor-pointer">📦 موجودی ها</button>
                 
                 <div class="border-t border-stone-100 my-1.5"></div>
-                <button onclick="showVipModal()" class="w-full text-right px-4 py-2 text-xs text-amber-800 bg-amber-50/60 rounded-xl transition-colors font-medium">👑 اشتراک vip</button>
+                <button onclick="showVipModal()" class="w-full text-right px-4 py-2 text-xs text-amber-800 bg-amber-50/60 rounded-xl transition-colors font-medium cursor-pointer">👑 اشتراک vip</button>
                 
                 <div class="border-t border-stone-100 my-1.5"></div>
-                <div class="px-4 py-1.5 text-xs text-[#a68015] font-bold">طلای های مینیمال ✨</div>
+                <div class="px-4 py-1.5 text-xs text-[#a68015] font-bold">طلاهای مینیمال ✨</div>
                 
-                <button onclick="filterCategory('دستبند')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">- دستبند ها</button>
-                <button onclick="filterCategory('گوشواره')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">- گوشواره ها</button>
-                <button onclick="filterCategory('انگشتر')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">- انگشتر ها</button>
-                <button onclick="filterCategory('گردنبند')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">- گردنبند ها</button>
-                <button onclick="filterCategory('آویز')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">- آویز ها</button>
-                <button onclick="filterCategory('پلاک')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">- پلاک ها</button>
-                <button onclick="filterCategory('نیم ست')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">- نیم ست ها</button>
+                <button onclick="filterCategory('دستبند')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">- دستبند ها</button>
+                <button onclick="filterCategory('گوشواره')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">- گوشواره ها</button>
+                <button onclick="filterCategory('انگشتر')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">- انگشتر ها</button>
+                <button onclick="filterCategory('گردنبند')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">- گردنبند ها</button>
+                <button onclick="filterCategory('آویز')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">- آویز ها</button>
+                <button onclick="filterCategory('پلاک')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">- پلاک ها</button>
+                <button onclick="filterCategory('نیم ست')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">- نیم ست ها</button>
                 
                 <div class="border-t border-stone-100 my-1.5"></div>
-                <button onclick="showAboutUs()" class="w-full text-right px-4 py-2 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors">درباره‌ی ماℹ️</button>
-                <button onclick="showSupportModal()" class="w-full text-right px-4 py-2 text-xs text-blue-700 hover:bg-stone-50 rounded-xl transition-colors">پشتیبانی ☎️</button>
-                <button onclick="logout()" class="w-full text-right px-4 py-2 text-xs text-rose-600 hover:bg-rose-50 rounded-xl transition-colors font-medium mt-1">خروج از حساب🚪</button>
+                <button onclick="showAboutUs()" class="w-full text-right px-4 py-2 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">درباره‌ی ماℹ️</button>
+                <button onclick="showSupportModal()" class="w-full text-right px-4 py-2 text-xs text-blue-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">پشتیبانی ☎️</button>
+                <button onclick="logout()" class="w-full text-right px-4 py-2 text-xs text-rose-600 hover:bg-rose-50 rounded-xl transition-colors font-medium mt-1 cursor-pointer">خروج از حساب🚪</button>
             </div>
         </div>
 
-        <!-- هدر بالایی ویترین -->
         <header class="flex flex-col sm:flex-row justify-between items-center pb-6 border-b border-stone-200 mb-6 gap-4 pl-14 pr-14">
             <div class="text-right">
                 <h1 class="text-3xl font-light tracking-widest text-[#a68015] uppercase drop-shadow-sm">SAMA ZARRIN</h1>
@@ -112,7 +112,6 @@
             </div>
         </header>
 
-        <!-- 🔍 بخش جستجو و فیلترها -->
         <div id="customer-filter-area" class="bg-white border border-[#e5d5c5] rounded-2xl p-5 mb-8 shadow-sm text-right grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 items-end">
             <div>
                 <label class="block text-[11px] text-stone-500 font-medium mb-1.5">🔍 جستجوی نام کالا</label>
@@ -145,7 +144,6 @@
             </div>
         </div>
 
-        <!-- 🛠️ پنل مدیریت جامع -->
         <div id="admin-panel" class="hidden bg-white border border-[#e5d5c5] rounded-3xl p-6 mb-8 text-right shadow-md space-y-6">
             <h3 class="text-md font-medium text-[#a68015]">🛠️ مدیریت ویترین و مشتریان سما زرین</h3>
             
@@ -184,61 +182,25 @@
             </form>
 
             <div>
-                <h4 class="text-xs font-bold text-stone-500 mb-2">📊 شبیه‌ساز تعداد خرید مشتری:</h4>
+                <h4 class="text-xs font-bold text-stone-500 mb-2">📊 شبیه‌ساز تعداد خرید مشتری (جهت تست فعال‌سازی VIP):</h4>
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="setMockPurchases(1)" class="bg-stone-50 text-stone-700 text-[11px] px-3 py-2 rounded-xl border border-stone-200">تنظیم خرید جاری روی ۱ بار</button>
-                    <button onclick="setMockPurchases(3)" class="bg-amber-50/60 text-amber-800 text-[11px] px-3 py-2 rounded-xl border border-amber-200">تنظیم خرید جاری روی ۳ بار (شرط خرید VIP)</button>
+                    <button onclick="setMockPurchases(1)" class="bg-stone-50 text-stone-700 text-[11px] px-3 py-2 rounded-xl border border-stone-200 cursor-pointer">تنظیم خرید جاری روی ۱ بار</button>
+                    <button onclick="setMockPurchases(3)" class="bg-amber-50/60 text-amber-800 text-[11px] px-3 py-2 rounded-xl border border-amber-200 cursor-pointer">تنظیم خرید جاری روی ۳ بار (شرط خرید VIP)</button>
                 </div>
             </div>
         </div>
 
-        <!-- 📥 بخش ردیف‌های اسلایدی هوشمند -->
         <div id="sliders-container" class="space-y-8"></div>
 
-        <!-- 📝 مودال جدید دریافت اطلاعات نهایی آدرس و سفارش کالا -->
-        <div id="checkout-modal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-            <div class="bg-white border border-[#e5d5c5] p-6 rounded-3xl max-w-md w-full text-right space-y-4 shadow-2xl">
-                <div class="flex justify-between items-center border-b border-stone-100 pb-2">
-                    <h3 class="text-md font-bold text-[#a68015] flex items-center gap-1">📋 تکمیل اطلاعات ارسال سفارش</h3>
-                    <button onclick="closeCheckoutModal()" class="text-stone-400 hover:text-stone-700 text-sm">✕</button>
-                </div>
-                
-                <div class="bg-stone-50 p-3 rounded-xl border border-stone-100 text-xs space-y-1">
-                    <div class="text-stone-500">کالا انتخابی: <span id="checkout-prod-name" class="font-bold text-stone-800"></span></div>
-                    <div class="text-stone-500">قیمت نهایی: <span id="checkout-prod-price" class="font-bold text-[#a68015] font-mono"></span></div>
-                </div>
-
-                <form onsubmit="submitCheckoutOrder(event)" class="space-y-3">
-                    <div>
-                        <label class="text-[11px] text-stone-500 mr-1">نام و نام‌خانوادگی تحویل‌گیرنده</label>
-                        <input type="text" id="checkout-name" required class="w-full p-3 mt-1 rounded-xl bg-stone-50 border border-stone-200 text-xs focus:outline-none focus:border-[#b89327]">
-                    </div>
-                    <div>
-                        <label class="text-[11px] text-stone-500 mr-1">شماره تماس مستقیم</label>
-                        <input type="tel" id="checkout-phone" required placeholder="09xxxxxxxx" class="w-full p-3 mt-1 rounded-xl bg-stone-50 border border-stone-200 text-xs text-center font-mono focus:outline-none focus:border-[#b89327]">
-                    </div>
-                    <div>
-                        <label class="text-[11px] text-stone-500 mr-1">آدرس کامل منزل جهت ارسال با پست/پیک</label>
-                        <textarea id="checkout-address" rows="3" required placeholder="استان، شهر، خیابان، کوچه، پلاک..." class="w-full p-3 mt-1 rounded-xl bg-stone-50 border border-stone-200 text-xs focus:outline-none focus:border-[#b89327] resize-none"></textarea>
-                    </div>
-                    
-                    <button type="submit" id="checkout-submit-btn" class="w-full bg-[#b89327] text-white py-3 rounded-xl text-xs font-bold mt-2 hover:bg-[#a68015] transition-all cursor-pointer shadow-md flex items-center justify-center gap-2">
-                        <span>🚀 ثبت نهایی و ارسال به گالری</span>
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <!-- 👑 مودال مقایسه‌ای اشتراک vip -->
         <div id="vip-modal" class="hidden fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-            <!-- محتوای مودال VIP -->
             <div class="bg-white border border-[#e5d5c5] p-6 rounded-3xl max-w-xl w-full text-right space-y-6 shadow-2xl">
                 <div class="flex justify-between items-center border-b border-stone-100 pb-3">
                     <h3 class="text-lg font-medium text-[#a68015] flex items-center gap-1">👑 جدول مقایسه و مزایای اشتراک کاربری VIP</h3>
-                    <button onclick="closeVipModal()" class="text-stone-400 hover:text-stone-700 text-sm">✕</button>
+                    <button onclick="closeVipModal()" class="text-stone-400 hover:text-stone-700 text-sm cursor-pointer">✕</button>
                 </div>
-                <div class="overflow-hidden rounded-2xl border border-stone-200 bg-white">
-                    <table class="w-full text-right text-xs">
+
+                <div class="overflow-x-auto rounded-2xl border border-stone-200 bg-white">
+                    <table class="w-full text-right text-xs border-collapse">
                         <thead>
                             <tr class="bg-stone-50 text-[#a68015] border-b border-stone-200">
                                 <th class="p-3.5 font-bold">ویژگی‌ها و مزایا</th>
@@ -248,46 +210,65 @@
                         </thead>
                         <tbody class="text-stone-700 divide-y divide-stone-100">
                             <tr>
-                                <td class="p-3.5">۲٪ تخفیف روی سود تمامی اجناس</td>
-                                <td class="p-3.5 text-center text-rose-600">❌ ندارد</td>
-                                <td class="p-3.5 text-center text-emerald-700 font-bold">✅ فعال</td>
+                                <td class="p-3.5 font-medium">۲٪ تخفیف روی سود تمامی اجناس</td>
+                                <td class="p-3.5 text-center text-rose-600 font-mono">❌ ندارد</td>
+                                <td class="p-3.5 text-center text-emerald-700 font-bold font-mono">✅ فعال</td>
                             </tr>
-                            <tr>td class="p-3.5">ضمانت کالا</td><td class="p-3.5 text-center text-rose-600">❌ ندارد</td><td class="p-3.5 text-center text-emerald-700 font-bold">✅ فعال</td></tr>
-                            <tr>td class="p-3.5">پشتیبانی ۲۴ ساعته</td><td class="p-3.5 text-center text-rose-600">❌ ندارد</td><td class="p-3.5 text-center text-emerald-700 font-bold">✅ فعال</td></tr>
-                            <tr>td class="p-3.5">بسته بندی مخصوص اشتراک ویژه</td><td class="p-3.5 text-center text-rose-600">❌ ندارد</td><td class="p-3.5 text-center text-emerald-700 font-bold">✅ فعال</td></tr>
+                            <tr>
+                                <td class="p-3.5 font-medium">ضمانت کالا</td>
+                                <td class="p-3.5 text-center text-rose-600 font-mono">❌ ندارد</td>
+                                <td class="p-3.5 text-center text-emerald-700 font-bold font-mono">✅ فعال</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3.5 font-medium">پشتیبانی ۲۴ ساعته</td>
+                                <td class="p-3.5 text-center text-rose-600 font-mono">❌ ندارد</td>
+                                <td class="p-3.5 text-center text-emerald-700 font-bold font-mono">✅ فعال</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3.5 font-medium">بسته‌بندی مخصوص اشتراک ویژه</td>
+                                <td class="p-3.5 text-center text-rose-600 font-mono">❌ ندارد</td>
+                                <td class="p-3.5 text-center text-emerald-700 font-bold font-mono">✅ فعال</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
+
                 <p class="text-[11px] text-stone-500 leading-relaxed">⚠️ این قابلیت بعد ۲ دور خرید برای هر فرد فعال می‌شود (حداقل ۳ خرید ثبت شده).</p>
+                
                 <div class="flex gap-3">
-                    <button onclick="activateVip()" class="flex-1 bg-gradient-to-r from-[#b89327] to-[#a68015] text-white text-xs font-bold py-3 rounded-xl shadow-md">👑 درخواست فعال‌سازی و ارتقای حساب</button>
+                    <button onclick="activateVip()" class="flex-1 bg-gradient-to-r from-[#b89327] to-[#a68015] text-white text-xs font-bold py-3 rounded-xl shadow-md cursor-pointer">👑 درخواست فعال‌سازی و ارتقای حساب</button>
                     <button onclick="closeVipModal()" class="px-6 bg-stone-900 text-white text-xs py-3 rounded-xl hover:bg-black cursor-pointer">بستن</button>
                 </div>
             </div>
         </div>
 
-        <!-- ☎️ مودال صفحه پشتیبانی -->
         <div id="support-modal" class="hidden fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center p-4 z-50">
             <div class="bg-white border border-[#e5d5c5] p-6 rounded-3xl max-w-sm w-full text-right space-y-5 shadow-2xl">
                 <div class="flex justify-between items-center border-b border-stone-100 pb-2">
                     <h3 class="text-md font-bold text-[#a68015]">☎️ مرکز پشتیبانی سما زرین</h3>
                     <button onclick="closeSupportModal()" class="text-stone-400 hover:text-stone-700 text-sm">✕</button>
                 </div>
+                
                 <div class="flex flex-col gap-3.5">
                     <a href="https://www.instagram.com/sama_zarinn?igsh=MTB4ZW1iY2VzZ255aA==" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-gradient-to-r from-purple-50 to-pink-50 border border-pink-200 text-pink-700 text-xs font-bold hover:scale-[1.02] transition-transform">
                         <span>📱 پشتیبانی اینستا</span>
                         <span dir="ltr" class="font-mono text-[10px]">@sama_zarinn</span>
                     </a>
+                    
                     <a href="https://t.me/sama_zarinn" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 text-blue-700 text-xs font-bold hover:scale-[1.02] transition-transform">
                         <span>✈️ پشتیبانی تلگرام</span>
                         <span dir="ltr" class="font-mono text-[10px]">sama_zarinn</span>
                     </a>
+                    
+                    <button onclick="alert('پشتیبانی پیام‌رسان بله به زودی فعال می‌گردد.')" class="flex items-center justify-between p-3.5 rounded-xl bg-stone-50 border border-stone-200 text-stone-400 text-xs font-bold cursor-not-allowed">
+                        <span>🌱 پشتیبانی بله</span>
+                        <span class="text-[10px] bg-stone-200 px-1.5 py-0.5 rounded-md text-stone-500">غیرفعال</span>
+                    </button>
                 </div>
                 <button onclick="closeSupportModal()" class="w-full bg-stone-900 text-white text-xs py-2.5 rounded-xl hover:bg-black transition-colors">بستن پنجره</button>
             </div>
         </div>
 
-        <!-- ℹ️ مودال درباره ما -->
         <div id="about-modal" class="hidden fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center p-4 z-50">
             <div class="bg-white border border-[#e5d5c5] p-6 rounded-3xl max-w-md w-full text-right space-y-5 shadow-2xl">
                 <h3 class="text-lg font-medium text-[#a68015]">درباره گالری سما زرین</h3>
@@ -301,7 +282,6 @@
         const BOT_TOKEN = "8940936882:AAG2OeXFfOsOwMPEuwhRHxfef9iBK68q3IU";
         const ADMIN_CHAT_ID = "6850239276"; 
         const MY_TELEGRAM_ID = "sama_zarinn"; 
-        const MY_INSTAGRAM_URL = "https://www.instagram.com/sama_zarinn?igsh=MTB4ZW1iY2VzZ255aA==";
 
         const ADMIN_PHONE = "09111543422";
         const ADMIN_PASS = "211820sk";
@@ -317,9 +297,6 @@
         let selectedImageBase64 = ""; 
         let previousGoldRate = 16135500; 
         let currentTrend = ""; 
-        
-        // متغیرهای ذخیره موقت برای محصول انتخابی در سبد خرید
-        let activeCheckoutProduct = null;
 
         function toggleMenu() { document.getElementById('dropdown-menu').classList.toggle('hidden'); }
         function toggleAdminMenu() { document.getElementById('admin-dropdown-menu').classList.toggle('hidden'); }
@@ -336,7 +313,7 @@
                 customerFilterArea.classList.add('hidden');
             } else {
                 adminPanel.classList.add('hidden');
-                slidersContainer.classList.remove('hidden');
+                slidersContainer.remove('hidden');
                 customerFilterArea.classList.remove('hidden');
                 updateAllPrices();
             }
@@ -349,92 +326,6 @@
         function closeVipModal() { document.getElementById('vip-modal').classList.add('hidden'); }
         function showSupportModal() { document.getElementById('support-modal').classList.remove('hidden'); toggleMenu(); }
         function closeSupportModal() { document.getElementById('support-modal').classList.add('hidden'); }
-
-        // توابع جدید مربوط به مدیریت فرم خرید مشتری
-        function openCheckoutModal(prodId, finalPriceText) {
-            const prod = products.find(p => p.id === prodId);
-            if(!prod) return;
-            
-            activeCheckoutProduct = { ...prod, formattedPrice: finalPriceText };
-            document.getElementById('checkout-prod-name').innerText = prod.name;
-            document.getElementById('checkout-prod-price').innerText = finalPriceText;
-            
-            // پر کردن پیشفرض نام و تلفن در صورت لاگین بودن
-            const session = JSON.parse(localStorage.getItem('sama_user'));
-            if(session) {
-                document.getElementById('checkout-name').value = session.name || "";
-                document.getElementById('checkout-phone').value = session.phone || "";
-            }
-            
-            document.getElementById('checkout-modal').classList.remove('hidden');
-        }
-
-        function closeCheckoutModal() {
-            document.getElementById('checkout-modal').classList.add('hidden');
-            activeCheckoutProduct = null;
-        }
-
-        async function submitCheckoutOrder(e) {
-            e.preventDefault();
-            if(!activeCheckoutProduct) return;
-
-            const name = document.getElementById('checkout-name').value.trim();
-            const phone = document.getElementById('checkout-phone').value.trim();
-            const address = document.getElementById('checkout-address').value.trim();
-            const submitBtn = document.getElementById('checkout-submit-btn');
-
-            submitBtn.disabled = true;
-            submitBtn.innerText = "⏳ در حال ارسال اطلاعات...";
-
-            // ساختاربندی پیام متنی برای ربات تلگرام ادمین
-            const messageText = `🛍️ *درخواست خرید جدید از سایت* \n\n` +
-                                `👤 *نام مشتری:* ${name}\n` +
-                                `📱 *شماره تماس:* \`${phone}\`\n` +
-                                `📍 *آدرس منزل:* ${address}\n\n` +
-                                `🔸 *کالا:* ${activeCheckoutProduct.name}\n` +
-                                `⚖️ *وزن:* ${activeCheckoutProduct.weight} گرم\n` +
-                                `💰 *قیمت نهایی محاسبه شده:* ${activeCheckoutProduct.formattedPrice}\n\n` +
-                                `❓ *آیا او را به پیوی شما بفرستم؟*`;
-
-            // ساخت دکمه‌های شیک تلگرام (Inline Keyboard) که زیر پیام در تلگرام ظاهر می‌شوند
-            const inlineKeyboard = {
-                inline_keyboard: [
-                    [
-                        { text: "✅ بله، هدایت به تلگرام ادمین", url: `https://t.me/${MY_TELEGRAM_ID}` },
-                        { text: "📸 هدایت به اینستاگرام", url: MY_INSTAGRAM_URL }
-                    ]
-                ]
-            };
-
-            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: ADMIN_CHAT_ID,
-                        text: messageText,
-                        parse_mode: 'Markdown',
-                        reply_markup: inlineKeyboard
-                    })
-                });
-
-                if(response.ok) {
-                    alert("✨ درخواست شما با موفقیت به مدیریت ارسال شد. تا لحظاتی دیگر جهت نهایی‌سازی سفارش به پیوی متصل خواهید شد.");
-                    // هدایت خودکار کاربر به چت تلگرام شما پس از ثبت فرم
-                    window.open(`https://t.me/${MY_TELEGRAM_ID}`, '_blank');
-                    closeCheckoutModal();
-                } else {
-                    alert("❌ خطا در ارسال اطلاعات به تلگرام. لطفا اتصال اینترنت خود را چک کنید.");
-                }
-            } catch (err) {
-                alert("❌ خطا در برقراری ارتباط با سرور.");
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerText = "🚀 ثبت نهایی و ارسال به گالری";
-            }
-        }
 
         function setMockPurchases(count) {
             const user = JSON.parse(localStorage.getItem('sama_user'));
@@ -503,11 +394,11 @@
                 let allUsers = JSON.parse(localStorage.getItem('sama_registered_users')) || [];
                 allUsers = allUsers.map(u => u.phone === user.phone ? { ...u, isVip: true } : u);
                 localStorage.setItem('sama_registered_users', JSON.stringify(allUsers));
-                alert("👑 حساب شما به سطح VIP ارتقا یافت.");
+                alert("👑 حساب شما به سطح VIP ارتقا یافت و ویژگی‌ها برای شما فعال شد.");
                 closeVipModal();
                 location.reload();
             } else {
-                alert(`❌ عدم امکان ارتقا! شما تا کنون ${user.purchases} بار خرید داشته‌اید.`);
+                alert(`❌ عدم امکان ارتقا! شما تا کنون ${user.purchases} بار خرید داشته‌اید. فعال‌سازی نیاز به بیش از ۲ بار خرید موفق دارد.`);
             }
         }
 
@@ -608,6 +499,7 @@
             const currentRate = parseFloat(rawRate) || 0;
             
             const container = document.getElementById('sliders-container');
+            if(!container) return;
             container.innerHTML = ""; 
 
             const session = JSON.parse(localStorage.getItem('sama_user'));
@@ -664,7 +556,6 @@
                     catProducts.forEach(p => {
                         const itemTax = p.taxPercent !== undefined ? p.taxPercent : 9;
                         const finalPrice = calculateGoldPrice(p.weight, p.wagePercent, p.profitPercent, itemTax, currentRate, isVip, p.discountPercent);
-                        const formattedPriceText = formatPrice(finalPrice);
                         
                         let cardTrendBadge = "";
                         if(currentTrend === "up") {
@@ -687,17 +578,20 @@
                                     <h3 class="text-xs font-medium text-stone-800 truncate">${p.name}</h3>
                                     <div class="flex justify-between items-center bg-stone-50 p-2 rounded-xl border border-stone-100">
                                         <span class="text-[10px] text-stone-500">قیمت نهایی روز:</span>
-                                        <span class="text-xs font-bold text-[#a68015] font-mono flex items-center">${cardTrendBadge} ${formattedPriceText}</span>
+                                        <span class="text-xs font-bold text-[#a68015] font-mono flex items-center">${cardTrendBadge} ${formatPrice(finalPrice)}</span>
                                     </div>
-                                    <!-- دکمه خرید حالا فرم ثبت مشخصات را باز می‌کند -->
-                                    <button onclick="openCheckoutModal(${p.id}, '${formattedPriceText}')" class="block text-center w-full bg-[#b89327] text-white py-2 rounded-xl text-[11px] font-bold hover:bg-[#a68015] transition-colors shadow-xs cursor-pointer">🛍️ مشاوره و خرید</button>
-                                    ${isAdmin ? `<button onclick="deleteProduct(${p.id})" class="w-full bg-rose-50 text-rose-600 text-[10px] py-1 rounded-lg mt-1 hover:bg-rose-100 transition-colors">🗑️ حذف کالا</button>` : ''}
+                                    <a href="https://t.me/${MY_TELEGRAM_ID}?text=${encodeURIComponent('سلام، قصد سفارش محصول «' + p.name + '» را دارم.')}" target="_blank" class="block text-center w-full bg-[#b89327] text-white py-2 rounded-xl text-[11px] font-bold hover:bg-[#a68015] transition-colors shadow-xs">🛍️ مشاوره و خرید</a>
+                                    ${isAdmin ? `<button onclick="deleteProduct(${p.id})" class="w-full bg-rose-50 text-rose-600 text-[10px] py-1 rounded-lg mt-1 hover:bg-rose-100 transition-colors cursor-pointer">🗑️ حذف کالا</button>` : ''}
                                 </div>
                             </div>
                         `;
                     });
 
-                    sliderHtml += `</div></div>`;
+                    sliderHtml += `
+                            </div>
+                        </div>
+                    `;
+                    
                     container.insertAdjacentHTML('beforeend', sliderHtml);
                 }
             });
@@ -713,6 +607,7 @@
                 document.getElementById('user-welcome').innerText = `✨ ${user.name} خوش آمدید`;
                 
                 if (user.isVip) { document.getElementById('vip-badge').classList.remove('hidden'); }
+                
                 if (user.role === 'admin' && user.phone === ADMIN_PHONE) { 
                     document.getElementById('admin-hamburger-zone').classList.remove('hidden'); 
                 }
