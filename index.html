@@ -6,18 +6,12 @@
     <title>گالری طلا و جواهر سما زرین | SAMA ZARRIN</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        /* مخفی کردن نوار اسکرول زشت اسلایدرها در ویندوز و آیفون جهت زیبایی ویترین */
-        .horizontal-slider::-webkit-scrollbar {
-            display: none;
-        }
-        .horizontal-slider {
-            -webkit-overflow-scrolling: touch; /* اسکرول فوق‌العاده نرم در آیفون */
-        }
+        .horizontal-slider::-webkit-scrollbar { display: none; }
+        .horizontal-slider { -webkit-overflow-scrolling: touch; }
     </style>
 </head>
 <body id="main-body" class="p-4 md:p-8 flex items-center justify-center min-h-screen bg-[#faf8f5]" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 80 80&quot;><path d=&quot;M40 10 C48 25, 60 25, 60 40 C60 55, 48 55, 40 70 C32 55, 20 55, 20 40 C20 25, 32 25, 40 10 Z&quot; fill=&quot;none&quot; stroke=&quot;%23d4af37&quot; stroke-width=&quot;0.6&quot; opacity=&quot;0.12&quot;/></svg>');">
 
-    <!-- 🔐 بخش ورود / ثبت نام -->
     <div id="auth-box" class="w-full max-w-sm bg-white p-8 rounded-3xl shadow-xl border border-[#e5d5c5]">
         <h1 class="text-center text-2xl font-light tracking-widest text-[#a68015] mb-2 uppercase">SAMA ZARRIN</h1>
         <p class="text-center text-xs text-stone-500 mb-6">ورود / ثبت‌نام در گالری سما زرین</p>
@@ -39,10 +33,8 @@
         </form>
     </div>
 
-    <!-- 🛍️ پنل اصلی ویترین گالری -->
     <div id="main-panel" class="w-full max-w-5xl mx-auto hidden relative">
         
-        <!-- ☰ منوی سه خط اختصاصی مدیریت (فقط برای ادمین) -->
         <div id="admin-hamburger-zone" class="absolute top-4 right-4 z-50 hidden">
             <button onclick="toggleAdminMenu()" class="w-10 h-10 rounded-full bg-stone-900 flex items-center justify-center text-white hover:bg-black transition-colors cursor-pointer shadow-md">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -51,55 +43,59 @@
             </button>
             
             <div id="admin-dropdown-menu" class="hidden absolute right-0 mt-2 w-56 bg-white border border-stone-200 rounded-2xl shadow-xl p-2 text-right z-50">
-                <button onclick="switchAdminView('showcase')" class="w-full text-right px-4 py-2.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors font-medium flex items-center justify-between cursor-pointer">
+                <button onclick="navigateTo('showcase')" class="w-full text-right px-4 py-2.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors font-medium flex items-center justify-between cursor-pointer">
                     <span>🛍️ مشاهده ویترین مغازه</span>
-                    <span class="text-[10px] text-stone-400">لینک ویترین</span>
                 </button>
-                <button onclick="switchAdminView('panel')" class="w-full text-right px-4 py-2.5 text-xs text-[#a68015] hover:bg-stone-50 rounded-xl transition-colors font-bold flex items-center justify-between border-t border-stone-100 mt-1 cursor-pointer">
+                <button onclick="navigateTo('admin')" class="w-full text-right px-4 py-2.5 text-xs text-[#a68015] hover:bg-stone-50 rounded-xl transition-colors font-bold flex items-center justify-between border-t border-stone-100 mt-1 cursor-pointer">
                     <span>🛠️ ورود به پنل مدیریت</span>
                     <span class="text-[9px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded-md">ادمین</span>
                 </button>
             </div>
         </div>
 
-        <!-- 💬 منوی دکمه سه نقطه مشتری -->
-        <div class="absolute top-4 left-4 z-50">
+        <div class="absolute top-4 left-4 z-50 flex items-center gap-2">
+            <button onclick="navigateTo('cart')" class="w-10 h-10 rounded-full bg-white border border-[#e5d5c5] flex items-center justify-center text-[#a68015] hover:bg-stone-50 relative cursor-pointer shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+                <span id="cart-badge-count" class="absolute -top-1 -left-1 bg-rose-600 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold font-mono">0</span>
+            </button>
+
             <button onclick="toggleMenu()" class="w-10 h-10 rounded-full bg-white border border-[#e5d5c5] flex items-center justify-center text-[#a68015] hover:bg-stone-50 transition-colors cursor-pointer shadow-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 17v.01" />
                 </svg>
             </button>
             
-            <div id="dropdown-menu" class="hidden absolute left-0 mt-2 w-64 bg-white border border-[#e5d5c5] rounded-2xl shadow-xl p-2 text-right z-50">
-                <button onclick="filterCategory('all')" class="w-full text-right px-4 py-2 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">✨ نمایش همه مجموعه‌ها</button>
-                <button onclick="filterCategory('discount')" class="w-full text-right px-4 py-2 text-xs text-[#a68015] hover:bg-stone-50 rounded-xl transition-colors font-medium cursor-pointer">🏷️ تخفیفی ها</button>
-                <button onclick="filterCategory('stock')" class="w-full text-right px-4 py-2 text-xs text-emerald-700 hover:bg-stone-50 rounded-xl transition-colors font-medium cursor-pointer">📦 موجودی ها</button>
+            <div id="dropdown-menu" class="hidden absolute left-0 mt-12 w-64 bg-white border border-[#e5d5c5] rounded-2xl shadow-xl p-2 text-right z-50">
+                <button onclick="navigateTo('showcase'); filterCategory('all')" class="w-full text-right px-4 py-2 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">✨ نمایش همه مجموعه‌ها</button>
+                <button onclick="navigateTo('cart')" class="w-full text-right px-4 py-2 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors font-medium flex justify-between items-center cursor-pointer">
+                    <span>🛒 سبد خرید شما</span>
+                    <span id="menu-cart-count" class="bg-stone-100 px-2 py-0.5 rounded-md text-stone-600 font-mono text-[10px]">0 کالا</span>
+                </button>
+                <button onclick="navigateTo('showcase'); filterCategory('discount')" class="w-full text-right px-4 py-2 text-xs text-[#a68015] hover:bg-stone-50 rounded-xl transition-colors font-medium cursor-pointer">🏷️ تخفیفی ها</button>
+                <button onclick="navigateTo('showcase'); filterCategory('stock')" class="w-full text-right px-4 py-2 text-xs text-emerald-700 hover:bg-stone-50 rounded-xl transition-colors font-medium cursor-pointer">📦 موجودی ها</button>
                 
                 <div class="border-t border-stone-100 my-1.5"></div>
                 <button onclick="showVipModal()" class="w-full text-right px-4 py-2 text-xs text-amber-800 bg-amber-50/60 rounded-xl transition-colors font-medium cursor-pointer">👑 اشتراک vip</button>
                 
                 <div class="border-t border-stone-100 my-1.5"></div>
                 <div class="px-4 py-1.5 text-xs text-[#a68015] font-bold">طلاهای مینیمال ✨</div>
-                
-                <button onclick="filterCategory('دستبند')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">- دستبند ها</button>
-                <button onclick="filterCategory('گوشواره')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">- گوشواره ها</button>
-                <button onclick="filterCategory('انگشتر')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">- انگشتر ها</button>
-                <button onclick="filterCategory('گردنبند')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">- گردنبند ها</button>
-                <button onclick="filterCategory('آویز')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">- آویز ها</button>
-                <button onclick="filterCategory('پلاک')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">- پلاک ها</button>
-                <button onclick="filterCategory('نیم ست')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">- نیم ست ها</button>
+                <button onclick="navigateTo('showcase'); filterCategory('دستبند')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl cursor-pointer">- دستبند ها</button>
+                <button onclick="navigateTo('showcase'); filterCategory('گوشواره')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl cursor-pointer">- گوشواره ها</button>
+                <button onclick="navigateTo('showcase'); filterCategory('انگشتر')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl cursor-pointer">- انگشتر ها</button>
+                <button onclick="navigateTo('showcase'); filterCategory('گردنبند')" class="w-full text-right pr-8 pl-4 py-1.5 text-xs text-stone-700 hover:bg-stone-50 rounded-xl cursor-pointer">- گردنبند ها</button>
                 
                 <div class="border-t border-stone-100 my-1.5"></div>
-                <button onclick="showAboutUs()" class="w-full text-right px-4 py-2 text-xs text-stone-700 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">درباره‌ی ماℹ️</button>
-                <button onclick="showSupportModal()" class="w-full text-right px-4 py-2 text-xs text-blue-700 hover:bg-stone-50 rounded-xl transition-colors font-medium cursor-pointer">پشتیبانی ☎️</button>
-                <button onclick="logout()" class="w-full text-right px-4 py-2 text-xs text-rose-600 hover:bg-rose-50 rounded-xl transition-colors font-medium mt-1 cursor-pointer">خروج از حساب🚪</button>
+                <button onclick="showAboutUs()" class="w-full text-right px-4 py-2 text-xs text-stone-700 hover:bg-stone-50 rounded-xl cursor-pointer">درباره‌ی ماℹ️</button>
+                <button onclick="showSupportModal()" class="w-full text-right px-4 py-2 text-xs text-blue-700 hover:bg-stone-50 rounded-xl cursor-pointer">پشتیبانی ☎️</button>
+                <button onclick="logout()" class="w-full text-right px-4 py-2 text-xs text-rose-600 hover:bg-rose-50 rounded-xl font-medium mt-1 cursor-pointer">خروج🚪</button>
             </div>
         </div>
 
-        <!-- هدر بالایی ویترین -->
-        <header class="flex flex-col sm:flex-row justify-between items-center pb-6 border-b border-stone-200 mb-6 gap-4 pl-14 pr-14">
+        <header class="flex flex-col sm:flex-row justify-between items-center pb-6 border-b border-stone-200 mb-6 gap-4 pl-28 pr-14">
             <div class="text-right">
-                <h1 class="text-3xl font-light tracking-widest text-[#a68015] uppercase drop-shadow-sm">SAMA ZARRIN</h1>
+                <h1 onclick="navigateTo('showcase')" class="text-3xl font-light tracking-widest text-[#a68015] uppercase drop-shadow-sm cursor-pointer">SAMA ZARRIN</h1>
                 <div class="flex items-center gap-2 mt-1">
                     <p id="user-welcome" class="text-xs text-stone-600 font-medium"></p>
                     <span id="vip-badge" class="hidden bg-amber-500/10 border border-amber-400 text-amber-800 text-[10px] px-2 py-0.5 rounded-full font-bold">VIP 👑</span>
@@ -110,212 +106,180 @@
                 <div class="text-right">
                     <label class="block text-[10px] font-bold text-[#a68015] mb-1 flex items-center gap-1">
                         نرخ معتبر و زنده ۱ گرم طلای ۱۸ عیار (تومان):
-                        <span id="rate-trend-indicator" class="text-sm transition-all duration-300"></span>
+                        <span id="rate-trend-indicator" class="text-sm"></span>
                     </label>
                     <input type="text" id="gold-rate-input" oninput="handleGoldRateChange(this)" value="16,135,500" class="bg-stone-50 text-[#a68015] px-3 py-1.5 rounded-xl border border-stone-200 text-sm font-mono text-center w-44 focus:outline-none focus:ring-1 focus:ring-[#b89327]" dir="ltr">
                 </div>
             </div>
         </header>
 
-        <!-- 🔍 بخش جستجو و فیلترهای کاملاً آزاد و عددی مشتری -->
-        <div id="customer-filter-area" class="bg-white border border-[#e5d5c5] rounded-2xl p-5 mb-8 shadow-sm text-right grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 items-end">
-            <div>
-                <label class="block text-[11px] text-stone-500 font-medium mb-1.5">🔍 جستجوی نام کالا</label>
-                <input type="text" id="search-input" oninput="updateAllPrices()" placeholder="مثلا: انگشتر گره..." class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs focus:outline-none focus:border-[#b89327]">
+        <div id="page-showcase" class="page-section space-y-6">
+            <div id="customer-filter-area" class="bg-white border border-[#e5d5c5] rounded-2xl p-5 shadow-sm text-right grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 items-end">
+                <div>
+                    <label class="block text-[11px] text-stone-500 font-medium mb-1.5">🔍 جستجوی نام کالا</label>
+                    <input type="text" id="search-input" oninput="updateAllPrices()" placeholder="مثلا: انگشتر گره..." class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs focus:outline-none focus:border-[#b89327]">
+                </div>
+                <div>
+                    <label class="block text-[11px] text-stone-500 font-medium mb-1.5">⚖️ محدوده وزن (گرم)</label>
+                    <div class="flex items-center gap-2">
+                        <input type="number" step="0.01" id="filter-weight-min" oninput="updateAllPrices()" placeholder="از" class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs text-center font-mono focus:outline-none">
+                        <input type="number" step="0.01" id="filter-weight-max" oninput="updateAllPrices()" placeholder="تا" class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs text-center font-mono focus:outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[11px] text-stone-500 font-medium mb-1.5">💰 محدوده قیمت (تومان)</label>
+                    <div class="flex items-center gap-2">
+                        <input type="number" id="filter-price-min" oninput="updateAllPrices()" placeholder="از" class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs text-center font-mono focus:outline-none">
+                        <input type="number" id="filter-price-max" oninput="updateAllPrices()" placeholder="تا" class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs text-center font-mono focus:outline-none">
+                    </div>
+                </div>
+                <div class="flex items-center h-full">
+                    <label class="inline-flex items-center text-xs text-stone-700 cursor-pointer bg-stone-50 px-4 py-3 rounded-xl border border-stone-200 w-full justify-between">
+                        <span>📦 فقط طلاهای موجود</span>
+                        <input type="checkbox" id="filter-only-stock" onchange="updateAllPrices()" class="mr-3 accent-[#b89327] w-4 h-4">
+                    </label>
+                </div>
+            </div>
+            <div id="sliders-container" class="space-y-8"></div>
+        </div>
+
+        <div id="page-cart" class="page-section hidden space-y-6 text-right">
+            <div class="flex justify-between items-center border-b border-stone-200 pb-3">
+                <h2 class="text-xl font-medium text-[#a68015] flex items-center gap-2">🛒 سبد خرید و پیش‌فاکتور شما</h2>
+                <button onclick="navigateTo('showcase')" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-700 px-4 py-2 rounded-xl transition-all">← بازگشت به ویترین</button>
             </div>
             
-            <div>
-                <label class="block text-[11px] text-stone-500 font-medium mb-1.5">⚖️ محدوده وزن (گرم)</label>
-                <div class="flex items-center gap-2">
-                    <input type="number" step="0.01" id="filter-weight-min" oninput="updateAllPrices()" placeholder="از" class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs text-center font-mono focus:outline-none focus:border-[#b89327]">
-                    <span class="text-stone-400 text-xs">تا</span>
-                    <input type="number" step="0.01" id="filter-weight-max" oninput="updateAllPrices()" placeholder="تا" class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs text-center font-mono focus:outline-none focus:border-[#b89327]">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+                <div id="cart-items-list" class="md:col-span-2 space-y-3"></div>
+                
+                <div class="bg-white border border-[#e5d5c5] rounded-3xl p-6 space-y-4 shadow-sm">
+                    <h3 class="text-sm font-bold text-stone-800 border-b border-stone-100 pb-2">📊 خلاصه فاکتور خرید</h3>
+                    <div class="space-y-2.5 text-xs text-stone-600">
+                        <div class="flex justify-between"><span>تعداد کل اقلام:</span><span id="summary-qty" class="font-bold font-mono text-stone-800">0 کالا</span></div>
+                        <div class="flex justify-between"><span>وزن مجموع کل طلا:</span><span id="summary-weight" class="font-bold font-mono text-stone-800">0 گرم</span></div>
+                        <div class="flex justify-between text-amber-700 font-medium"><span>سود کسر شده (VIP):</span><span id="summary-vip-discount" class="font-mono">0 تومان</span></div>
+                    </div>
+                    <div class="border-t border-stone-100 pt-3 flex justify-between items-center">
+                        <span class="text-xs font-bold text-stone-800">مبلغ قابل پرداخت:</span>
+                        <span id="summary-total-price" class="text-md font-bold text-[#a68015] font-mono">0 تومان</span>
+                    </div>
+                    <button onclick="openOrderModal()" id="checkout-btn" class="w-full bg-[#b89327] text-white py-3.5 rounded-xl text-xs font-bold hover:bg-[#a68015] transition-all shadow-md cursor-pointer mt-2">🛍️ تکمیل سفارش و ثبت مشخصات</button>
                 </div>
-            </div>
-
-            <div>
-                <label class="block text-[11px] text-stone-500 font-medium mb-1.5">💰 محدوده قیمت (تومان)</label>
-                <div class="flex items-center gap-2">
-                    <input type="number" id="filter-price-min" oninput="updateAllPrices()" placeholder="از قیمت" class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs text-center font-mono focus:outline-none focus:border-[#b89327]">
-                    <span class="text-stone-400 text-xs">تا</span>
-                    <input type="number" id="filter-price-max" oninput="updateAllPrices()" placeholder="تا قیمت" class="w-full p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs text-center font-mono focus:outline-none focus:border-[#b89327]">
-                </div>
-            </div>
-
-            <div class="flex items-center h-full sm:justify-center">
-                <label class="inline-flex items-center text-xs text-stone-700 cursor-pointer bg-stone-50 px-4 py-3 rounded-xl border border-stone-200 w-full justify-between sm:justify-start">
-                    <span>📦 فقط طلاهای موجود</span>
-                    <input type="checkbox" id="filter-only-stock" onchange="updateAllPrices()" class="mr-3 accent-[#b89327] w-4 h-4">
-                </label>
             </div>
         </div>
 
-        <!-- 🛠️ پنل مدیریت جامع با تنظیمات پیشرفته -->
-        <div id="admin-panel" class="hidden bg-white border border-[#e5d5c5] rounded-3xl p-6 mb-8 text-right shadow-md space-y-6">
+        <div id="page-admin" class="page-section hidden bg-white border border-[#e5d5c5] rounded-3xl p-6 shadow-md space-y-6 text-right">
             <h3 class="text-md font-medium text-[#a68015]">🛠️ مدیریت ویترین و مشتریان سما زرین</h3>
-            
             <form onsubmit="addNewProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 border-b border-stone-100 pb-6">
-                <input type="text" id="prod-name" placeholder="نام محصول" required class="p-3 rounded-xl bg-white text-stone-800 text-xs border border-[#e5d5c5] focus:outline-none focus:border-[#b89327]">
-                <input type="number" step="0.01" id="prod-weight" placeholder="وزن به گرم" required class="p-3 rounded-xl bg-white text-stone-800 text-xs border border-[#e5d5c5] text-center font-mono focus:outline-none focus:border-[#b89327]">
-                <input type="number" id="prod-wage" placeholder="درصد اجرت" required class="p-3 rounded-xl bg-white text-stone-800 text-xs border border-[#e5d5c5] text-center font-mono focus:outline-none focus:border-[#b89327]">
-                <input type="number" id="prod-profit" placeholder="درصد سود" required class="p-3 rounded-xl bg-white text-stone-800 text-xs border border-[#e5d5c5] text-center font-mono focus:outline-none focus:border-[#b89327]">
-                <input type="number" id="prod-tax" placeholder="درصد مالیات" required class="p-3 rounded-xl bg-white text-stone-800 text-xs border border-[#e5d5c5] text-center font-mono focus:outline-none focus:border-[#b89327]">
-                <input type="number" id="prod-discount-input" placeholder="درصد تخفیف کالا" value="0" class="p-3 rounded-xl bg-white text-stone-800 text-xs border border-[#e5d5c5] text-center font-mono focus:outline-none focus:border-[#b89327]">
+                <input type="text" id="prod-name" placeholder="نام محصول" required class="p-3 rounded-xl bg-white text-stone-800 text-xs border border-[#e5d5c5] focus:outline-none">
+                <input type="number" step="0.01" id="prod-weight" placeholder="وزن به گرم" required class="p-3 rounded-xl bg-white text-stone-800 text-xs border border-[#e5d5c5] text-center font-mono">
+                <input type="number" id="prod-wage" placeholder="درصد اجرت" required class="p-3 rounded-xl bg-white border border-[#e5d5c5] text-center font-mono">
+                <input type="number" id="prod-profit" placeholder="درصد سود" required class="p-3 rounded-xl bg-white border border-[#e5d5c5] text-center font-mono">
+                <input type="number" id="prod-tax" placeholder="درصد مالیات" required class="p-3 rounded-xl bg-white border border-[#e5d5c5] text-center font-mono">
+                <input type="number" id="prod-discount-input" placeholder="درصد تخفیف کالا" value="0" class="p-3 rounded-xl bg-white border border-[#e5d5c5] text-center font-mono">
                 
-                <div class="relative flex items-center bg-white rounded-xl border border-[#e5d5c5] px-3 overflow-hidden group">
-                    <label for="prod-img-file" class="w-full text-right text-xs text-stone-500 cursor-pointer flex justify-between items-center py-3">
-                        <span id="file-label-text">🖼️ انتخاب مستقیم عکس از گالری</span>
-                        <span class="bg-stone-800 text-white text-[10px] px-2 py-1 rounded-md">برو به گالری</span>
+                <div class="relative flex items-center bg-white rounded-xl border border-[#e5d5c5] px-3 py-3 overflow-hidden">
+                    <label for="prod-img-file" class="w-full text-xs text-stone-500 cursor-pointer flex justify-between items-center">
+                        <span id="file-label-text">🖼️ انتخاب عکس از گالری</span>
+                        <span class="bg-stone-800 text-white text-[10px] px-2 py-1 rounded-md">گالری</span>
                     </label>
                     <input type="file" id="prod-img-file" accept="image/*" required onchange="handleFileSelect(this)" class="hidden">
                 </div>
                 
-                <select id="prod-category" class="p-3 rounded-xl bg-white text-stone-700 text-xs border border-[#e5d5c5] focus:outline-none focus:border-[#b89327]">
+                <select id="prod-category" class="p-3 rounded-xl bg-white border border-[#e5d5c5] text-xs">
                     <option value="دستبند">دستبند</option>
                     <option value="گوشواره">گوشواره</option>
                     <option value="انگشتر">انگشتر</option>
                     <option value="گردنبند">گردنبند</option>
-                    <option value="آویز">آویز</option>
-                    <option value="پلاک">پلاک</option>
-                    <option value="نیم ست">نیم ست</option>
                 </select>
 
                 <div class="flex items-center gap-6 bg-stone-50 p-3 rounded-xl border border-stone-100">
                     <label class="inline-flex items-center text-xs text-stone-700 cursor-pointer">
-                        <input type="checkbox" id="prod-stock" checked class="ml-2 accent-emerald-600"> طلا در انبار موجود است
+                        <input type="checkbox" id="prod-stock" checked class="ml-2 accent-emerald-600"> طلا موجود است
                     </label>
                 </div>
-                <button type="submit" class="md:col-span-3 bg-stone-900 text-white text-xs font-medium py-3.5 rounded-xl hover:bg-black transition-colors cursor-pointer">➕ افزودن به ویترین اسلایدی</button>
+                <button type="submit" class="md:col-span-3 bg-stone-900 text-white text-xs font-medium py-3.5 rounded-xl hover:bg-black cursor-pointer">➕ افزودن به ویترین اسلایدی</button>
             </form>
-
             <div>
-                <h4 class="text-xs font-bold text-stone-500 mb-2">📊 شبیه‌ساز تعداد خرید مشتری (جهت تست فعال‌سازی VIP):</h4>
+                <h4 class="text-xs font-bold text-stone-500 mb-2">📊 شبیه‌ساز تعداد خرید مشتری جهت تست VIP:</h4>
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="setMockPurchases(1)" class="bg-stone-50 text-stone-700 text-[11px] px-3 py-2 rounded-xl border border-stone-200 cursor-pointer">تنظیم خرید جاری روی ۱ بار</button>
-                    <button onclick="setMockPurchases(3)" class="bg-amber-50/60 text-amber-800 text-[11px] px-3 py-2 rounded-xl border border-amber-200 cursor-pointer">تنظیم خرید جاری روی ۳ بار (شرط خرید VIP)</button>
+                    <button onclick="setMockPurchases(1)" class="bg-stone-50 text-stone-700 text-[11px] px-3 py-2 rounded-xl border border-stone-200">تنظیم خرید روی ۱ بار</button>
+                    <button onclick="setMockPurchases(3)" class="bg-amber-50/60 text-amber-800 text-[11px] px-3 py-2 rounded-xl border border-amber-200">تنظیم خرید روی ۳ بار (شرط VIP)</button>
                 </div>
             </div>
         </div>
 
-        <!-- 📥 بخش ردیف‌های اسلایدی هوشمند و مستقل -->
-        <div id="sliders-container" class="space-y-8"></div>
-
-        <!-- 👑 مودال مقایسه‌ای اشتراک vip -->
         <div id="vip-modal" class="hidden fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center p-4 z-50">
             <div class="bg-white border border-[#e5d5c5] p-6 rounded-3xl max-w-xl w-full text-right space-y-6 shadow-2xl">
                 <div class="flex justify-between items-center border-b border-stone-100 pb-3">
-                    <h3 class="text-lg font-medium text-[#a68015] flex items-center gap-1">👑 جدول مقایسه و مزایای اشتراک کاربری VIP</h3>
-                    <button onclick="closeVipModal()" class="text-stone-400 hover:text-stone-700 text-sm cursor-pointer">✕</button>
+                    <h3 class="text-lg font-medium text-[#a68015]">👑 مزایای اشتراک کاربری VIP</h3>
+                    <button onclick="closeVipModal()" class="text-stone-400 text-sm">✕</button>
                 </div>
-
                 <div class="overflow-x-auto rounded-2xl border border-stone-200 bg-white">
                     <table class="w-full text-right text-xs border-collapse">
                         <thead>
                             <tr class="bg-stone-50 text-[#a68015] border-b border-stone-200">
-                                <th class="p-3.5 font-bold">ویژگی‌ها و مزایا</th>
-                                <th class="p-3.5 text-center font-bold">اشتراک عادی</th>
-                                <th class="p-3.5 text-center font-bold text-amber-700">اشتراک VIP 👑</th>
+                                <th class="p-3.5 font-bold">ویژگی‌ها</th>
+                                <th class="p-3.5 text-center font-bold">عادی</th>
+                                <th class="p-3.5 text-center font-bold text-amber-700">VIP 👑</th>
                             </tr>
                         </thead>
                         <tbody class="text-stone-700 divide-y divide-stone-100">
                             <tr>
-                                <td class="p-3.5 font-medium">۲٪ تخفیف روی سود تمامی اجناس</td>
-                                <td class="p-3.5 text-center text-rose-600 font-mono">❌ ندارد</td>
-                                <td class="p-3.5 text-center text-emerald-700 font-bold font-mono">✅ فعال</td>
-                            </tr>
-                            <tr>
-                                <td class="p-3.5 font-medium">ضمانت کالا</td>
-                                <td class="p-3.5 text-center text-rose-600 font-mono">❌ ندارد</td>
-                                <td class="p-3.5 text-center text-emerald-700 font-bold font-mono">✅ فعال</td>
-                            </tr>
-                            <tr>
-                                <td class="p-3.5 font-medium">پشتیبانی ۲۴ ساعته</td>
-                                <td class="p-3.5 text-center text-rose-600 font-mono">❌ ندارد</td>
-                                <td class="p-3.5 text-center text-emerald-700 font-bold font-mono">✅ فعال</td>
-                            </tr>
-                            <tr>
-                                <td class="p-3.5 font-medium">بسته‌بندی مخصوص اشتراک ویژه</td>
-                                <td class="p-3.5 text-center text-rose-600 font-mono">❌ ندارد</td>
-                                <td class="p-3.5 text-center text-emerald-700 font-bold font-mono">✅ فعال</td>
+                                <td class="p-3.5">۲٪ تخفیف روی سود تمامی اجناس</td>
+                                <td class="p-3.5 text-center text-rose-600">❌ ندارد</td>
+                                <td class="p-3.5 text-center text-emerald-700 font-bold">✅ فعال</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-
-                <p class="text-[11px] text-stone-500 leading-relaxed">⚠️ این قابلیت بعد ۲ دور خرید برای هر فرد فعال می‌شود (حداقل ۳ خرید ثبت شده).</p>
-                
                 <div class="flex gap-3">
-                    <button onclick="activateVip()" class="flex-1 bg-gradient-to-r from-[#b89327] to-[#a68015] text-white text-xs font-bold py-3 rounded-xl shadow-md cursor-pointer">👑 درخواست فعال‌سازی و ارتقای حساب</button>
-                    <button onclick="closeVipModal()" class="px-6 bg-stone-900 text-white text-xs py-3 rounded-xl hover:bg-black cursor-pointer">بستن</button>
+                    <button onclick="activateVip()" class="flex-1 bg-gradient-to-r from-[#b89327] to-[#a68015] text-white text-xs font-bold py-3 rounded-xl shadow-md">👑 ارتقای حساب</button>
+                    <button onclick="closeVipModal()" class="px-6 bg-stone-900 text-white text-xs py-3 rounded-xl">بستن</button>
                 </div>
             </div>
         </div>
 
-        <!-- 🛍️ مودال اختصاصی فرم درخواست خرید کالا -->
-        <div id="purchase-modal" class="hidden fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+        <div id="order-modal" class="hidden fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center p-4 z-50">
             <div class="bg-white border border-[#e5d5c5] p-6 rounded-3xl max-w-md w-full text-right space-y-4 shadow-2xl">
                 <div class="flex justify-between items-center border-b border-stone-100 pb-2">
-                    <h3 class="text-md font-bold text-[#a68015]">📋 فرم ثبت درخواست مشاوره و خرید</h3>
-                    <button onclick="closePurchaseModal()" class="text-stone-400 hover:text-stone-700 text-sm cursor-pointer">✕</button>
+                    <h3 class="text-md font-bold text-[#a68015]">📋 فرم مشخصات گیرنده و ارسال سفارش</h3>
+                    <button onclick="closeOrderModal()" class="text-stone-400 hover:text-stone-700 text-sm">✕</button>
                 </div>
-                
-                <form onsubmit="submitPurchaseOrder(event)" class="space-y-4 text-right">
-                    <div>
-                        <label class="text-xs text-stone-500 mr-1">نام محصول انتخابی</label>
-                        <input type="text" id="order-product-name" readonly class="w-full p-3 mt-1 rounded-xl bg-stone-50 border border-stone-200 text-stone-700 text-xs font-bold focus:outline-none">
-                    </div>
+                <form onsubmit="submitFinalPurchaseOrder(event)" class="space-y-4 text-right">
                     <div>
                         <label class="text-xs text-[#a68015] mr-1">نام و نام‌خانوادگی خریدار</label>
                         <input type="text" id="order-user-name" required class="w-full p-3 mt-1 rounded-xl bg-white border border-[#e5d5c5] text-stone-800 text-xs focus:outline-none focus:border-[#b89327]">
                     </div>
                     <div>
                         <label class="text-xs text-[#a68015] mr-1">شماره تماس</label>
-                        <input type="tel" id="order-user-phone" required class="w-full p-3 mt-1 rounded-xl bg-white border border-[#e5d5c5] text-stone-800 text-xs font-mono text-center focus:outline-none focus:border-[#b89327]" placeholder="09xxxxxxxxx">
+                        <input type="tel" id="order-user-phone" required class="w-full p-3 mt-1 rounded-xl bg-white border border-[#e5d5c5] text-stone-800 text-xs font-mono text-center focus:outline-none" placeholder="09xxxxxxxxx">
                     </div>
                     <div>
                         <label class="text-xs text-[#a68015] mr-1">آدرس دقیق جهت ارسال</label>
-                        <textarea id="order-user-address" required rows="3" class="w-full p-3 mt-1 rounded-xl bg-white border border-[#e5d5c5] text-stone-800 text-xs focus:outline-none focus:border-[#b89327]" placeholder="استان، شهر، خیابان..."></textarea>
+                        <textarea id="order-user-address" required rows="3" class="w-full p-3 mt-1 rounded-xl bg-white border border-[#e5d5c5] text-stone-800 text-xs focus:outline-none" placeholder="استان، شهر، خیابان..."></textarea>
                     </div>
-                    
-                    <button type="submit" class="w-full bg-[#b89327] text-white py-3 rounded-xl text-xs font-bold hover:bg-[#a68015] transition-all cursor-pointer shadow-md">✨ ثبت نهایی سفارش و ارسال به گالری</button>
+                    <button type="submit" class="w-full bg-[#b89327] text-white py-3 rounded-xl text-xs font-bold hover:bg-[#a68015] shadow-md cursor-pointer">✨ ثبت نهایی سبد خرید و ارسال به گالری</button>
                 </form>
             </div>
         </div>
 
-        <!-- ☎️ مودال صفحه پشتیبانی -->
         <div id="support-modal" class="hidden fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center p-4 z-50">
             <div class="bg-white border border-[#e5d5c5] p-6 rounded-3xl max-w-sm w-full text-right space-y-5 shadow-2xl">
-                <div class="flex justify-between items-center border-b border-stone-100 pb-2">
-                    <h3 class="text-md font-bold text-[#a68015]">☎️ مرکز پشتیبانی سما زرین</h3>
-                    <button onclick="closeSupportModal()" class="text-stone-400 hover:text-stone-700 text-sm">✕</button>
+                <button onclick="closeSupportModal()" class="text-stone-400 text-sm float-left">✕</button>
+                <h3 class="text-md font-bold text-[#a68015]">☎️ مرکز پشتیبانی سما زرین</h3>
+                <div class="flex flex-col gap-3.5 pt-2">
+                    <a href="https://www.instagram.com/sama_zarinn?igsh=MTB4ZW1iY2VzZ255aA==" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-pink-50 border border-pink-200 text-pink-700 text-xs font-bold"><span>📱 اینستاگرام</span><span dir="ltr">@sama_zarinn</span></a>
+                    <a href="https://t.me/sama_zarinn" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold"><span>✈️ تلگرام</span><span dir="ltr">sama_zarinn</span></a>
                 </div>
-                
-                <div class="flex flex-col gap-3.5">
-                    <a href="https://www.instagram.com/sama_zarinn?igsh=MTB4ZW1iY2VzZ255aA==" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-gradient-to-r from-purple-50 to-pink-50 border border-pink-200 text-pink-700 text-xs font-bold hover:scale-[1.02] transition-transform">
-                        <span>📱 پشتیبانی اینستا</span>
-                        <span dir="ltr" class="font-mono text-[10px]">@sama_zarinn</span>
-                    </a>
-                    
-                    <a href="https://t.me/sama_zarinn" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 text-blue-700 text-xs font-bold hover:scale-[1.02] transition-transform">
-                        <span>✈️ پشتیبانی تلگرام</span>
-                        <span dir="ltr" class="font-mono text-[10px]">sama_zarinn</span>
-                    </a>
-                    
-                    <button onclick="alert('پشتیبانی پیام‌رسان بله به زودی فعال می‌گردد.')" class="flex items-center justify-between p-3.5 rounded-xl bg-stone-50 border border-stone-200 text-stone-400 text-xs font-bold cursor-not-allowed">
-                        <span>🌱 پشتیبانی بله</span>
-                        <span class="text-[10px] bg-stone-200 px-1.5 py-0.5 rounded-md text-stone-500">غیرفعال</span>
-                    </button>
-                </div>
-                <button onclick="closeSupportModal()" class="w-full bg-stone-900 text-white text-xs py-2.5 rounded-xl hover:bg-black transition-colors">بستن پنجره</button>
             </div>
         </div>
 
-        <!-- ℹ️ مودال درباره ما -->
         <div id="about-modal" class="hidden fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center p-4 z-50">
             <div class="bg-white border border-[#e5d5c5] p-6 rounded-3xl max-w-md w-full text-right space-y-5 shadow-2xl">
                 <h3 class="text-lg font-medium text-[#a68015]">درباره گالری سما زرین</h3>
-                <p class="text-xs text-stone-600 leading-relaxed">گالری سما زرین ارائه‌دهنده لوکس‌ترین و ظریف‌ترین طلاهای مینیمال ۱۸ عیار است. ما در تلاشیم تا زیبایی و سادگی را در قالب قطعاتی ماندگار به شما هدیه دهیم.</p>
-                <button onclick="closeAboutUs()" class="w-full bg-stone-900 text-white text-xs py-2.5 rounded-xl hover:bg-black cursor-pointer shadow-sm">بستن پنجره</button>
+                <p class="text-xs text-stone-600 leading-relaxed">گالری سما زرین ارائه‌دهنده لوکس‌ترین و ظریف‌ترین طلاهای مینیمال ۱۸ عیار است.</p>
+                <button onclick="closeAboutUs()" class="w-full bg-stone-900 text-white text-xs py-2.5 rounded-xl">بستن</button>
             </div>
         </div>
     </div>
@@ -327,12 +291,15 @@
         const ADMIN_PHONE = "09111543422";
         const ADMIN_PASS = "211820sk";
 
-        const ALL_CATEGORIES = ["دستبند", "گوشواره", "انگشتر", "گردنبند", "آویز", "پلاک", "نیم ست"];
+        const ALL_CATEGORIES = ["دستبند", "گوشواره", "انگشتر", "گردنبند"];
 
         let products = JSON.parse(localStorage.getItem('sama_products')) || [
             { id: 1, name: "دستبند زنجیری مینیمال باران", weight: 2.45, wagePercent: 12, profitPercent: 9, taxPercent: 9, discountPercent: 5, category: "دستبند", isStock: true, img: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&auto=format&fit=crop&q=60" },
             { id: 2, name: "انگشتر گره طلا ۱۸ عیار", weight: 1.82, wagePercent: 15, profitPercent: 9, taxPercent: 9, discountPercent: 0, category: "انگشتر", isStock: true, img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=500&auto=format&fit=crop&q=60" }
         ];
+
+        // آرایه سبد خرید (ذخیره محصولات انتخابی خریدار)
+        let cart = JSON.parse(localStorage.getItem('sama_cart')) || [];
 
         let currentFilter = 'all';
         let selectedImageBase64 = ""; 
@@ -342,25 +309,19 @@
         function toggleMenu() { document.getElementById('dropdown-menu').classList.toggle('hidden'); }
         function toggleAdminMenu() { document.getElementById('admin-dropdown-menu').classList.toggle('hidden'); }
         
-        function switchAdminView(view) {
+        // تابع مدیریت ناوبری صفحات بدون ریلود شدن (SPA Routing)
+        function navigateTo(pageId) {
+            document.getElementById('dropdown-menu').classList.add('hidden');
             document.getElementById('admin-dropdown-menu').classList.add('hidden');
-            const adminPanel = document.getElementById('admin-panel');
-            const slidersContainer = document.getElementById('sliders-container');
-            const customerFilterArea = document.getElementById('customer-filter-area');
-
-            if (view === 'panel') {
-                adminPanel.classList.remove('hidden');
-                slidersContainer.classList.add('hidden');
-                customerFilterArea.classList.add('hidden');
-            } else {
-                adminPanel.classList.add('hidden');
-                slidersContainer.classList.remove('hidden');
-                customerFilterArea.classList.remove('hidden');
-                updateAllPrices();
-            }
+            
+            document.querySelectorAll('.page-section').forEach(section => section.classList.add('hidden'));
+            document.getElementById(`page-${pageId}`).classList.remove('hidden');
+            
+            if(pageId === 'showcase') updateAllPrices();
+            if(pageId === 'cart') renderCartPage();
         }
 
-        function logout() { localStorage.removeItem('sama_user'); location.reload(); }
+        function logout() { localStorage.removeItem('sama_user'); localStorage.removeItem('sama_cart'); location.reload(); }
         function showAboutUs() { document.getElementById('about-modal').classList.remove('hidden'); toggleMenu(); }
         function closeAboutUs() { document.getElementById('about-modal').classList.add('hidden'); }
         function showVipModal() { document.getElementById('vip-modal').classList.remove('hidden'); toggleMenu(); }
@@ -368,32 +329,153 @@
         function showSupportModal() { document.getElementById('support-modal').classList.remove('hidden'); toggleMenu(); }
         function closeSupportModal() { document.getElementById('support-modal').classList.add('hidden'); }
 
-        // توابع باز و بسته کردن فرم خرید اختصاصی
-        function openPurchaseModal(productName) {
-            document.getElementById('order-product-name').value = productName;
+        // افزودن آیتم به سبد خرید خریدار
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if(!product) return;
+            
+            const existing = cart.find(item => item.id === productId);
+            if(existing) {
+                alert("✨ این کالا از قبل در سبد خرید شما موجود است.");
+                return;
+            }
+            cart.push(product);
+            saveCart();
+            alert(`🛒 کالا «${product.name}» به سبد خرید شما اضافه شد.`);
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            saveCart();
+            renderCartPage();
+        }
+
+        function saveCart() {
+            localStorage.setItem('sama_cart', JSON.stringify(cart));
+            updateCartBadges();
+        }
+
+        function updateCartBadges() {
+            document.getElementById('cart-badge-count').innerText = cart.length;
+            document.getElementById('menu-cart-count').innerText = `${cart.length} کالا`;
+        }
+
+        // رندر کردن و محاسبه نهایی پیش فاکتور سبد خرید
+        function renderCartPage() {
+            const container = document.getElementById('cart-items-list');
+            if(!container) return;
+            container.innerHTML = "";
+
+            if(cart.length === 0) {
+                container.innerHTML = `<div class="bg-white border border-[#e5d5c5] rounded-3xl p-12 text-center text-xs text-stone-500">سبد خرید شما در حال حاضر خالی است. ✨</div>`;
+                document.getElementById('checkout-btn').disabled = true;
+                document.getElementById('checkout-btn').classList.add('opacity-50', 'cursor-not-allowed');
+                resetSummary();
+                return;
+            }
+
+            document.getElementById('checkout-btn').disabled = false;
+            document.getElementById('checkout-btn').classList.remove('opacity-50', 'cursor-not-allowed');
+
+            const rawRate = document.getElementById('gold-rate-input').value.replace(/[^0-9]/g, '');
+            const currentRate = parseFloat(rawRate) || 0;
+            const session = JSON.parse(localStorage.getItem('sama_user'));
+            const isVip = session && session.isVip === true;
+
+            let totalQty = cart.length;
+            let totalWeight = 0;
+            let totalVipDiscount = 0;
+            let totalFinalPrice = 0;
+
+            cart.forEach(p => {
+                const itemTax = p.taxPercent !== undefined ? p.taxPercent : 9;
+                
+                const normalPrice = calculateGoldPrice(p.weight, p.wagePercent, p.profitPercent, itemTax, currentRate, false, p.discountPercent);
+                const finalPrice = calculateGoldPrice(p.weight, p.wagePercent, p.profitPercent, itemTax, currentRate, isVip, p.discountPercent);
+                
+                totalWeight += p.weight;
+                totalFinalPrice += finalPrice;
+                if(isVip) { totalVipDiscount += (normalPrice - finalPrice); }
+
+                container.innerHTML += `
+                    <div class="bg-white border border-[#e5d5c5] p-4 rounded-2xl flex items-center gap-4 justify-between">
+                        <div class="flex items-center gap-3">
+                            <img src="${p.img}" class="w-16 h-16 object-cover rounded-xl border border-stone-100">
+                            <div>
+                                <h4 class="text-xs font-bold text-stone-800">${p.name}</h4>
+                                <p class="text-[10px] text-stone-500 mt-1">وزن: ${p.weight.toFixed(2)} گرم | دسته: ${p.category}</p>
+                            </div>
+                        </div>
+                        <div class="text-left flex flex-col items-end gap-2">
+                            <span class="text-xs font-mono font-bold text-[#a68015]">${finalPrice.toLocaleString('fa-IR')} تومان</span>
+                            <button onclick="removeFromCart(${p.id})" class="text-[10px] text-rose-600 hover:underline cursor-pointer">🗑️ حذف</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('summary-qty').innerText = `${totalQty} کالا`;
+            document.getElementById('summary-weight').innerText = `${totalWeight.toFixed(2)} گرم`;
+            document.getElementById('summary-vip-discount').innerText = `${totalVipDiscount.toLocaleString('fa-IR')} تومان`;
+            document.getElementById('summary-total-price').innerText = `${totalFinalPrice.toLocaleString('fa-IR')} تومان`;
+        }
+
+        function resetSummary() {
+            document.getElementById('summary-qty').innerText = "0 کالا";
+            document.getElementById('summary-weight').innerText = "0 گرم";
+            document.getElementById('summary-vip-discount').innerText = "0 تومان";
+            document.getElementById('summary-total-price').innerText = "0 تومان";
+        }
+
+        function openOrderModal() {
             const session = JSON.parse(localStorage.getItem('sama_user'));
             if(session) {
                 document.getElementById('order-user-name').value = session.name !== "مشتری جدید" ? session.name : "";
                 document.getElementById('order-user-phone').value = session.phone || "";
             }
-            document.getElementById('purchase-modal').classList.remove('hidden');
+            document.getElementById('order-modal').classList.remove('hidden');
         }
-        function closePurchaseModal() { document.getElementById('purchase-modal').classList.add('hidden'); }
+        function closeOrderModal() { document.getElementById('order-modal').classList.add('hidden'); }
 
-        // ثبت سفارش و ارسال داده‌ها به ادمین از طریق بات تلگرام
-        function submitPurchaseOrder(e) {
+        // ثبت نهایی سفارش و تولید لینک اختصاصی سبد خرید برای ادمین گالری
+        function submitFinalPurchaseOrder(e) {
             e.preventDefault();
-            const pName = document.getElementById('order-product-name').value;
             const uName = document.getElementById('order-user-name').value.trim();
             const uPhone = document.getElementById('order-user-phone').value.trim();
             const uAddress = document.getElementById('order-user-address').value.trim();
 
-            const textMessage = `🛍️ درخواست خرید جدید!\n\n👑 محصول: ${pName}\n👤 خریدار: ${uName}\n📱 همراه: ${uPhone}\n📍 آدرس ارسال: ${uAddress}`;
+            // ساخت یک شناسه متنی از روی آرایه IDهای سبد جهت ایجاد لینک سبد خرید برای ادمین
+            const encodedCartIds = cart.map(item => item.id).join(',');
+            const currentGoldRate = document.getElementById('gold-rate-input').value.replace(/[^0-9]/g, '');
             
-            new Image().src = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(textMessage)}`;
+            // تولید لینک اختصاصی جهت نمایش اقلام خریدار برای ادمین
+            const cartReviewUrl = `${window.location.origin}${window.location.pathname}?reviewCart=${encodedCartIds}&rate=${currentGoldRate}`;
+
+            const telegramMsg = `🛒 سبد خرید جدید ثبت شد!\n\n👤 خریدار: ${uName}\n📱 همراه: ${uPhone}\n📍 آدرس ارسال: ${uAddress}\n\n🔗 لینک مشاهده سبد خرید خریدار:\n${cartReviewUrl}`;
             
-            alert("✨ درخواست شما با موفقیت ثبت شد! کارشناسان سما زرین به زودی جهت هماهنگی با شما تماس خواهند گرفت.");
-            closePurchaseModal();
+            new Image().src = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(telegramMsg)}`;
+            
+            alert("✨ سفارش شما با موفقیت به گالری سما زرین ارسال شد! سبد خرید شما خالی شد.");
+            cart = [];
+            saveCart();
+            closeOrderModal();
+            navigateTo('showcase');
+        }
+
+        // تابع کمکی برای ادمین جهت بارگذاری سبد خرید از روی لینک ارسالی تلگرام ربات
+        function checkUrlForCartReview() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const reviewCart = urlParams.get('reviewCart');
+            const rate = urlParams.get('rate');
+            
+            if(reviewCart) {
+                if(rate) { document.getElementById('gold-rate-input').value = parseInt(rate).toLocaleString('en-US'); }
+                const ids = reviewCart.split(',').map(Number);
+                cart = products.filter(p => ids.includes(p.id));
+                updateCartBadges();
+                navigateTo('cart');
+                alert("📂 در حال مشاهده اقلام سبد خرید ارسالی مشتری از تلگرام هستید.");
+            }
         }
 
         function setMockPurchases(count) {
@@ -401,25 +483,20 @@
             if(user) {
                 user.purchases = count;
                 localStorage.setItem('sama_user', JSON.stringify(user));
-                alert(`تعداد خرید کاربر روی ${count} تنظیم شد.`);
+                alert(`تعداد خرید روی ${count} تنظیم شد.`);
             }
         }
 
         function handleFileSelect(input) {
             const file = input.files[0];
-            if (file) {
-                if (file.size > 2 * 1024 * 1024) { 
-                    alert("❌ لطفاً عکسی با حجم کمتر از ۲ مگابایت انتخاب کنید.");
-                    input.value = "";
-                    return;
-                }
+            if (file && file.size <= 2 * 1024 * 1024) {
                 const reader = new FileReader();
-                reader.onload = function (e) {
+                reader.onload = e => {
                     selectedImageBase64 = e.target.result;
-                    document.getElementById('file-label-text').innerText = "✅ عکس انتخاب شد: " + file.name.substring(0, 15) + "...";
+                    document.getElementById('file-label-text').innerText = "✅ عکس انتخاب شد";
                 };
                 reader.readAsDataURL(file);
-            }
+            } else { alert("❌ سایز عکس زیاد است"); }
         }
 
         async function handleAuth(e) {
@@ -430,7 +507,6 @@
 
             if (phone === ADMIN_PHONE && pass === ADMIN_PASS) {
                 localStorage.setItem('sama_user', JSON.stringify({ name: "مدیریت گالری", phone, role: "admin", isVip: false, purchases: 5 }));
-                alert("👑 با موفقیت وارد پنل مدیریت شدید.");
                 location.reload();
                 return;
             }
@@ -439,101 +515,51 @@
             let existingUser = allUsers.find(u => u.phone === phone);
 
             if(existingUser) {
-                if(existingUser.pass !== pass) {
-                    alert("❌ رمز عبور اشتباه است!");
-                    return;
-                }
+                if(existingUser.pass !== pass) { alert("❌ رمز اشتباه است"); return; }
                 localStorage.setItem('sama_user', JSON.stringify(existingUser));
             } else {
                 const newUser = { name: name || "مشتری جدید", phone, pass, role: "customer", isVip: false, purchases: 0 };
                 allUsers.push(newUser);
                 localStorage.setItem('sama_registered_users', JSON.stringify(allUsers));
                 localStorage.setItem('sama_user', JSON.stringify(newUser));
-                new Image().src = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`🆕 ثبت نام جدید در سایت:\n👤 نام: ${newUser.name}\n📱 شماره: ${phone}`)}`;
+                new Image().src = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`🆕 ثبت نام جدید: ${newUser.name}`)}`;
             }
             checkLoginState();
         }
 
         function activateVip() {
             let user = JSON.parse(localStorage.getItem('sama_user'));
-            if(!user) return;
-            if (user.purchases > 2) {
+            if(user && user.purchases > 2) {
                 user.isVip = true;
                 localStorage.setItem('sama_user', JSON.stringify(user));
-                let allUsers = JSON.parse(localStorage.getItem('sama_registered_users')) || [];
-                allUsers = allUsers.map(u => u.phone === user.phone ? { ...u, isVip: true } : u);
-                localStorage.setItem('sama_registered_users', JSON.stringify(allUsers));
-                alert("👑 حساب شما به سطح VIP ارتقا یافت و ویژگی‌ها برای شما فعال شد.");
-                closeVipModal();
+                alert("👑 حساب ارتقا یافت");
                 location.reload();
-            } else {
-                alert(`❌ عدم امکان ارتقا! شما تا کنون ${user.purchases} بار خرید داشته‌اید. فعال‌سازی نیاز به بیش از ۲ بار خرید موفق دارد.`);
-            }
+            } else { alert("❌ نیاز به حداقل ۳ خرید موفق دارد."); }
         }
 
-        // 📊 دریافت نرخ واقعی، معتبر و زنده طلا از وب‌سرویس Navasan
         async function fetchLiveGoldRate() {
             const inputElement = document.getElementById('gold-rate-input');
-            if(!inputElement) return;
-
             try {
                 const response = await fetch('https://api.navasan.tech/latest/?api_key=free');
                 if(response.ok) {
                     const data = await response.json();
-                    
                     if(data && data['18ayar'] && data['18ayar'].value) {
-                        const currentRate = parseInt(inputElement.value.replace(/[^0-9]/g, '')) || 16135500;
-                        previousGoldRate = currentRate;
-                        
                         let newRate = parseInt(data['18ayar'].value);
-                        if(newRate > 100000000) { 
-                            newRate = Math.round(newRate / 10); 
-                        } 
-
-                        if(newRate > previousGoldRate) {
-                            currentTrend = "up";
-                            document.getElementById('rate-trend-indicator').innerHTML = "<span class='text-emerald-600 font-bold animate-pulse'>📈</span>";
-                        } else if(newRate < previousGoldRate) {
-                            currentTrend = "down";
-                            document.getElementById('rate-trend-indicator').innerHTML = "<span class='text-rose-600 font-bold animate-pulse'>📉</span>";
-                        }
-
+                        if(newRate > 100000000) newRate = Math.round(newRate / 10);
                         inputElement.value = newRate.toLocaleString('en-US');
                         updateAllPrices();
                         return;
                     }
                 }
-            } catch (e) {
-                console.log("خطا در ارتباط با وب‌سرویس نوسان. سوئیچ روی مکانیزم پشتیبان امن.");
-            }
-
-            const currentRate = parseInt(inputElement.value.replace(/[^0-9]/g, '')) || 16135500;
-            previousGoldRate = currentRate;
-            const change = (Math.floor(Math.random() * 16) - 8) * 1000; 
-            const newRate = Math.max(5000000, currentRate + change);
-
-            if(newRate > previousGoldRate) {
-                currentTrend = "up";
-                document.getElementById('rate-trend-indicator').innerHTML = "<span class='text-emerald-600 font-bold animate-pulse'>📈</span>";
-            } else {
-                currentTrend = "down";
-                document.getElementById('rate-trend-indicator').innerHTML = "<span class='text-rose-600 font-bold animate-pulse'>📉</span>";
-            }
-            inputElement.value = newRate.toLocaleString('en-US');
+            } catch (e) { }
             updateAllPrices();
         }
 
-        function startLiveGoldRate() {
-            fetchLiveGoldRate(); 
-            setInterval(fetchLiveGoldRate, 300000); 
-        }
+        function startLiveGoldRate() { fetchLiveGoldRate(); setInterval(fetchLiveGoldRate, 300000); }
 
         function addNewProduct(e) {
             e.preventDefault();
-            if(!selectedImageBase64) {
-                alert("❌ لطفا ابتدا یک عکس از گالری انتخاب کنید.");
-                return;
-            }
+            if(!selectedImageBase64) return;
             const newProd = {
                 id: Date.now(),
                 name: document.getElementById('prod-name').value,
@@ -547,31 +573,20 @@
                 img: selectedImageBase64
             };
             products.push(newProd);
-            try {
-                localStorage.setItem('sama_products', JSON.stringify(products));
-                alert("✨ طلا با موفقیت اضافه شد!");
-                selectedImageBase64 = ""; 
-                document.getElementById('file-label-text').innerText = "🖼️ انتخاب مستقیم عکس از گالری";
-                e.target.reset();
-                updateAllPrices();
-            } catch (error) {
-                alert("❌ خطای حافظه! لطفا حجم عکس انتخابی را کمی بهینه‌تر و کمتر کنید.");
-            }
+            localStorage.setItem('sama_products', JSON.stringify(products));
+            updateAllPrices();
+            e.target.reset();
         }
 
         function deleteProduct(id) {
-            if(confirm("آیا مایل به حذف هستید؟")) {
+            if(confirm("حذف شود؟")) {
                 products = products.filter(p => p.id !== id);
                 localStorage.setItem('sama_products', JSON.stringify(products));
                 updateAllPrices();
             }
         }
 
-        function filterCategory(filter) {
-            currentFilter = filter;
-            document.getElementById('dropdown-menu').classList.add('hidden');
-            updateAllPrices();
-        }
+        function filterCategory(filter) { currentFilter = filter; updateAllPrices(); }
 
         function calculateGoldPrice(weight, wagePercent, profitPercent, taxPercent, currentRate, isVip, itemDiscountPercent) {
             if (isVip) { profitPercent = Math.max(0, profitPercent - 2); }
@@ -582,24 +597,19 @@
             const subTotal2 = subTotal1 + profitAmount;
             const taxAmount = subTotal2 * (taxPercent / 100);
             let finalPrice = subTotal2 + taxAmount;
-            
-            if (itemDiscountPercent > 0) { finalPrice = finalPrice * ((100 - itemDiscountPercent) / 100); }
+            if (itemDiscountPercent > 0) finalPrice = finalPrice * ((100 - itemDiscountPercent) / 100);
             return Math.round(finalPrice);
         }
 
-        function formatPrice(price) { return price.toLocaleString('fa-IR') + " تومان"; }
-        
         function handleGoldRateChange(input) {
             let value = input.value.replace(/[^0-9]/g, '');
-            if (value === "") value = "0";
-            input.value = parseInt(value).toLocaleString('en-US');
+            input.value = parseInt(value || 0).toLocaleString('en-US');
             updateAllPrices();
         }
 
         function updateAllPrices() {
             const rawRate = document.getElementById('gold-rate-input').value.replace(/[^0-9]/g, '');
             const currentRate = parseFloat(rawRate) || 0;
-            
             const container = document.getElementById('sliders-container');
             if(!container) return;
             container.innerHTML = ""; 
@@ -617,84 +627,42 @@
 
             let filteredList = products.filter(p => {
                 if (currentFilter === 'all') return true;
-                if (currentFilter === 'discount') return p.discountPercent > 0;
-                if (currentFilter === 'stock') return p.isStock;
                 return p.category === currentFilter;
             });
 
-            if (searchQuery !== "") {
-                filteredList = filteredList.filter(p => p.name.toLowerCase().includes(searchQuery));
-            }
-
+            if(searchQuery) filteredList = filteredList.filter(p => p.name.toLowerCase().includes(searchQuery));
             filteredList = filteredList.filter(p => p.weight >= weightMin && p.weight <= weightMax);
-
-            if (onlyStock) {
-                filteredList = filteredList.filter(p => p.isStock);
-            }
-
-            filteredList = filteredList.filter(p => {
-                const itemTax = p.taxPercent !== undefined ? p.taxPercent : 9;
-                const calculatedPrice = calculateGoldPrice(p.weight, p.wagePercent, p.profitPercent, itemTax, currentRate, isVip, p.discountPercent);
-                return calculatedPrice >= priceMin && calculatedPrice <= priceMax;
-            });
-
-            if (filteredList.length === 0) {
-                container.innerHTML = `<div class="bg-white border border-[#e5d5c5] rounded-3xl p-12 text-center text-xs text-stone-500">هیچ طلایی با مشخصات جستجو شده یافت نشد.</div>`;
-                return;
-            }
+            if(onlyStock) filteredList = filteredList.filter(p => p.isStock);
 
             ALL_CATEGORIES.forEach(cat => {
                 const catProducts = filteredList.filter(p => p.category === cat);
-                
                 if (catProducts.length > 0) {
-                    let sliderHtml = `
-                        <div class="space-y-3">
-                            <h2 class="text-md font-medium text-[#a68015] flex items-center gap-1.5 px-1">
-                                <span class="w-1.5 h-1.5 rounded-full bg-[#b89327]"></span> ردیف ${cat}‌ها
-                            </h2>
-                            <div class="horizontal-slider flex gap-4 overflow-x-auto pb-4 pt-1 px-1 scroll-snap-type-x-mandatory">
-                    `;
-
+                    let sliderHtml = `<div class="space-y-3"><h2 class="text-md font-medium text-[#a68015] px-1">✨ ردیف ${cat}‌ها</h2><div class="horizontal-slider flex gap-4 overflow-x-auto pb-4 pt-1 px-1">`;
                     catProducts.forEach(p => {
                         const itemTax = p.taxPercent !== undefined ? p.taxPercent : 9;
                         const finalPrice = calculateGoldPrice(p.weight, p.wagePercent, p.profitPercent, itemTax, currentRate, isVip, p.discountPercent);
                         
-                        let cardTrendBadge = "";
-                        if(currentTrend === "up") {
-                            cardTrendBadge = "<span class='text-emerald-600 ml-1 text-xs font-bold'>📈</span>";
-                        } else if(currentTrend === "down") {
-                            cardTrendBadge = "<span class='text-rose-600 ml-1 text-xs font-bold'>📉</span>";
-                        }
-
-                        // تغییر دکمه جهت باز کردن فرم خرید لوکال به جای لینک مستقیم تلگرام
                         sliderHtml += `
-                            <div class="flex-none w-64 bg-white rounded-3xl overflow-hidden shadow-md border border-[#e5d5c5] hover:border-amber-300 transition-all group scroll-snap-align-start">
-                                <div class="h-48 bg-stone-100 relative overflow-hidden">
-                                    <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="flex-none w-64 bg-white rounded-3xl overflow-hidden shadow-md border border-[#e5d5c5]">
+                                <div class="h-48 bg-stone-100 relative">
+                                    <img src="${p.img}" class="w-full h-full object-cover">
                                     <div class="absolute top-3 right-3 flex flex-col gap-1">
-                                        <span class="bg-white/90 backdrop-blur-xs px-2.5 py-0.5 rounded-full text-[10px] font-mono text-[#a68015] font-bold shadow-xs">${p.weight.toFixed(2)} گرم</span>
-                                        ${p.discountPercent > 0 ? `<span class="bg-amber-500 text-white text-[9px] px-2 py-0.5 rounded-full text-center font-bold shadow-xs">%${p.discountPercent} تخفیف</span>` : ''}
-                                        ${p.isStock ? '<span class="bg-emerald-600 text-white text-[9px] px-2 py-0.5 rounded-full text-center font-bold shadow-xs">موجود</span>' : ''}
+                                        <span class="bg-white/90 px-2.5 py-0.5 rounded-full text-[10px] text-[#a68015] font-bold">${p.weight.toFixed(2)} گرم</span>
                                     </div>
                                 </div>
                                 <div class="p-4 text-right space-y-3">
                                     <h3 class="text-xs font-medium text-stone-800 truncate">${p.name}</h3>
-                                    <div class="flex justify-between items-center bg-stone-50 p-2 rounded-xl border border-stone-100">
+                                    <div class="flex justify-between items-center bg-stone-50 p-2 rounded-xl">
                                         <span class="text-[10px] text-stone-500">قیمت نهایی روز:</span>
-                                        <span class="text-xs font-bold text-[#a68015] font-mono flex items-center">${cardTrendBadge} ${formatPrice(finalPrice)}</span>
+                                        <span class="text-xs font-bold text-[#a68015] font-mono">${finalPrice.toLocaleString('fa-IR')} تومان</span>
                                     </div>
-                                    <button onclick="openPurchaseModal('${p.name}')" class="block text-center w-full bg-[#b89327] text-white py-2 rounded-xl text-[11px] font-bold hover:bg-[#a68015] transition-colors shadow-xs cursor-pointer">🛍️ مشاوره و خرید</button>
-                                    ${isAdmin ? `<button onclick="deleteProduct(${p.id})" class="w-full bg-rose-50 text-rose-600 text-[10px] py-1 rounded-lg mt-1 hover:bg-rose-100 transition-colors cursor-pointer">🗑️ حذف کالا</button>` : ''}
+                                    <button onclick="addToCart(${p.id})" class="block text-center w-full bg-[#b89327] text-white py-2 rounded-xl text-[11px] font-bold hover:bg-[#a68015] cursor-pointer">➕ افزودن به سبد خرید</button>
+                                    ${isAdmin ? `<button onclick="deleteProduct(${p.id})" class="w-full bg-rose-50 text-rose-600 text-[10px] py-1 rounded-lg">🗑️ حذف</button>` : ''}
                                 </div>
                             </div>
                         `;
                     });
-
-                    sliderHtml += `
-                            </div>
-                        </div>
-                    `;
-                    
+                    sliderHtml += `</div></div>`;
                     container.insertAdjacentHTML('beforeend', sliderHtml);
                 }
             });
@@ -708,15 +676,14 @@
                 document.getElementById('auth-box').classList.add('hidden');
                 document.getElementById('main-panel').classList.remove('hidden');
                 document.getElementById('user-welcome').innerText = `✨ ${user.name} خوش آمدید`;
-                
-                if (user.isVip) { document.getElementById('vip-badge').classList.remove('hidden'); }
-                
+                if (user.isVip) document.getElementById('vip-badge').classList.remove('hidden');
                 if (user.role === 'admin' && user.phone === ADMIN_PHONE) { 
                     document.getElementById('admin-hamburger-zone').classList.remove('hidden'); 
                 }
-                
-                switchAdminView('showcase');
-                startLiveGoldRate(); 
+                updateCartBadges();
+                navigateTo('showcase');
+                startLiveGoldRate();
+                checkUrlForCartReview();
             }
         }
 
