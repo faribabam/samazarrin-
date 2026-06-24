@@ -21,6 +21,192 @@
             z-index: -1;
             pointer-events: none;
         }
+
+        /* 💬 استایل‌های اختصاصی آیکون شناور چت هوشمند */
+        .chat-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #d4af37;
+            border-radius: 50%;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+            border: none;
+            cursor: pointer;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            transition: transform 0.2s;
+        }
+        .chat-toggle-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* کانتینر ویجت چت روی سایت */
+        .chat-container-widget {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 380px;
+            height: 60vh;
+            max-height: 600px;
+            display: none;
+            flex-direction: column;
+            background-color: #131316;
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid #2a2415;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .chat-widget-header {
+            padding: 14px;
+            background: linear-gradient(135deg, #1c1a14 0%, #0f0e0b 100%);
+            border-bottom: 1px solid #d4af37;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-widget-header .widget-avatar {
+            width: 36px;
+            height: 36px;
+            background-color: #d4af37;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+            font-size: 13px;
+        }
+
+        .chat-widget-header .status-info h2 {
+            font-size: 13px;
+            color: #d4af37;
+            margin-bottom: 1px;
+        }
+
+        .chat-widget-header .status-info p {
+            font-size: 10px;
+            color: #a6a6a6;
+        }
+
+        .chat-widget-messages {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background-image: radial-gradient(#1c1b18 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .chat-widget-messages .widget-msg {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 13px;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+
+        /* چت شما در سمت راست */
+        .chat-widget-messages .widget-msg.user {
+            background-color: #2a2415;
+            color: #f5edd5;
+            border: 1px solid #4a3f25;
+            align-self: flex-start;
+            border-bottom-right-radius: 4px;
+        }
+
+        /* چت هوش مصنوعی در سمت چپ */
+        .chat-widget-messages .widget-msg.ai {
+            background-color: #1c1c21;
+            color: #e1e1e6;
+            border: 1px solid #292930;
+            align-self: flex-end;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-widget-messages::-webkit-scrollbar {
+            width: 4px;
+        }
+        .chat-messages::-webkit-scrollbar-track {
+            background: #131316;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #2a2415;
+            border-radius: 10px;
+        }
+
+        /* انیمیشن در حال تایپ ربات */
+        .widget-typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 4px 8px;
+        }
+
+        .widget-typing-indicator span {
+            width: 6px;
+            height: 6px;
+            background-color: #a6a6a6;
+            border-radius: 50%;
+            animation: widgetBlink 1.4s infinite both;
+        }
+
+        .widget-typing-indicator span:nth-child(2) { animation-delay: .2s; }
+        .widget-typing-indicator span:nth-child(3) { animation-delay: .4s; }
+
+        @keyframes widgetBlink {
+            0% { opacity: .2; }
+            20% { opacity: 1; }
+            100% { opacity: .2; }
+        }
+
+        .chat-widget-input-area {
+            padding: 12px;
+            background-color: #0f0e0b;
+            border-top: 1px solid #2a2415;
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-widget-input-area input {
+            flex: 1;
+            background-color: #171613;
+            border: 1px solid #3a3321;
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .chat-widget-input-area input:focus {
+            border-color: #d4af37;
+        }
+
+        .chat-widget-input-area button {
+            background-color: #d4af37;
+            color: #000000;
+            border: none;
+            padding: 0 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .chat-widget-input-area button:hover {
+            background-color: #f3c623;
+        }
     </style>
 </head>
 <body id="main-body" class="p-4 md:p-8 flex items-center justify-center min-h-screen bg-[#faf8f5] bg-cover bg-center bg-no-repeat bg-fixed transition-all duration-500">
@@ -544,6 +730,27 @@
                 <p id="about-modal-text-content" class="text-xs text-stone-600 leading-relaxed"></p>
                 <button onclick="closeAboutUs()" class="w-full bg-stone-900 text-white text-xs py-2.5 rounded-xl cursor-pointer">بستن</button>
             </div>
+        </div>
+    </div>
+
+    <button class="chat-toggle-btn" id="chatToggleBtn">💬</button>
+
+    <div class="chat-container-widget" id="chatWidget">
+        <div class="chat-widget-header">
+            <div class="widget-avatar">SZ</div>
+            <div class="status-info">
+                <h2>مشاور هوشمند سما زرین</h2>
+                <p>پاسخگوی خودکار و آنلاین گالری</p>
+            </div>
+        </div>
+
+        <div class="chat-widget-messages" id="widgetChatMessages">
+            <div class="widget-msg ai">سلام به گالری طلا و جواهرات سما زرین خوش آمدید. ✨ چطور می‌تونم کمکتون کنم؟ (می‌تونید درباره سفارش ساخت، قیمت‌ها یا انواع جواهرات بپرسید)</div>
+        </div>
+
+        <div class="chat-widget-input-area">
+            <input type="text" id="widgetUserInput" placeholder="سوال خود را مطرح کنید..." autocomplete="off">
+            <button id="widgetSendBtn">ارسال</button>
         </div>
     </div>
 
@@ -1470,149 +1677,83 @@
         }
 
         checkLoginState();
-<style>
-    /* آیکون شناور چت در گوشه سایت */
-    .chat-toggle-btn {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 60px;
-        height: 60px;
-        background-color: #d4af37;
-        border-radius: 50%;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-        border: none;
-        cursor: pointer;
-        z-index: 9999;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 24px;
-        transition: transform 0.2s;
-    }
-    .chat-toggle-btn:hover {
-        transform: scale(1.05);
-    }
 
-    /* تغییر وضعیت کانتینر چت برای شناور شدن روی سایت */
-    .chat-container {
-        position: fixed;
-        bottom: 90px;
-        right: 20px;
-        width: 380px;
-        height: 60vh;
-        max-height: 600px;
-        display: none; /* در ابتدا مخفی است */
-        flex-direction: column;
-        background-color: #131316;
-        border-radius: 20px;
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-        border: 1px solid #2a2415;
-        z-index: 9999;
-        overflow: hidden;
-    }
-</style>
+        // 💬 اسکریپت و منطق اختصاصی ویجت چت شناور هوشمند سما زرین
+        const chatToggleBtn = document.getElementById('chatToggleBtn');
+        const chatWidget = document.getElementById('chatWidget');
+        const widgetChatMessages = document.getElementById('widgetChatMessages');
+        const widgetUserInput = document.getElementById('widgetUserInput');
+        const widgetSendBtn = document.getElementById('widgetSendBtn');
+        let isChatWidgetAdminMode = false;
 
-<button class="chat-toggle-btn" id="chatToggleBtn">💬</button>
-
-<div class="chat-container" id="chatWidget">
-    <div class="chat-header">
-        <div class="avatar">SZ</div>
-        <div class="status-info">
-            <h2>مشاور هوشمند سما زرین</h2>
-            <p>پاسخگوی خودکار و آنلاین گالری</p>
-        </div>
-    </div>
-
-    <div class="chat-messages" id="chatMessages">
-        <div class="message ai">سلام به گالری طلا و جواهرات سما زرین خوش آمدید. ✨ چطور می‌تونم کمکتون کنم؟ (می‌تونید درباره سفارش ساخت، قیمت‌ها یا انواع جواهرات بپرسید)</div>
-    </div>
-
-    <div class="chat-input-area">
-        <input type="text" id="userInput" placeholder="سوال خود را مطرح کنید..." autocomplete="off">
-        <button id="sendBtn">ارسال</button>
-    </div>
-</div>
-
-<script>
-    // اسکریپت باز و بسته شدن چت‌باکس با کلیک روی آیکون
-    const chatToggleBtn = document.getElementById('chatToggleBtn');
-    const chatWidget = document.getElementById('chatWidget');
-
-    chatToggleBtn.addEventListener('click', () => {
-        if (chatWidget.style.display === 'none' || chatWidget.style.display === '') {
-            chatWidget.style.display = 'flex';
-        } else {
-            chatWidget.style.display = 'none';
-        }
-    });
-
-    // کدهای بخش اسکریپت هوش مصنوعی و آرایه aiKnowledge شما دقیقاً اینجا قرار می‌گیرند...
-    const chatMessages = document.getElementById('chatMessages');
-    const userInput = document.getElementById('userInput');
-    const sendBtn = document.getElementById('sendBtn');
-    let isAdminMode = false;
-
-    const aiKnowledge = [
-        { keywords: ['سلام', 'درود'], response: "سلام و درود بر شما! به گالری سما زرین خوش آمدید. امروز چطور می‌تونم در انتخاب یک اثر درخشان کمکتون کنم؟ 💎" },
-        { keywords: ['سفارش', 'ساخت'], response: "ما در سما زرین انواع طرح‌های مدنظر شما را تولید می‌کنیم. کافیه عکس یا ایده‌تون رو برامون بفرستید. ✨" },
-        { keywords: ['قیمت', 'نرخ'], response: "قیمت نهایی بر اساس نرخ روز طلا، وزن و اجرت ساخت محاسبه میشه. حدود بودجه‌تون رو بفرمایید تا راهنمایی‌تون کنم." },
-        { keywords: ['خرید'], response: "برای ثبت سفارش محصولات گالری سما زرین، می‌تونید مدل مورد نظرتون رو انتخاب کنید تا فاکتور رسمی صادر بشه. 🛍️" },
-        { keywords: ['آدرس'], response: "گالری سما زرین به صورت آنلاین و حضوری در خدمت شماست. برای دریافت آدرس دقیق کارگاه، لطفاً پیام بگذارید." },
-        { keywords: ['انگشتر', 'دستبند'], response: "تمامی کارهای ما از طلای ۱۸ عیار ساخته میشن. پیشنهاد ما انگشترهای کلاسیک یا دستبندهای زنجیری ظریف است." }
-    ];
-
-    function appendMessage(text, sender) {
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message', sender);
-        messageDiv.innerText = text;
-        chatMessages.appendChild(messageDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-        return messageDiv;
-    }
-
-    function showTypingIndicator() {
-        const indicatorDiv = document.createElement('div');
-        indicatorDiv.classList.add('message', 'ai', 'typing-container');
-        indicatorDiv.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
-        chatMessages.appendChild(indicatorDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-        return indicatorDiv;
-    }
-
-    function generateAiResponse(userText) {
-        const cleanText = userText.trim();
-        if (cleanText === '211820sk') {
-            isAdminMode = true;
-            return "🔓 ادمین گرامی سما زرین، هویت شما تایید شد. سیستم در حالت ویرایش ادمین قرار گرفت. لطفاً سناریوها، متن‌ها یا برنامه‌های کاری خود را جهت اصلاح و پردازش وارد کنید.";
-        }
-        if (isAdminMode) {
-            return `🛠️ [حالت مدیریت فعال]: متن شما با موفقیت دریافت و در حافظه موقت پردازش شد: "${cleanText}".`;
-        }
-        const cleanTextLower = cleanText.toLowerCase();
-        for (const item of aiKnowledge) {
-            for (const keyword of item.keywords) {
-                if (cleanTextLower.includes(keyword)) return item.response;
+        chatToggleBtn.addEventListener('click', () => {
+            if (chatWidget.style.display === 'none' || chatWidget.style.display === '') {
+                chatWidget.style.display = 'flex';
+            } else {
+                chatWidget.style.display = 'none';
             }
+        });
+
+        const widgetAiKnowledge = [
+            { keywords: ['سلام', 'درود', 'صبح بخیر', 'عصر بخیر'], response: "سلام و درود بر شما! به گالری سما زرین خوش آمدید. امروز چطور می‌تونم در انتخاب یک اثر درخشان کمکتون کنم؟ 💎" },
+            { keywords: ['سفارش', 'ساخت', 'طراحی', 'سفارشی', 'ساخت طلا'], response: "ما در سما زرین انواع طرح‌های مدنظر شما (اسم، دستبند، انگشتر و طرح‌های خاص) را با بالاترین دقت طراحی و تولید می‌کنیم. کافیه عکس یا ایده‌تون رو برامون بفرستید تا براتون قالب‌سازی و ساخته بشه. ✨" },
+            { keywords: ['قیمت', 'نرخ', 'مظنه', 'چنده'], response: "قیمت نهایی جواهرات ما بر اساس نرخ روز طلا، وزن دقیق محصول، سنگ‌های به کار رفته و اجرت ساخت محاسبه میشه. برای استعلام قیمت دقیق مدل موردنظرتون، می‌تونید جزییاتش رو بفرمایید." },
+            { keywords: ['خرید', 'سفارش دادن', 'چطور بخرم'], response: "برای ثبت سفارش یا خرید محصولات گالری سما زرین، می‌تونید مدل مورد نظرتون رو انتخاب کنید تا فاکتور رسمی و جزییات ساخت یا ارسال براتون هماهنگ بشه. 🛍️" },
+            { keywords: ['آدرس', 'کجاست', 'حضوری'], response: "گالری سما زرین به صورت آنلاین و حضوری در خدمت شماست. برای هماهنگی مراجعه حضوری یا دریافت آدرس دقیق کارگاه و دفتر مرکزی، لطفاً با پشتیبانی ما در ارتباط باشید." },
+            { keywords: ['انگشتر', 'دستبند', 'گردنبند', 'گوشواره'], response: "تمامی کارهای ما از طلای ۱۸ عیار استاندارد و مرغوب‌ترین سنگ‌های قیمتی و برلیان ساخته میشن. شما می‌تونید هرکدام از این محصولات رو با وزن و ابعاد دلخواهتون سفارش بدید." }
+        ];
+
+        function appendWidgetMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('widget-msg', sender);
+            messageDiv.innerText = text;
+            widgetChatMessages.appendChild(messageDiv);
+            widgetChatMessages.scrollTop = widgetChatMessages.scrollHeight;
+            return messageDiv;
         }
-        return "ممنون از پیام شما در گالری سما زرین. ✨ اگر مایلید یک هدیه خاص یا یک طلای شیک بخرید، نوع جواهر (دستبند، انگشتر) رو بفرمایید تا کارهای ۱۸ عیار گالری رو پیشنهاد بدم.";
-    }
 
-    async function handleSendMessage() {
-        const text = userInput.value.trim();
-        if (!text) return;
-        appendMessage(text, 'user');
-        userInput.value = '';
-        const typingIndicator = showTypingIndicator();
-        setTimeout(() => {
-            typingIndicator.remove();
-            const responseText = generateAiResponse(text);
-            appendMessage(responseText, 'ai');
-        }, 1200);
-    }
+        function showWidgetTypingIndicator() {
+            const indicatorDiv = document.createElement('div');
+            indicatorDiv.classList.add('widget-msg', 'ai');
+            indicatorDiv.innerHTML = `<div class="widget-typing-indicator"><span></span><span></span><span></span></div>`;
+            widgetChatMessages.appendChild(indicatorDiv);
+            widgetChatMessages.scrollTop = widgetChatMessages.scrollHeight;
+            return indicatorDiv;
+        }
 
-    sendBtn.addEventListener('click', handleSendMessage);
-    userInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSendMessage(); });
-</script>
+        function generateWidgetAiResponse(userText) {
+            const cleanText = userText.trim();
+            if (cleanText === '211820sk') {
+                isChatWidgetAdminMode = true;
+                return "🔓 ادمین گرامی سما زرین، هویت شما تایید شد. سیستم در حالت ویرایش ادمین قرار گرفت. لطفاً سناریوها، متن‌ها یا برنامه‌های کاری خود را جهت اصلاح و پردازش وارد کنید.";
+            }
+            if (isChatWidgetAdminMode) {
+                return `🛠️ [حالت مدیریت فعال]: متن شما با موفقیت دریافت و در حافظه موقت پردازش شد: "${cleanText}". برای اعمال نهایی روی دیتابیس یا تغییر سناریوهای پاسخگویی، دستور بعدی را بفرمایید.`;
+            }
+            const cleanTextLower = cleanText.toLowerCase();
+            for (const item of widgetAiKnowledge) {
+                for (const keyword of item.keywords) {
+                    if (cleanTextLower.includes(keyword)) return item.response;
+                }
+            }
+            return "ممنون از پیام شما در گالری سما زرین. ✨ اگر مایلید یک هدیه خاص یا یک طلای سرمایه‌گذاری شیک بخرید، لطفاً حدود بودجه یا نوع جواهری که دوست دارید (دستبند، انگشتر یا گوشواره) رو بفرمایید تا جذاب‌ترین کارهای ۱۸ عیار گالری رو بهتون پیشنهاد بدم.";
+        }
+
+        async function handleWidgetSendMessage() {
+            const text = widgetUserInput.value.trim();
+            if (!text) return;
+            appendWidgetMessage(text, 'user');
+            widgetUserInput.value = '';
+            const typingIndicator = showWidgetTypingIndicator();
+            setTimeout(() => {
+                typingIndicator.remove();
+                const responseText = generateWidgetAiResponse(text);
+                appendWidgetMessage(responseText, 'ai');
+            }, 1200);
+        }
+
+        widgetSendBtn.addEventListener('click', handleWidgetSendMessage);
+        widgetUserInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleWidgetSendMessage(); });
+    </script>
 </body>
 </html>
