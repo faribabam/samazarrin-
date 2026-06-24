@@ -81,10 +81,12 @@
             </button>
             
             <div id="dropdown-menu" class="hidden absolute left-0 top-12 w-64 bg-white border border-[#e5d5c5] rounded-2xl shadow-xl p-2 text-right z-50 max-h-[85vh] overflow-y-auto">
-                <button onclick="navigateTo('editor')" class="w-full text-right px-4 py-2 text-xs text-purple-700 bg-purple-50 rounded-xl font-bold flex justify-between items-center cursor-pointer">
+                <button id="menu-editor-btn" onclick="navigateTo('editor')" class="w-full text-right px-4 py-2 text-xs text-purple-700 bg-purple-50 rounded-xl font-bold flex justify-between items-center cursor-pointer hidden">
                     <span>🎨 استودیو جایگذاری طلا (کپ‌کات)</span>
+                    <span class="text-[9px] bg-purple-200 text-purple-800 px-1.5 py-0.5 rounded-md">ادمین</span>
                 </button>
-                <div class="border-t border-stone-100 my-1.5"></div>
+                <div id="menu-editor-separator" class="border-t border-stone-100 my-1.5 hidden"></div>
+                
                 <button onclick="navigateTo('cart')" class="w-full text-right px-4 py-2 text-xs text-stone-700 hover:bg-stone-50 rounded-xl font-medium flex justify-between items-center cursor-pointer">
                     <span>🛒 سبد خرید اختصاصی شما</span>
                     <span id="menu-cart-count" class="bg-stone-100 px-2 py-0.5 rounded-md text-stone-600 font-mono text-[10px]">0 کالا</span>
@@ -259,16 +261,21 @@
                     <div class="space-y-4">
                         <div class="bg-gradient-to-r from-stone-900 to-stone-950 p-5 rounded-2xl border border-stone-800 text-right space-y-3 shadow-lg">
                             <label class="text-xs font-bold text-amber-400 block flex items-center gap-1">🎬 استودیو پس‌زمینه سایت (مخصوص شما)</label>
-                            <p class="text-[10px] text-stone-400">عکس دلخواهت رو آپلود کن تا پس‌زمینه کل سایت تغییر کنه.</p>
+                            <p class="text-[10px] text-stone-400">عکس دلخواهت رو آپلود کن یا رنگ یکدست پس‌زمینه رو تغییر بده.</p>
                             
-                            <div class="flex gap-2 items-center">
+                            <div class="flex gap-2 items-center flex-wrap">
                                 <label for="admin-bg-file" class="bg-[#b89327] hover:bg-[#a68015] text-white text-xs font-bold px-4 py-2.5 rounded-xl cursor-pointer shadow-sm transition-all text-center flex-1">
-                                    ＋ انتخاب عکس پس‌زمینه از گالری
+                                    ＋ انتخاب عکس از گالری
                                 </label>
                                 <input type="file" id="admin-bg-file" accept="image/*" onchange="handleAdminBackgroundUpload(this)" class="hidden">
                                 
-                                <button type="button" onclick="resetToDefaultBackground()" class="bg-stone-800 hover:bg-stone-700 text-stone-300 text-[11px] px-4 py-2.5 rounded-xl transition-all">
-                                    ریست پس‌زمینه
+                                <div class="bg-stone-800 px-3 py-1 rounded-xl flex items-center gap-2 border border-stone-700 h-[38px]">
+                                    <label for="admin-bg-color-picker" class="text-[10px] text-stone-300 font-medium">رنگ:</label>
+                                    <input type="color" id="admin-bg-color-picker" value="#faf8f5" oninput="handleAdminBackgroundColorChange(this)" class="w-6 h-6 border-0 rounded-md cursor-pointer p-0 bg-transparent">
+                                </div>
+
+                                <button type="button" onclick="resetToDefaultBackground()" class="bg-stone-800 hover:bg-stone-700 text-stone-300 text-[11px] px-4 py-2.5 rounded-xl transition-all w-full sm:w-auto">
+                                    ریست
                                 </button>
                             </div>
                         </div>
@@ -328,6 +335,10 @@
                     ➕ افزودن طلا از گالری
                 </label>
                 <input type="file" id="editor-file-input" accept="image/*" class="hidden" onchange="handleEditorFileSelect(this)">
+
+                <button onclick="addVectorToEditorCanvas()" class="bg-purple-600 text-white text-xs font-bold px-5 py-3 rounded-xl hover:bg-purple-700 transition-all cursor-pointer shadow-md">
+                    📐 اضافه کردن وکتور
+                </button>
 
                 <button onclick="deleteSelectedEditorObject()" class="bg-rose-50 text-rose-600 text-xs font-bold px-5 py-3 rounded-xl hover:bg-rose-100 transition-all cursor-pointer">🗑️ حذف آیتم انتخابی</button>
                 <button onclick="exportEditorDesign()" class="bg-stone-900 text-white text-xs font-medium px-5 py-3 rounded-xl hover:bg-black transition-all cursor-pointer">💾 خروجی عکس نهایی</button>
@@ -566,6 +577,13 @@
             canvas.on('mouse:down', () => document.body.style.overflow = 'hidden');
             canvas.on('mouse:up', () => document.body.style.overflow = 'auto');
             
+            // اضافه کردن هندلر کلیک راست روی بوم برای حذف مستقیم آبجکت‌های سلکت شده
+            canvas.upperCanvasEl.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                deleteSelectedEditorObject();
+                return false;
+            });
+            
             fabricCanvasInitialized = true;
         }
 
@@ -595,6 +613,28 @@
             };
             reader.readAsDataURL(file);
             input.value = ''; 
+        }
+
+        // عملکرد افزودن یک شکل وکتور نمونه SVG به کانواس ادیتور
+        function addVectorToEditorCanvas() {
+            if (!canvas) return;
+            // ترسیم یک لوزی یا ستاره چهارپر طلایی به عنوان وکتور پیش‌فرض لوکس
+            const pathData = "M 25 0 L 50 25 L 25 50 L 0 25 Z"; 
+            const vectorPath = new fabric.Path(pathData, {
+                left: canvas.width / 2,
+                top: canvas.height / 2,
+                fill: '#b89327',
+                stroke: '#e5d5c5',
+                strokeWidth: 2,
+                originX: 'center',
+                originY: 'center',
+                cornerColor: '#b89327',
+                borderColor: '#ffffff',
+                cornerSize: 20
+            });
+            canvas.add(vectorPath);
+            canvas.setActiveObject(vectorPath);
+            canvas.renderAll();
         }
 
         function deleteSelectedEditorObject() {
@@ -639,8 +679,18 @@
             reader.readAsDataURL(file);
         }
 
+        // قابلیت تغییر زنده رنگ بک‌گراند توسط ادمین
+        function handleAdminBackgroundColorChange(picker) {
+            siteSettings.customBackgroundImage = ""; // ریست کردن عکس هنگام انتخاب رنگ ثابت
+            siteSettings.backgroundStyle = picker.value;
+            localStorage.setItem('sama_site_settings', JSON.stringify(siteSettings));
+            applyLiveSiteSettings();
+        }
+
         function resetToDefaultBackground() {
             siteSettings.customBackgroundImage = "";
+            siteSettings.backgroundStyle = "#faf8f5";
+            document.getElementById('admin-bg-color-picker').value = "#faf8f5";
             localStorage.setItem('sama_site_settings', JSON.stringify(siteSettings));
             applyLiveSiteSettings();
             alert("پس‌زمینه سایت به حالت پیش‌فرض گالری بازگشت.");
@@ -652,6 +702,7 @@
             document.getElementById('settings-instagram-handle').value = siteSettings.instagramHandle;
             document.getElementById('settings-telegram-url').value = siteSettings.telegramUrl;
             document.getElementById('settings-telegram-handle').value = siteSettings.telegramHandle;
+            document.getElementById('admin-bg-color-picker').value = siteSettings.backgroundStyle || "#faf8f5";
             renderAdminCategoriesList();
         }
 
@@ -1186,9 +1237,18 @@
                 document.getElementById('main-panel').classList.remove('hidden');
                 document.getElementById('user-welcome').innerText = `✨ ${user.name} خوش آمدید`;
                 if (user.isVip) document.getElementById('vip-badge').classList.remove('hidden');
-                if (user.role === 'admin' && user.phone === ADMIN_PHONE) { 
+                
+                // شرط نمایش دکمه همبرگری کپ‌کات و منوی مدیریت بالا فقط برای نقش ادمین
+                if (user.role === 'admin') { 
                     document.getElementById('admin-hamburger-zone').classList.remove('hidden'); 
+                    document.getElementById('menu-editor-btn').classList.remove('hidden');
+                    document.getElementById('menu-editor-separator').classList.remove('hidden');
+                } else {
+                    document.getElementById('admin-hamburger-zone').classList.add('hidden'); 
+                    document.getElementById('menu-editor-btn').classList.add('hidden');
+                    document.getElementById('menu-editor-separator').classList.add('hidden');
                 }
+                
                 updateCartBadges();
                 navigateTo('showcase');
                 startLiveGoldRate();
