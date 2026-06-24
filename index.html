@@ -21,21 +21,57 @@
             height: 100vh;
         }
 
-        .chat-container {
-            width: 100%;
-            max-width: 500px;
-            height: 100vh;
+        /* دکمه شناور چت در گوشه سایت */
+        .chat-toggle-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            background-color: #d4af37;
+            border-radius: 50%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            border: 2px solid #1c1a14;
+            cursor: pointer;
+            z-index: 10000;
             display: flex;
-            flex-direction: column;
-            background-color: #131316;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
+            transition: all 0.3s ease;
         }
 
-        @media (min-width: 640px) {
+        .chat-toggle-btn:hover {
+            transform: scale(1.1) rotate(5deg);
+            background-color: #f3c623;
+        }
+
+        /* کانتینر چت به صورت ویجت شناور */
+        .chat-container {
+            position: fixed;
+            bottom: 100px;
+            right: 25px;
+            width: 380px;
+            height: 60vh;
+            max-height: 580px;
+            display: none; /* ابتدا مخفی است و با کلیک روی دکمه باز می‌شود */
+            flex-direction: column;
+            background-color: #131316;
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid #2a2415;
+            z-index: 10000;
+            overflow: hidden;
+            transition: all 0.2s ease-in-out;
+        }
+
+        /* بهینه‌سازی نمایش در گوشی‌های موبایل */
+        @media (max-width: 480px) {
             .chat-container {
-                height: 85vh;
-                border-radius: 20px;
-                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-                border: 1px solid #2a2415;
+                width: calc(100% - 40px);
+                height: 70vh;
+                right: 20px;
+                bottom: 95px;
             }
         }
 
@@ -83,7 +119,7 @@
             background-size: 20px 20px;
         }
 
-        /* استایل ظریف اسکرول‌بار */
+        /* استایل سفارشی اسکرول‌بار */
         .chat-messages::-webkit-scrollbar {
             width: 5px;
         }
@@ -188,7 +224,9 @@
 </head>
 <body>
 
-    <div class="chat-container">
+    <button class="chat-toggle-btn" id="chatToggleBtn">💬</button>
+
+    <div class="chat-container" id="chatWidget">
         <div class="chat-header">
             <div class="avatar">SZ</div>
             <div class="status-info">
@@ -208,9 +246,21 @@
     </div>
 
     <script>
+        // دکمه‌ها و کانتینر چت
+        const chatToggleBtn = document.getElementById('chatToggleBtn');
+        const chatWidget = document.getElementById('chatWidget');
         const chatMessages = document.getElementById('chatMessages');
         const userInput = document.getElementById('userInput');
         const sendBtn = document.getElementById('sendBtn');
+
+        // مدیریت وضعیت باز یا بسته بودن ویجت
+        chatToggleBtn.addEventListener('click', () => {
+            if (chatWidget.style.display === 'none' || chatWidget.style.display === '') {
+                chatWidget.style.display = 'flex';
+            } else {
+                chatWidget.style.display = 'none';
+            }
+        });
 
         // وضعیت ورود حالت مدیریت
         let isAdminMode = false;
