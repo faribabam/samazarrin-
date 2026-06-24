@@ -100,7 +100,7 @@
                 </button>
                 
                 <div class="border-t border-stone-100 my-1.5"></div>
-                <div class="px-4 py-1.5 text-xs text-[#a68015] font-bold">دسته‌بندی‌های طلا ✨</div>
+                <div class="px-4 py-1.5 text-xs text-[#a68015] font-bold">دسته‌ب بندی‌های طلا ✨</div>
                 
                 <div id="dynamic-menu-categories" class="space-y-0.5"></div>
                 
@@ -189,7 +189,6 @@
         </div>
 
         <div id="page-admin" class="page-section hidden space-y-8 text-right">
-            
             <div class="bg-white border border-[#e5d5c5] rounded-3xl p-6 shadow-md space-y-6">
                 <h3 class="text-md font-medium text-[#a68015] flex items-center gap-1">🛠️ مدیریت ویترین و محصولات گالری</h3>
                 <form onsubmit="addNewProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 border-b border-stone-100 pb-6">
@@ -280,8 +279,7 @@
                                 <th class="p-3 text-center">دسته بندی</th>
                             </tr>
                         </thead>
-                        <tbody id="batch-admin-table-body" class="divide-y divide-stone-200/60 bg-white">
-                            </tbody>
+                        <tbody id="batch-admin-table-body" class="divide-y divide-stone-200/60 bg-white"></tbody>
                     </table>
                 </div>
             </div>
@@ -376,7 +374,7 @@
             </div>
         </div>
 
-        <div id="page-[#page-edit-product]" class="page-section hidden space-y-6 text-right">
+        <div id="page-edit-product" class="page-section hidden space-y-6 text-right">
             <div class="flex justify-between items-center bg-white/90 p-4 rounded-2xl border border-stone-200 pb-3">
                 <h2 class="text-xl font-medium text-amber-800 flex items-center gap-2">✏️ ویرایش و تغییرات طلا در ویترین</h2>
                 <button onclick="navigateTo('showcase')" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-700 px-4 py-2 rounded-xl transition-all cursor-pointer">← انصراف و بازگشت</button>
@@ -538,7 +536,7 @@
             telegramUrl: "https://t.me/sama_zarinn",
             telegramHandle: "sama_zarinn",
             backgroundStyle: "#faf8f5",
-            customBackgroundImage: "", // نگهداری عکس پس‌زمینه کاستوم ادمین
+            customBackgroundImage: "", 
             categories: ["دستبند", "گوشواره", "انگشتر", "گردنبند", "آویز", "پلاک", "نیم ست"]
         };
 
@@ -552,7 +550,7 @@
         let cart = JSON.parse(localStorage.getItem('sama_cart')) || [];
         let currentFilter = 'all';
         let selectedImageBase64 = ""; 
-        let editImageBase64 = ""; // نگهداری تصویر ویرایش موقت
+        let editImageBase64 = ""; 
         
         let fabricCanvasInitialized = false;
         let canvas;
@@ -579,7 +577,6 @@
         function navigateTo(pageId) {
             document.querySelectorAll('.page-section').forEach(section => section.classList.add('hidden'));
             
-            // رفع مشکل شناسایی آی‌دی‌های خاص مانند ادیت پروداکت
             const targetPage = document.getElementById(`page-${pageId}`) || document.getElementById(`page-[${pageId}]`);
             if (targetPage) targetPage.classList.remove('hidden');
             
@@ -608,7 +605,6 @@
             canvas.on('mouse:down', () => document.body.style.overflow = 'hidden');
             canvas.on('mouse:up', () => document.body.style.overflow = 'auto');
             
-            // اضافه کردن هندلر کلیک راست روی بوم برای حذف مستقیم آبجکت‌های سلکت شده
             canvas.upperCanvasEl.addEventListener('contextmenu', function(e) {
                 e.preventDefault();
                 deleteSelectedEditorObject();
@@ -646,10 +642,8 @@
             input.value = ''; 
         }
 
-        // عملکرد افزودن یک شکل وکتور نمونه SVG به کانواس ادیتور
         function addVectorToEditorCanvas() {
             if (!canvas) return;
-            // ترسیم یک لوزی یا ستاره چهارپر طلایی به عنوان وکتور پیش‌فرض لوکس
             const pathData = "M 25 0 L 50 25 L 25 50 L 0 25 Z"; 
             const vectorPath = new fabric.Path(pathData, {
                 left: canvas.width / 2,
@@ -710,9 +704,8 @@
             reader.readAsDataURL(file);
         }
 
-        // قابلیت تغییر زنده رنگ بک‌گراند توسط ادمین
         function handleAdminBackgroundColorChange(picker) {
-            siteSettings.customBackgroundImage = ""; // ریست کردن عکس هنگام انتخاب رنگ ثابت
+            siteSettings.customBackgroundImage = ""; 
             siteSettings.backgroundStyle = picker.value;
             localStorage.setItem('sama_site_settings', JSON.stringify(siteSettings));
             applyLiveSiteSettings();
@@ -735,10 +728,9 @@
             document.getElementById('settings-telegram-handle').value = siteSettings.telegramHandle;
             document.getElementById('admin-bg-color-picker').value = siteSettings.backgroundStyle || "#faf8f5";
             renderAdminCategoriesList();
-            renderBatchAdminTable(); // لود کردن لیست محصولات در جدول ویرایش گروهی
+            renderBatchAdminTable(); 
         }
 
-        /* 👑 توابع جدید فرانت‌اند مدیریت و رندر جدول ویرایش گروهی طلاها */
         function renderBatchAdminTable() {
             const tbody = document.getElementById('batch-admin-table-body');
             if(!tbody) return;
@@ -801,7 +793,7 @@
                 document.getElementById('batch-edit-btn').classList.remove('hidden');
                 document.getElementById('batch-save-btn').classList.add('hidden');
                 document.getElementById('batch-cancel-btn').classList.add('hidden');
-                renderBatchAdminTable(); // لود مجدد برای لغو تغییرات ناتمام
+                renderBatchAdminTable(); 
             }
         }
 
@@ -826,7 +818,7 @@
             localStorage.setItem('sama_products', JSON.stringify(products));
             alert("✅ تغییرات گروهی کل محصولات با موفقیت روی حافظه سایت ذخیره و اعمال شد!");
             toggleBatchEditMode(false);
-            updateAllPrices(); // آپدیت در لحظه قیمت‌ها و اسلایدرها
+            updateAllPrices(); 
         }
 
         function renderAdminCategoriesList() {
@@ -905,7 +897,6 @@
                 `;
             });
 
-            // بروزرسانی سلکتورهای دسته‌بندی در هر دو فرم افزودن و ویرایش
             ['prod-category', 'edit-prod-category'].forEach(id => {
                 const el = document.getElementById(id);
                 if(el) {
@@ -1094,7 +1085,6 @@
             document.getElementById('live-preview-img').src = "";
         }
 
-        /* ✏️ توابع اختصاصی مدیریت صفحه‌ی ۵ (ویرایش محصول) */
         function openEditProductPage(productId) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
@@ -1249,7 +1239,7 @@
             updateAllPrices();
             e.target.reset();
             clearSelectedImage();
-            renderBatchAdminTable(); // به روزرسانی آنی جدول ادیت گروهی بعد از اد کردن جنس جدید
+            renderBatchAdminTable(); 
             alert("✨ کالا با موفقیت به ویترین افزوده شد.");
         }
 
@@ -1258,7 +1248,7 @@
                 products = products.filter(p => p.id !== id);
                 localStorage.setItem('sama_products', JSON.stringify(products));
                 updateAllPrices();
-                renderBatchAdminTable(); // به روزرسانی جدول ادیت گروهی بعد از حذف جنس
+                renderBatchAdminTable(); 
             }
         }
 
@@ -1365,7 +1355,6 @@
                 document.getElementById('user-welcome').innerText = `✨ ${user.name} خوش آمدید`;
                 if (user.isVip) document.getElementById('vip-badge').classList.remove('hidden');
                 
-                // شرط نمایش دکمه همبرگری کپ‌کات و منوی مدیریت بالا فقط برای نقش ادمین
                 if (user.role === 'admin') { 
                     document.getElementById('admin-hamburger-zone').classList.remove('hidden'); 
                     document.getElementById('menu-editor-btn').classList.remove('hidden');
